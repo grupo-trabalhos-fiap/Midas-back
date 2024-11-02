@@ -1,0 +1,28 @@
+body {
+    background-image: url("../Imagens/Background Login/Vetor Midas.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#LoginFingold {
+    text-align: center;
+}
+
+#loginbox {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+#linkentrar {
+    color: #B78E10;
+    text-decoration: none;
+}
+
+.btn-danger {
+    background-color: #6B0000; /* Cor de fundo personalizada */
+    border-color: #6B0000;     /* Cor da borda personalizada */
+    color: white;              /* Cor do texto */
+}

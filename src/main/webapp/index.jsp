@@ -7,7 +7,7 @@
   <%@include file="resources/pages/links_header.jsp"%>
   <!-- css da tela -->
   <link rel="stylesheet" href="resources/css/style.css">
-  <link rel="shortcut icon" type="imagex/png" href="./resources/Imagens/Logo/Miniatura.png">
+  <link rel="shortcut icon" type="imagex/png" href="resources/Imagens/Logo/Miniatura.png">
   <title>Landing Page</title>
 </head>
 
@@ -19,7 +19,7 @@
       <img src="resources/Imagens/Logo/FinGold branco sem fundo 1 (1).png">
     </div>
     <nav class="nav-list">
-      <a href="./resources/pages/Cadastro_Usuario.jsp">
+      <a href="resources/pages/Cadastro_Usuario.jsp">
         <button class="cadastre text-nowrap">Se Cadastre</button>
       </a>
     </nav>
@@ -54,10 +54,10 @@
         </article>
 
         <div class="botoes">
-          <a href="">
+          <a href="resources/pages/Cadastro_Usuario.jsp">
             <button class="botao text-nowrap">Se cadastre</button>
           </a>
-          <a href="">
+          <a href="resources/pages/Login.jsp">
             <button class="botao2">Entre</button>
           </a>
         </div>

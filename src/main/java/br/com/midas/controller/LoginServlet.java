@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
@@ -41,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", email);
             String mensagem =
                     "Um login foi realizado na plataforma em " + LocalDate.now();
-            request.getRequestDispatcher("Ganho.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
             try {
                 bo.enviarEmail(email, "Login Realizado", mensagem);
             } catch (EmailException e) {

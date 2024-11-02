@@ -12,11 +12,6 @@
     --bege: #F1EBD5;
 }
 
-/* primeiro container */
-.row {
-    flex-direction: row-reverse;
-}
-
 .imagemprincipal img {
     margin-top: 30px;
 }

@@ -43,7 +43,7 @@
         <label class="form-check-label" for="lembrar">Lembrar-me</label> -->
       </div>
       <div class="mb-3 form-floating d-flex justify-content-center align-items-center flex-column">
-        <a class="btn btn-secondary btn-lg w-50 btn-danger me-md-2" href="#" role="link" id="linkentrar">Entrar</a>
+        <button class="btn btn-secondary btn-lg w-50 btn-danger me-md-2" id="linkentrar" type="submit">Entrar</button>
       </div>
       <div class="mb-4 form-floating d-flex justify-content-center align-items-center flex-column">
         <p>Ainda não possui acesso?</p>

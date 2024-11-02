@@ -1,3 +1,10 @@
+:root {
+    --vermelho: #6B0000;
+    --dourado: #B78E10;
+    --branco: #fff;
+    --bege: #F1EBD5;
+}
+
 body {
     background-image: url("../Imagens/Background Cadastro/background_cadastro.jpg");
     background-size: cover;
@@ -53,12 +60,12 @@ body {
 }
 
 #linkcontinuar {
-    color: #B78E10;
+    color: var(--dourado);
     text-decoration: none;
 }
 
 .btn-danger {
-    background-color: #6B0000; /* Cor de fundo personalizada */
-    border-color: #6B0000;     /* Cor da borda personalizada */
-    color: white;              /* Cor do texto */
+    background-color: var(--vermelho); /* Cor de fundo personalizada */
+    border-color: var(--vermelho);     /* Cor da borda personalizada */
+    color: var(--branco);              /* Cor do texto */
 }

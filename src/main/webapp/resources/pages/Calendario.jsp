@@ -4,9 +4,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario</title>
     <%@include file="links_header.jsp"%>
-
+    <title>Calendário</title>
     <!-- css do datepicker -->
     <link rel="stylesheet" href="../datepicker/css/bootstrap-datepicker.min.css">
 
@@ -24,13 +23,13 @@
 <!-- primeiro container -->
 <div class="container mt-5 text-center">
     <div class="row text-center">
-        <div class="col-12 col-sm-12 col-md-12 order-1 col-lg-6 mt-2">
+        <div class="col-12 col-sm-12 col-md-12 order-2 col-lg-6 mt-2">
             <!-- imagem principal do Calendário -->
             <div class="imagemprincipal mt-5">
                 <img src="../Imagens/Vetores/Imagem Calendário.png" class="img-fluid">
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 order-2 col-lg-6 mt-5">
+        <div class="col-12 col-sm-12 col-md-12 order-1 col-lg-6 mt-5">
             <!-- conteúdo da direita - título e subtítulo -->
             <section class="conteudodireito mt-5 mx-3">
                 <article class="textoprincipal">

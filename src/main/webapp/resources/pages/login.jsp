@@ -28,7 +28,7 @@
     <span class="navbar-text text-danger" style="margin-right:10px">
         ${erro }
     </span>
-    <form action="login" method="post">
+    <form action="${pageContext.request.contextPath}/login" method="post">
       <div class="mb-4 ms-4 me-5">
         <label class="form-label">E-mail</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com">

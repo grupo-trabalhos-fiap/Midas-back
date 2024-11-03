@@ -26,11 +26,11 @@
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <li class="nav-item">
               <i class="bi bi-house-fill"></i>
-              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class="nav-link" aria-current="page" href="dashboard.jsp">Home</a>
             </li>
             <li class="nav-item perfil">
               <i class="bi bi-person-circle"></i>
-              <a class="nav-link" href="#">Perfil</a>
+              <a class="nav-link" href="perfil.jsp">Perfil</a>
             </li>
             <!-- menu dropdown -->
             <li class="nav-item dropdown">
@@ -59,7 +59,7 @@
 
             <li class="nav-item">
               <i class="bi bi-piggy-bank-fill"></i>
-              <a class="nav-link" href="#">Investimentos</a>
+              <a class="nav-link" href="investimento.jsp">Investimentos</a>
             </li>
 
             <li class="nav-item notificacoes">

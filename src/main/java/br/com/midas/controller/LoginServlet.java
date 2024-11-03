@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", email);
             String mensagem =
                     "Um login foi realizado na plataforma em " + LocalDate.now();
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("main\\webapp\\resources\\pages/Ganhos.jsp").forward(request, response);
             try {
                 bo.enviarEmail(email, "Login Realizado", mensagem);
             } catch (EmailException e) {
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
         }else {
             request.setAttribute("erro", "Usuário e/ou senha inválidos");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("main\\webapp\\resources\\pages/login.jsp").forward(request, response);
         }
     }
 
@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("main\\webapp\\resources\\pages/Gastos.jsp").forward(request, response);
 
     }
 }

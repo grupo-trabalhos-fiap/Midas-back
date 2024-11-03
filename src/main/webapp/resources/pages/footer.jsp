@@ -26,10 +26,10 @@
             <h3>Início</h3>
           </li>
           <li>
-            <a href="" class="footer-link">Home</a>
+            <a href="dashboard.jsp" class="footer-link">Home</a>
           </li>
           <li>
-            <a href="" class="footer-link">Perfil</a>
+            <a href="perfil.jsp" class="footer-link">Perfil</a>
           </li>
           <li>
             <a href="Calendario.jsp" class="footer-link">Calendário</a>
@@ -54,7 +54,7 @@
             <a href="Gastos.jsp" class="footer-link">Gastos</a>
           </li>
           <li>
-            <a href="" class="footer-link">Investimentos</a>
+            <a href="investimento.jsp" class="footer-link">Investimentos</a>
           </li>
           <li>
             <a href="Dividas.jsp" class="footer-link">Dívidas</a>

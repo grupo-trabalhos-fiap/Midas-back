@@ -22,8 +22,8 @@ public class OracleUsuarioDao implements UsuarioDao {
                     .getInstance()
                     .getConnection();
 
-            String sql = "SELECT * FROM TB_USUARIO " +
-                    "WHERE DS_EMAIL = ? AND DS_SENHA = ?";
+            String sql = "SELECT * FROM T_MSF_USUARIO " +
+                    "WHERE EMAIL = ? AND SENHA = ?";
 
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, usuario.getEmail());

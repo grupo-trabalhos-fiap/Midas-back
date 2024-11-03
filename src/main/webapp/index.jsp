@@ -57,7 +57,7 @@
           <a href="resources/pages/Cadastro_Usuario.jsp">
             <button class="botao text-nowrap">Se cadastre</button>
           </a>
-          <a href="resources/pages/Login.jsp">
+          <a href="resources/pages/login.jsp">
             <button class="botao2">Entre</button>
           </a>
         </div>

@@ -1,0 +1,209 @@
+
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira de investimentos</title>
+
+    <%@include file="links_header.jsp"%>
+
+    <!-- CSS da página de investimentos -->
+    <link rel="stylesheet" href="../css/styleInvestimento.css">
+
+    <!-- css do header e do footer -->
+    <link rel="stylesheet" href="../css/header_footer.css">
+</head>
+<body>
+<%@include file="header.jsp"%>
+
+<!-- começo conteúdo -->
+<!-- primeiro container -->
+<div class="container mt-5 text-center">
+    <div class="row text-center">
+        <div class="col-12 col-sm-12 col-md-12 order-2 col-lg-6 mt-3">
+            <!-- imagem principal dos investimentos -->
+            <div class="imagemprincipal mt-5">
+                <img src="../Imagens/Vetores/Imagem investimentos.png" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 order-1 col-lg-6 mt-5">
+            <!-- conteúdo da esquerda - título e subtítulo -->
+            <section class="conteudoesquerdo mt-5 mx-3">
+                <article class="textoprincipal">
+                    <h1>
+                        Faça um novo <br>
+                        <h1 class="digitando">investimento</h1>
+                    </h1>
+                </article>
+
+                <article class="subtitulo mt-3">
+                    Faça um novo investimento e não
+                    deixe seu dinheiro parado. Investir
+                    é um realizador de sonhos.
+            </section>
+        </div>
+
+    </div>
+</div>
+<!-- fim primeiro container -->
+
+<!-- botão - adicionar investimento -->
+<button type="button" class="btn adicionar p-2 px-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 58.81">
+        <defs>
+            <style>
+                .cls-1 {
+                    fill-rule: evenodd;
+                }
+            </style>
+        </defs>
+        <title>send-money</title>
+        <path class="cls-1"
+              d="M12.08,12V58.81H93.46L93.33,42a31.77,31.77,0,0,0-8.25,1.12v1.5a6.9,6.9,0,0,0-6.74,7H27.12c0-4.37-3.16-7.46-7-7.43V25.63a6.9,6.9,0,0,0,6.75-7H71.53c.45-.32.88-.63,1.27-1A43.64,43.64,0,0,1,81.24,12Zm110.8,12.76-20.46,20.3.1-10.2c-12.8-2.77-27.26.49-35,10.17C69,25,87.09,15,102.7,14.5l.09-10.41,20.09,20.66ZM62,30.26a10.67,10.67,0,1,0-4.47,14.41A10.67,10.67,0,0,0,62,30.26ZM0,0V43.61l5.57,0V11.85A5.15,5.15,0,0,1,11.1,6.62H76.78l0-6.62Z" />
+    </svg>
+    Adicionar novo investimento
+</button>
+<!-- fim botão - adicionar investimento -->
+
+<!-- modal - adicionar investimento -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Carteira de investimentos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="linha-modal"></div>
+            <!-- formulário modal -->
+            <form>
+                <div class="modal-body">
+
+                    <div class="form-floating mb-3">
+
+                        <input type="text" class="form-control" id="floatingInput" placeholder="R$00,00" required>
+                        <label for="floatingInput">Valor</label>
+                    </div>
+                    <div class="form-floating mb-3">
+
+                        <input type="date" class="form-control" id="floatingdata" required>
+                        <label for="floatingdata" class="col-form-label">Data</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="floatingselect" required>
+                            <option selected disabled>Selecione uma categoria</option>
+                            <option value="Renda fixa">Renda fixa</option>
+                            <option value="Ações">Ações</option>
+                            <option value="Fundos imobiliários">Fundos imobiliários</option>
+                            <option value="Fundos de investimento">Fundos de investimento</option>
+                            <option value="Criptoativos">Criptoativos</option>
+                            <option value="Câmbio">Câmbio</option>
+                            <option value="Commodities">Commodities</option>
+                            <option value="Previdência privada">Previdência privada</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <label for="floatingselect" class="col-form-label">Categorias</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                            <textarea class="form-control" id="floatingdesc"
+                                      placeholder="motivo do investimento"></textarea>
+                        <label for="floatingdesc" class="col-form-label">Breve descrição</label>
+                    </div>
+                </div>
+
+                <div class="linha-modal"></div>
+                <!-- botões modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn salvar">Salvar investimento</button>
+                </div>
+
+            </form>
+            <!-- fim formulário modal -->
+        </div>
+    </div>
+</div>
+<!-- fim modal - adicionar investimento -->
+
+<!-- tabela de investimentos -->
+<div class="container">
+    <table class="table">
+        <!-- colunas -->
+        <thead class="text-center">
+        <tr>
+            <th>
+                <div class="colunas">
+                    Data
+                </div>
+            </th>
+            <th>
+                <div class="colunas">
+                    Valor
+                </div>
+            </th>
+            <th>
+                <div class="colunas">
+                    Categoria
+                </div>
+            </th>
+            <th>
+                <div class="colunas">
+                    Descrição
+                </div>
+            </th>
+            <th>
+                <div class="colunas">
+                    #
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <!-- fim colunas -->
+
+        <!-- conteúdo de exemplo -->
+        <tbody class="text-center">
+        <tr>
+            <td data-label="Data">dd/mm/aaaa</td>
+            <td data-label="Valor">R$00,00</td>
+            <td data-label="Categoria">Categoria do investimento</td>
+            <td data-label="Descrição">Breve descrição sobre o investimento</td>
+            <td data-label="#" class="funções">
+                <button type="button" class="btn editar">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </button>
+                <button type="button" class="btn excluir">
+                    <i class="bi bi-trash3-fill"></i> Excluir
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td data-label="Data">dd/mm/aaaa</td>
+            <td data-label="Valor">R$00,00</td>
+            <td data-label="Categoria">Categoria do investimento</td>
+            <td data-label="Descrição">Breve descrição sobre o investimento</td>
+            <td data-label="#" class="funções">
+                <button type="button" class="btn editar">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </button>
+                <button type="button" class="btn excluir">
+                    <i class="bi bi-trash3-fill"></i> Excluir
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+        <!-- fim conteúdo de exemplo -->
+    </table>
+</div>
+<!-- fim tabela de investimentos -->
+<%@include file="footer.jsp"%>
+
+<!-- link JS de investimento.js -->
+<script src="../js/investimento.js"></script>
+
+<%@include file="links_footer.jsp"%>
+</body>
+</html>

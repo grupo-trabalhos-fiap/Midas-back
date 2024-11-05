@@ -6,4 +6,5 @@ public interface UsuarioDao {
 
     boolean validarUsuario(Usuario usuario);
 
+    int getCodigoUsuarioByEmail(String email);
 }

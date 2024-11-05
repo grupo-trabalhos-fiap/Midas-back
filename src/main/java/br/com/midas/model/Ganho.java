@@ -3,7 +3,8 @@ package br.com.midas.model;
 import java.time.LocalDate;
 
 public class Ganho {
-    private Long codigoGanho;
+    private int codigoGanho;
+    private int cdUsuario; // Adicione o atributo cdUsuario
     private double valorGanho;
     private LocalDate dataGanho; // dd/mm/aaa
     private String descricaoGanho;
@@ -13,27 +14,37 @@ public class Ganho {
     }
 
     // Construtor com todos os atributos obrigatórios
-    public Ganho(Long codigoGanho, double valorGanho, LocalDate dataGanho, String descricaoGanho) {
+    public Ganho(int codigoGanho, int codigoUsuario, double valorGanho, LocalDate dataGanho, String descricaoGanho) {
         this.codigoGanho = codigoGanho;
+        this.cdUsuario = codigoUsuario; // Se você quiser manter o atributo Usuario
         this.valorGanho = valorGanho;
         this.dataGanho = dataGanho;
         this.descricaoGanho = descricaoGanho;
     }
 
     // Construtor com o código oculto
-    public Ganho(double valorGanho, LocalDate dataGanho, String descricaoGanho) {
+    public Ganho(int codigoGanho, double valorGanho, LocalDate dataGanho, String descricaoGanho) {
+        this.codigoGanho = codigoGanho;
         this.valorGanho = valorGanho;
         this.dataGanho = dataGanho;
         this.descricaoGanho = descricaoGanho;
     }
 
     // Métodos getters e setters
-    public Long getCodigoGanho() {
+    public int getCodigoGanho() {
         return codigoGanho;
     }
 
-    public void setCodigoGanho(Long codigoGanho) {
+    public void setCodigoGanho(int codigoGanho) {
         this.codigoGanho = codigoGanho;
+    }
+
+    public int getCdUsuario() {
+        return cdUsuario;
+    }
+
+    public void setCdUsuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
     }
 
     public double getValorGanho() {

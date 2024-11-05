@@ -15,5 +15,5 @@
       integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<link rel="shortcut icon" type="imagex/png" href="../Imagens/Logo/Miniatura.png">
+<link rel="shortcut icon" type="imagex/png" href="${pageContext.request.contextPath}/resources/Imagens/Logo/Miniatura.png">
 

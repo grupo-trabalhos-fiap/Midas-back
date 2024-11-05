@@ -7,7 +7,7 @@
     <div class="esquerda">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <img src="../Imagens/Icones/Menu.png" width="80%" class="img-fluid">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Icones/Menu.png" width="80%" class="img-fluid">
       </button>
 
       <!-- começo offcanvas -->
@@ -26,11 +26,11 @@
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <li class="nav-item">
               <i class="bi bi-house-fill"></i>
-              <a class="nav-link" aria-current="page" href="dashboard.jsp">Home</a>
+              <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/resources/pages/dashboard.jsp">Home</a>
             </li>
             <li class="nav-item perfil">
               <i class="bi bi-person-circle"></i>
-              <a class="nav-link" href="perfil.jsp">Perfil</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/perfil.jsp">Perfil</a>
             </li>
             <!-- menu dropdown -->
             <li class="nav-item dropdown">
@@ -39,27 +39,27 @@
                 Finanças >
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item my-3" href="Ganhos.jsp">Ganhos</a></li>
+                <li><a class="dropdown-item my-3" href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp">Ganhos</a></li>
                 <li>
                 </li>
-                <li><a class="dropdown-item" href="Gastos.jsp">Gastos</a></li>
+                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp">Gastos</a></li>
               </ul>
             </li>
             <!-- fim menu dropdown -->
 
             <li class="nav-item calendario">
               <i class="bi bi-calendar3"></i>
-              <a class="nav-link" href="Calendario.jsp">Calendário</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp">Calendário</a>
             </li>
 
             <li class="nav-item">
               <i class="bi bi-bullseye"></i>
-              <a class="nav-link" href="Objetivos.jsp">Objetivos</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/Objetivos.jsp">Objetivos</a>
             </li>
 
             <li class="nav-item">
               <i class="bi bi-piggy-bank-fill"></i>
-              <a class="nav-link" href="investimento.jsp">Investimentos</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/investimento.jsp">Investimentos</a>
             </li>
 
             <li class="nav-item notificacoes">
@@ -71,7 +71,7 @@
       </div>
       <!-- fim offcanvas -->
       <div class="logo mx-4">
-        <img src="../Imagens/Logo/FinGold branco sem fundo 1 (1).png" width="80%" class="img-fluid">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Logo/FinGold branco sem fundo 1 (1).png" width="80%" class="img-fluid">
       </div>
     </div>
     <!-- fim conteúdo da esquerda -->

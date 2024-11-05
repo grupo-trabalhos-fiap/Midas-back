@@ -30,13 +30,13 @@ public class OracleUsuarioDao implements UsuarioDao {
             stmt.setString(2, usuario.getSenha());
             rs = stmt.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 return true;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 stmt.close();
                 rs.close();
@@ -46,5 +46,31 @@ public class OracleUsuarioDao implements UsuarioDao {
             }
         }
         return false;
+    }
+
+    public int getCodigoUsuarioByEmail(String email) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conexao = ConnectionFactory.getInstance().getConnection();
+            String sql = "SELECT cd_usuario FROM T_MSF_USUARIO WHERE EMAIL = ?";
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("cd_usuario");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                rs.close();
+                conexao.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return -1; // Retorna -1 se o usuário não for encontrado
     }
 }

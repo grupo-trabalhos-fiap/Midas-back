@@ -1,9 +1,9 @@
 package br.com.midas.controller;
 
-import br.com.midas.dao.ObjetivoDao;
+import br.com.midas.dao.GanhoDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.DaoFactory;
-import br.com.midas.model.Objetivo;
+import br.com.midas.model.Ganho;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,18 +14,17 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@WebServlet("/objetivos")
-public class ObjetivoServlet extends HttpServlet {
+@WebServlet("/ganhos")
+public class GanhoServlet extends HttpServlet {
 
-    private ObjetivoDao dao;
+    private GanhoDao dao;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        dao = DaoFactory.getObjetivoDAO();
+        dao = DaoFactory.getGanhoDAO();
     }
 
     @Override
@@ -53,25 +52,23 @@ public class ObjetivoServlet extends HttpServlet {
     private void cadastrar(HttpServletRequest req, HttpServletResponse resp, int codigoUsuario)
             throws ServletException, IOException {
         try {
-            String nomeObjetivo = req.getParameter("nomeObjetivo");
-            double valorObjetivo = Double.parseDouble(req.getParameter("valorObjetivo"));
-            LocalDate dataObjetivo = LocalDate.parse(req.getParameter("dataObjetivo"));
-            String descricaoObjetivo = req.getParameter("descricaoObjetivo");
+            double valorGanho = Double.parseDouble(req.getParameter("valorGanho"));
+            LocalDate dataGanho = LocalDate.parse(req.getParameter("dataGanho"));
+            String descricaoGanho = req.getParameter("descricaoGanho");
 
-            Objetivo objetivo = new Objetivo(
+            Ganho ganho = new Ganho(
                     0,
                     codigoUsuario,
-                    nomeObjetivo,
-                    valorObjetivo,
-                    dataObjetivo,
-                    descricaoObjetivo
+                    valorGanho,
+                    dataGanho,
+                    descricaoGanho
             );
 
-            dao.cadastrar(objetivo);
+            dao.cadastrar(ganho);
 
             req.setAttribute("mensagem", "Objetivo cadastrado!");
-            List<Objetivo> objetivos = dao.getAll();
-            req.setAttribute("objetivos", objetivos);
+            List<Ganho> ganhos = dao.getAll();
+            req.setAttribute("ganhos", ganhos);
 
         } catch (DBException db) {
             db.printStackTrace();
@@ -80,26 +77,24 @@ public class ObjetivoServlet extends HttpServlet {
             e.printStackTrace();
             req.setAttribute("erro", "Por favor, valide os dados");
         }
-        req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
+        req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
     }
 
     private void editar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            int codigoObjetivo = Integer.parseInt(req.getParameter("codigo"));
-            String nomeObjetivo = req.getParameter("nomeObjetivo");
-            double valorObjetivo = Double.parseDouble(req.getParameter("valorObjetivo"));
-            LocalDate dataObjetivo = LocalDate.parse(req.getParameter("dataObjetivo"));
-            String descricaoObjetivo = req.getParameter("descricaoObjetivo");
+            int codigoGanho = Integer.parseInt(req.getParameter("codigoGanho"));
+            double valorGanho = Double.parseDouble(req.getParameter("valorGanho"));
+            LocalDate dataGanho = LocalDate.parse(req.getParameter("dataGanho"));
+            String descricaoGanho = req.getParameter("descricaoGanho");
 
-            Objetivo objetivo = new Objetivo(
-                    codigoObjetivo,
-                    nomeObjetivo,
-                    valorObjetivo,
-                    dataObjetivo,
-                    descricaoObjetivo
+            Ganho ganho = new Ganho(
+                    codigoGanho,
+                    valorGanho,
+                    dataGanho,
+                    descricaoGanho
             );
 
-            dao.atualizar(objetivo);
+            dao.atualizar(ganho);
 
             req.setAttribute("mensagem", "Objetivo atualizado!");
         } catch (DBException db) {
@@ -114,9 +109,9 @@ public class ObjetivoServlet extends HttpServlet {
 
     private void excluir(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int codigoObjetivo = Integer.parseInt(req.getParameter("codigoExcluir"));
+        int codigoGanho = Integer.parseInt(req.getParameter("codigoExcluir"));
         try {
-            dao.remover(codigoObjetivo);
+            dao.remover(codigoGanho);
             req.setAttribute("mensagem", "Produto removido!");
         } catch (DBException e) {
             e.printStackTrace();
@@ -132,8 +127,8 @@ public class ObjetivoServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Objetivo> objetivos = dao.getAll();
-            req.setAttribute("objetivos", objetivos);
-            req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
+            List<Ganho> ganhos = dao.getAll();
+            req.setAttribute("ganhos", ganhos);
+            req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
     }
 }

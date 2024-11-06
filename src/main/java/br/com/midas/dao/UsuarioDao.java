@@ -10,4 +10,5 @@ public interface UsuarioDao {
     Usuario buscarPorId(Long id) throws SQLException;
     void deletar(Long id) throws SQLException;
     boolean validarUsuario(Usuario usuario);
-}
+
+    int getCodigoUsuarioByEmail(String email);

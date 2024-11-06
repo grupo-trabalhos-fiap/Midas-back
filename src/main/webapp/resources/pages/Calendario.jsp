@@ -68,10 +68,10 @@
 </div>
 <!-- fim do segundo container (calendario) -->
 <!-- terceiro container -->
-<div class="container-fluid mt-5 text-center">
+<div class="container mt-5 text-center">
     <div class="row text-center">
         <div class="col-12 order-lg-1 order-2 col-lg-6">
-            <div class="imagemprincipal mt-5">
+            <div class="imagemprincipal2 mt-5">
                 <img src="../Imagens/Vetores/Imagem Calendário2.png" class="img-fluid">
             </div>
         </div>

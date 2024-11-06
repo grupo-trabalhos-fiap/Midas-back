@@ -8,10 +8,10 @@
   <%@include file="links_header.jsp"%>
 
   <!-- CSS da página de dashboard -->
-  <link rel="stylesheet" href="../css/styleDashboard.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleDashboard.css">
 
   <!-- css do header e do footer -->
-  <link rel="stylesheet" href="../css/header_footer.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 <body>
 <%@include file="header.jsp"%>
@@ -24,7 +24,7 @@
       <p class="topo-p">Dê um toque de ouro nas suas finanças<br> e conquiste o sucesso que sempre sonhou!</p>
     </div>
     <div class="topo-esquerda-imagem">
-      <img src="../Imagens/Vetores/Vetor Midas.png" class="img">
+      <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Vetor Midas.png" class="img">
     </div>
   </div>
   <!-- topo direita -->
@@ -34,7 +34,7 @@
       <button class="botao-topo-direita">Acesse</button>
     </div>
     <div class="topo-direita-grafico">
-      <img src="../Imagens/Gráficos/ganhos-gastos.svg" class="img-fluid imagem-topo-direita">
+      <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/ganhos-gastos.svg" class="img-fluid imagem-topo-direita">
       <h4>Saldo do mês = <span>R$200,00</span></h4>
     </div>
   </div>
@@ -42,12 +42,11 @@
 <section class="container graficos-meio">
   <div class="grafico1-meio">
     <div class="graficos-meio-botao">
-      <!-- PAREI AQUIIIIIIIIIIIIIII -->
       <h3 class="h3-graficos-meio">Análise: <span>ganhos</span></h3>
       <button class="botao-graficos-meio">Acesse</button>
     </div>
     <div class="meio-grafico">
-      <img src="../Imagens/Gráficos/analise-de-ganhos.svg" class="img-fluid">
+      <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-ganhos.svg" class="img-fluid">
       <h4>Ganhos de março = R$2.000,00</h4>
     </div>
   </div>
@@ -59,7 +58,7 @@
     </div>
     <div class="meio-grafico">
       <h4>Gastos de março = R$1.800,00</h4>
-      <img src="../Imagens/Gráficos/analise-de-gastos.svg" class="img-fluid">
+      <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-gastos.svg" class="img-fluid">
 
     </div>
   </div>

@@ -7,7 +7,7 @@
   <%@include file="links_header.jsp"%>
 
   <!-- link css -->
-  <link rel="stylesheet" href="../css/styleLogin.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleLogin.css">
 
   <title>Login Midas Fingold</title>
 </head>
@@ -17,10 +17,10 @@
   <div class="col-sm-8 col-md-6 col-lg-4 rounded p-4 shadow" id="loginbox">
     <div class="row" id="linhalogos">
       <div class="col form-floating d-flex justify-content-center align-items-center flex-column">
-        <img src="../Imagens/Logo/FinGold branco sem fundo 1 (1).png" class="rounded float-start" id="logofingold" alt="Logo Fingold">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Logo/FinGold branco sem fundo 1 (1).png" class="rounded float-start" id="logofingold" alt="Logo Fingold">
       </div>
       <div class="col form-floating d-flex justify-content-center align-items-center flex-column">
-        <img src="../Imagens/Logo/Miniatura.png" class="rounded float-end" id="miniaturafingold"alt="Miniatura Fingold" width="40%">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Logo/Miniatura.png" class="rounded float-end" id="miniaturafingold"alt="Miniatura Fingold" width="40%">
       </div>
     </div>
     <h1 id="LoginFingold">Login Midas</h1>
@@ -47,7 +47,7 @@
       </div>
       <div class="mb-4 form-floating d-flex justify-content-center align-items-center flex-column">
         <p>Ainda não possui acesso?</p>
-        <a href="Cadastro_Usuario.jsp" id="cadastrese">Cadastre-se</a>
+        <a href="${pageContext.request.contextPath}/resources/pages/Cadastro_Usuario.jsp" id="cadastrese">Cadastre-se</a>
       </div>
     </form>
     </c:if>

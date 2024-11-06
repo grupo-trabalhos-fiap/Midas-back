@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
@@ -36,21 +37,25 @@ public class LoginServlet extends HttpServlet {
         Usuario usuario = new Usuario(email, senha);
 
         if (usuarioDao.validarUsuario(usuario)) {
+            int codigoUsuario = usuarioDao.getCodigoUsuarioByEmail(usuario.getEmail()); // Obter o código do usuário
 
             HttpSession session = request.getSession();
-            session.setAttribute("user", email);
+            // session.setAttribute("user", email); // Remova esta linha
+            session.setAttribute("codigoUsuario", codigoUsuario); // Armazena o código
             String mensagem =
                     "Um login foi realizado na plataforma em " + LocalDate.now();
-            request.getRequestDispatcher("../webapp/resources/pages/dashboard.jsp").forward(request, response);
+
+            request.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(request, response);
+
             try {
                 bo.enviarEmail(email, "Login Realizado", mensagem);
             } catch (EmailException e) {
                 e.printStackTrace();
             }
 
-        }else {
+        } else {
             request.setAttribute("erro", "Usuário e/ou senha inválidos");
-            request.getRequestDispatcher("main\\webapp\\resources\\pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
         }
     }
 
@@ -60,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        request.getRequestDispatcher("main\\webapp\\resources\\pages/Gastos.jsp").forward(request, response);
+        request.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(request, response);
 
     }
 }

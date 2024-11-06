@@ -1,4 +1,7 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,10 +11,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- css da tela -->
-    <link rel="stylesheet" href="../css/styleObjetivos.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleObjetivos.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
     <title>Objetivos</title>
 </head>
 
@@ -25,7 +28,7 @@
         <div class="col-12 col-lg-6 order-2 mt-3">
             <!-- imagem principal dos objetivos -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem objetivos.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem objetivos.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-lg-6 order-1 mt-5">
@@ -82,27 +85,40 @@
             </div>
             <div class="linha-modal"></div>
             <!-- formulário modal -->
-            <form>
+            <c:choose>
+                <c:when test="${not empty mensagem}">
+                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                            ${mensagem}
+                    </div>
+                </c:when>
+                <c:when test="${not empty erro}">
+                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                            ${erro}
+                    </div>
+                </c:when>
+            </c:choose>
+
+            <form action="${pageContext.request.contextPath}/objetivos?acao=cadastrar" method="post">
                 <div class="modal-body">
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingNome" placeholder="ex.: casa própria"
+                        <input type="text" class="form-control" name="nomeObjetivo" id="floatingNome" placeholder="ex.: casa própria"
                                required>
                         <label for="floatingNome">Nome</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="R$00,00" required>
+                        <input type="text" class="form-control" name="valorObjetivo" id="floatingInput" placeholder="R$00,00" required>
                         <label for="floatingInput">Valor</label>
                     </div>
                     <div class="form-floating mb-3">
 
-                        <input type="date" class="form-control" id="floatingdata" required>
+                        <input type="date" class="form-control" name="dataObjetivo" id="floatingdata" required>
                         <label for="floatingdata" class="col-form-label">Data</label>
                     </div>
                     <div class="form-floating mb-3">
 
-                            <textarea class="form-control" id="floatingdesc"
+                            <textarea class="form-control" name="descricaoObjetivo" id="floatingdesc"
                                       placeholder="motivo do recebimento"></textarea>
                         <label for="floatingdesc" class="col-form-label">Breve descrição</label>
                     </div>
@@ -113,7 +129,7 @@
                 <!-- botões modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn salvar">Salvar objetivo</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar objetivo</button>
                 </div>
             </form>
             <!-- fim formulário modal -->
@@ -159,7 +175,6 @@
 
         <!-- conteúdo de exemplo -->
         <tbody class="text-center body">
-
         <tr>
             <td data-label="Nome">Nome para a sua meta</td>
             <td data-label="Data">dd/mm/aaaa</td>
@@ -179,37 +194,98 @@
             </td>
         </tr>
 
-
-        <tr>
-            <td data-label="Nome">Nome para a sua meta</td>
-            <td data-label="Data">dd/mm/aaaa</td>
-            <td data-label="Valor">R$00,00</td>
-            <td data-label="Descrição">Breve descrição sobre o ganho</td>
-            <td data-label="#" class="funções">
-                <button type="button" class="btn editar">
-                    <i class="bi bi-pencil-square"></i> Editar
-                </button>
-                <button type="button" class="btn excluir">
-                    <i class="bi bi-trash3-fill"></i> Excluir
-                </button>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="customCheckbox2">
-                    <label class="form-check-label" for="customCheckbox2"></label>
-                </div>
-            </td>
-        </tr>
-
+        <c:forEach items="${objetivos}" var="objetivo">
+            <tr>
+                <td data-label="Nome">${objetivo.nomeObjetivo}</td>
+                <td data-label="Data">
+                    <fmt:parseDate value="${objetivo.dataObjetivo}" pattern="yyyy-MM-dd" var="dataObjetivoFmt"/>
+                    <fmt:formatDate value="${dataObjetivoFmt}" pattern="dd/MM/yyyy"/>
+                </td>
+                <td data-label="Valor"> <fmt:formatNumber value="${objetivo.valorObjetivo}"/></td>
+                <td data-label="Descrição">${objetivo.descricaoObjetivo}</td>
+                <td data-label="#" class="funções">
+                    <button type="button" class="btn editar">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </button>
+                    <button type="button" class="btn excluir" data-bs-toggle="modal"
+                            data-bs-target="#excluirModal"
+                            onclick="codigoExcluir.value = ${objetivo.codigoObjetivo}">
+                        <i class="bi bi-trash3-fill"></i> Excluir
+                    </button>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="customCheckbox2">
+                        <label class="form-check-label" for="customCheckbox2"></label>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
         <!-- fim conteúdo de exemplo -->
     </table>
 </div>
 <!-- fim tabela de objetivos -->
+<!-- Modal -->
+<div
+        class="modal fade"
+        id="excluirModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel2">
+                    Confirmar Exclusão
+                </h1>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Você confirma a exclusão deste objetivo?</h4>
+                <p><strong>Atenção!</strong> Esta ação é irreversível.</p>
+            </div>
+            <div class="modal-footer">
+
+                <form action="${pageContext.request.contextPath}/objetivos" method="post">
+                    <input
+                            type="hidden"
+                            name="acao"
+                            value="excluir">
+                    <input
+                            type="hidden"
+                            name="codigoExcluir"
+                            id="codigoExcluir">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Não
+                    </button>
+                    <button
+                            type="submit"
+                            class="btn btn-danger">
+                        Sim
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal-->
+
 
 <%@include file="footer.jsp"%>
 
 
 <!-- link javascript para funcionamento do formulário conectado na tabela -->
-<script src="../js/objetivos.js"></script>
+<!-- <script src="../js/objetivos.js"></script> -->
 
 <%@include file="links_footer.jsp"%>
 

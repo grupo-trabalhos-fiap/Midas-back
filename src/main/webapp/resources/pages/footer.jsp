@@ -6,7 +6,7 @@
     <div class="row ">
       <!-- primeira coluna - logo e redes sociais  -->
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 primeira_col order-1">
-        <img src="../Imagens/Logo/Miniatura.png" widht="20" height="90">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Logo/Miniatura.png" widht="20" height="90">
 
         <div class="redes_sociais">
           <a href="#" class="footer-link" id="instagram">
@@ -26,16 +26,16 @@
             <h3>Início</h3>
           </li>
           <li>
-            <a href="dashboard.jsp" class="footer-link">Home</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/dashboard.jsp" class="footer-link">Home</a>
           </li>
           <li>
-            <a href="perfil.jsp" class="footer-link">Perfil</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/perfil.jsp" class="footer-link">Perfil</a>
           </li>
           <li>
-            <a href="Calendario.jsp" class="footer-link">Calendário</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp" class="footer-link">Calendário</a>
           </li>
           <li>
-            <a href="Objetivos.jsp" class="footer-link">Objetivos</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/Objetivos.jsp" class="footer-link">Objetivos</a>
           </li>
         </ul>
       </div>
@@ -48,16 +48,16 @@
             <h3>Finanças</h3>
           </li>
           <li>
-            <a href="Ganhos.jsp" class="footer-link">Ganhos</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp" class="footer-link">Ganhos</a>
           </li>
           <li>
-            <a href="Gastos.jsp" class="footer-link">Gastos</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp" class="footer-link">Gastos</a>
           </li>
           <li>
-            <a href="investimento.jsp" class="footer-link">Investimentos</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="footer-link">Investimentos</a>
           </li>
           <li>
-            <a href="Dividas.jsp" class="footer-link">Dívidas</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp" class="footer-link">Dívidas</a>
           </li>
         </ul>
       </div>

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Objetivo {
     private int codigoObjetivo;
-    private Usuario usuario;
+    private int cdUsuario; // Adicione o atributo cdUsuario
     private String nomeObjetivo;
     private double valorObjetivo;
     private LocalDate dataObjetivo; // dd/mm/aaaa
@@ -32,6 +32,14 @@ public class Objetivo {
         this.descricaoObjetivo = descricaoObjetivo;
     }
 
+    public Objetivo(int codigoObjetivo, int codigoUsuario, String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo, String descricaoObjetivo) {
+        this.codigoObjetivo = codigoObjetivo;
+        this.cdUsuario = codigoUsuario; // Se você quiser manter o atributo Usuario
+        this.nomeObjetivo = nomeObjetivo;
+        this.valorObjetivo = valorObjetivo;
+        this.dataObjetivo = dataObjetivo;
+        this.descricaoObjetivo = descricaoObjetivo;
+    }
     // Métodos getters e setters
     public int getCodigoObjetivo() {
         return codigoObjetivo;
@@ -39,6 +47,14 @@ public class Objetivo {
 
     public void setCodigoObjetivo(int codigoObjetivo) {
         this.codigoObjetivo = codigoObjetivo;
+    }
+
+    public int getCdUsuario() {
+        return cdUsuario;
+    }
+
+    public void setCdUsuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
     }
 
     public String getNomeObjetivo() {

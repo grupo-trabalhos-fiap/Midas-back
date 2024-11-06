@@ -9,10 +9,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- CSS da página de investimentos -->
-    <link rel="stylesheet" href="../css/styleInvestimento.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleInvestimento.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 <body>
 <%@include file="header.jsp"%>
@@ -24,7 +24,7 @@
         <div class="col-12 col-sm-12 col-md-12 order-2 col-lg-6 mt-3">
             <!-- imagem principal dos investimentos -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem investimentos.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem investimentos.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 order-1 col-lg-6 mt-5">
@@ -200,9 +200,6 @@
 </div>
 <!-- fim tabela de investimentos -->
 <%@include file="footer.jsp"%>
-
-<!-- link JS de investimento.js -->
-<script src="../js/investimento.js"></script>
 
 <%@include file="links_footer.jsp"%>
 </body>

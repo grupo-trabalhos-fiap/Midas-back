@@ -9,10 +9,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- css da tela -->
-    <link rel="stylesheet" href="../css/styleGastos.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleGastos.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         <div class="col-12 col-lg-6 order-1 mt-3">
             <!-- imagem principal dos gastos -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem Gastos.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem Gastos.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-lg-6 order-2 mt-5">
@@ -202,10 +202,6 @@
 <!-- fim tabela de gastos -->
 
 <%@include file="footer.jsp"%>
-
-
-<!-- link javascript para funcionamento do formulário conectado na tabela -->
-<script src="../js/gastos.js"></script>
 
 <%@include file="links_footer.jsp"%>
 

@@ -70,8 +70,8 @@ public class ObjetivoServlet extends HttpServlet {
             dao.cadastrar(objetivo);
 
             req.setAttribute("mensagem", "Objetivo cadastrado!");
-            List<Objetivo> objetivos = dao.getAll();
-            req.setAttribute("objetivos", objetivos);
+            listar(req, resp); // Atualiza a tabela
+
 
         } catch (DBException db) {
             db.printStackTrace();
@@ -102,6 +102,7 @@ public class ObjetivoServlet extends HttpServlet {
             dao.atualizar(objetivo);
 
             req.setAttribute("mensagem", "Objetivo atualizado!");
+            listar(req, resp);
         } catch (DBException db) {
             db.printStackTrace();
             req.setAttribute("erro", "Erro ao atualizar");
@@ -132,8 +133,8 @@ public class ObjetivoServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Objetivo> objetivos = dao.getAll();
-            req.setAttribute("objetivos", objetivos);
-            req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
+        List<Objetivo> objetivos = dao.getAll();
+        req.setAttribute("objetivos", objetivos);
+        req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
     }
 }

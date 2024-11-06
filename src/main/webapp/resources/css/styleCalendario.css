@@ -170,8 +170,15 @@
 .positivo, .negativo{
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .positivo img, .negativo img{
-    width: 5rem;
+    width: 4rem;
+    height: 4rem;
+}
+
+.imagemprincipal2 img {
+    margin-bottom: 0;
+    width: 8rem;
 }

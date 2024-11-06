@@ -9,10 +9,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- css da tela -->
-    <link rel="stylesheet" href="../css/styleGanhos.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleGanhos.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         <div class="col-12 col-lg-6 order-2  mt-3">
             <!-- imagem principal dos ganhos -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem ganhos.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem ganhos.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-lg-6 order-1 mt-5">
@@ -77,22 +77,34 @@
             </div>
             <div class="linha-modal"></div>
             <!-- formulário modal -->
-            <form>
+            <c:choose>
+                <c:when test="${not empty mensagem}">
+                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                            ${mensagem}
+                    </div>
+                </c:when>
+                <c:when test="${not empty erro}">
+                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                            ${erro}
+                    </div>
+                </c:when>
+            </c:choose>
+            <form action="${pageContext.request.contextPath}/ganhos?acao=cadastrar" method="post">
                 <div class="modal-body">
 
                     <div class="form-floating mb-3">
 
-                        <input type="text" class="form-control" id="floatingInput" placeholder="R$00,00" required>
+                        <input type="text" class="form-control" id="floatingInput" name="valorGanho" placeholder="R$00,00" required>
                         <label for="floatingInput">Valor</label>
                     </div>
                     <div class="form-floating mb-3">
 
-                        <input type="date" class="form-control" id="floatingdata" required>
+                        <input type="date" class="form-control"name="dataGanho" id="floatingdata" required>
                         <label for="floatingdata" class="col-form-label">Data</label>
                     </div>
                     <div class="form-floating mb-3">
 
-                            <textarea class="form-control" id="floatingdesc"
+                            <textarea class="form-control" id="floatingdesc" name="descricaoGanho"
                                       placeholder="motivo do recebimento"></textarea>
                         <label for="floatingdesc" class="col-form-label">Breve descrição</label>
                     </div>
@@ -103,7 +115,7 @@
                 <!-- botões modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn salvar">Salvar ganho</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar ganho</button>
                 </div>
             </form>
             <!-- fim formulário modal -->
@@ -182,9 +194,6 @@
 </div>
 <!-- fim tabela de ganhos -->
 <%@include file="footer.jsp"%>
-
-<!-- link javascript para funcionamento do formulário conectado na tabela -->
-<script src="../js/ganhos.js"></script>
 
 <%@include file="links_footer.jsp"%>
 </body>

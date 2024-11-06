@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 @WebServlet("/login")
@@ -21,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     private UsuarioDao usuarioDao;
     private EmailBo bo;
 
-    public LoginServlet() {
+    public LoginServlet() throws SQLException {
         usuarioDao = DaoFactory.getUsuarioDAO();
         bo = new EmailBo();
     }
@@ -43,7 +44,9 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("codigoUsuario", codigoUsuario); // Armazena o código
             String mensagem =
                     "Um login foi realizado na plataforma em " + LocalDate.now();
+
             request.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(request, response);
+
             try {
                 bo.enviarEmail(email, "Login Realizado", mensagem);
             } catch (EmailException e) {

@@ -7,9 +7,11 @@ import br.com.midas.dao.impl.OracleGanhoDao;
 import br.com.midas.dao.impl.OracleObjetivoDao;
 import br.com.midas.dao.impl.OracleUsuarioDao;
 
+import java.sql.SQLException;
+
 
 public class DaoFactory {
-    public static UsuarioDao getUsuarioDAO() {
+    public static UsuarioDao getUsuarioDAO() throws SQLException {
         return new OracleUsuarioDao();
     }
     public static ObjetivoDao getObjetivoDAO() {

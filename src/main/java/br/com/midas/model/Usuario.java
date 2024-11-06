@@ -11,33 +11,41 @@ public class Usuario {
     private char genero;
     private String email;
     private String senha;
-    private String perfilInvestidor; // Atributo agora é opcional
 
     // Construtor padrão
     public Usuario() {
     }
 
     // Construtor com todos os atributos obrigatórios
-    public Usuario(Long codigoUsuario, String nomeCompleto, LocalDate dataNascimento, char genero, String email,
-                   String senha, String perfilInvestidor) {
+    public Usuario(
+            Long codigoUsuario,
+            String nomeCompleto,
+            LocalDate dataNascimento,
+            char genero,
+            String email,
+            String senha
+    ) {
         this.codigoUsuario = codigoUsuario;
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
         this.email = email;
         this.senha = senha;
-        this.perfilInvestidor = perfilInvestidor;
     }
 
     // Construtor com o código oculto
-    public Usuario(String nomeCompleto, LocalDate dataNascimento, char genero, String email, String senha,
-                   String perfilInvestidor) {
+    public Usuario(
+            String nomeCompleto,
+            LocalDate dataNascimento,
+            char genero,
+            String email,
+            String senha
+    ) {
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
         this.email = email;
         this.senha = senha;
-        this.perfilInvestidor = perfilInvestidor;
     }
 
     public Usuario(String email, String senha) {
@@ -96,13 +104,5 @@ public class Usuario {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getPerfilInvestidor() {
-        return perfilInvestidor;
-    }
-
-    public void setPerfilInvestidor(String perfilInvestidor) {
-        this.perfilInvestidor = perfilInvestidor;
     }
 }

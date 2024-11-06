@@ -11,22 +11,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/usuarios")
 public class UsuarioServlet extends HttpServlet {
 
     private UsuarioDao dao;
+    private static final Logger logger = Logger.getLogger(UsuarioServlet.class.getName());
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        try {
-            dao = DaoFactory.getUsuarioDAO();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        dao = DaoFactory.getUsuarioDAO();
     }
 
     @Override
@@ -52,23 +50,25 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private void cadastrar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("CADASTRANDO USUÁRIO");
         try {
-            Long codigoUsuario = Long.parseLong(req.getParameter("codigoUsuario"));
             String nomeCompleto = req.getParameter("nomeCompleto");
             LocalDate dataNascimento = LocalDate.parse(req.getParameter("dataNascimento"));
             char genero = req.getParameter("genero").charAt(0);
             String email = req.getParameter("email");
             String senha = req.getParameter("senha");
 
-            Usuario usuario = new Usuario(codigoUsuario, nomeCompleto, dataNascimento, genero, email, senha);
+            Usuario usuario = new Usuario(nomeCompleto, dataNascimento, genero, email, senha);
             dao.cadastrar(usuario);
 
+            logger.info("Usuário cadastrado com sucesso!");
             req.setAttribute("mensagem", "Usuário cadastrado com sucesso!");
+            req.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao cadastrar usuário", e);
             req.setAttribute("erro", "Erro ao cadastrar usuário. Por favor, valide os dados.");
+            req.getRequestDispatcher("/resources/pages/Cadastro_Usuario.jsp").forward(req, resp);
         }
-        listar(req, resp);
     }
 
     private void editar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -85,7 +85,7 @@ public class UsuarioServlet extends HttpServlet {
 
             req.setAttribute("mensagem", "Usuário atualizado com sucesso!");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao atualizar usuário", e);
             req.setAttribute("erro", "Erro ao atualizar usuário. Por favor, valide os dados.");
         }
         listar(req, resp);
@@ -98,7 +98,7 @@ public class UsuarioServlet extends HttpServlet {
 
             req.setAttribute("mensagem", "Usuário excluído com sucesso!");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao excluir usuário", e);
             req.setAttribute("erro", "Erro ao excluir usuário.");
         }
         listar(req, resp);
@@ -118,7 +118,7 @@ public class UsuarioServlet extends HttpServlet {
                 req.setAttribute("erro", "Usuário inválido.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao validar usuário", e);
             req.setAttribute("erro", "Erro ao validar usuário.");
         }
         listar(req, resp);
@@ -130,6 +130,6 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("Usuarios.jsp").forward(req, resp);
+        req.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(req, resp);
     }
 }

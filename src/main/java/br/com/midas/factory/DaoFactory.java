@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 
 public class DaoFactory {
-    public static UsuarioDao getUsuarioDAO() throws SQLException {
+    public static UsuarioDao getUsuarioDAO() {
         return new OracleUsuarioDao();
     }
     public static ObjetivoDao getObjetivoDAO() {

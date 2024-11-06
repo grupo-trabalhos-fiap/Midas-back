@@ -1,14 +1,14 @@
 package br.com.midas.dao;
 
+import br.com.midas.exception.DBException;
 import br.com.midas.model.Usuario;
-import java.sql.SQLException;
 
 public interface UsuarioDao {
 
-    void cadastrar(Usuario usuario) throws SQLException;
-    void atualizar(Usuario usuario) throws SQLException;
-    Usuario buscarPorId(Long id) throws SQLException;
-    void deletar(Long id) throws SQLException;
+    void cadastrar(Usuario usuario) throws DBException;
+    void atualizar(Usuario usuario) throws DBException;
+    Usuario buscarPorId(Long id) throws DBException;
+    void deletar(Long id) throws DBException;
     boolean validarUsuario(Usuario usuario);
-
-    int getCodigoUsuarioByEmail(String email);
+    int getCodigoUsuarioByEmail(String email) ;
+}

@@ -41,6 +41,7 @@
                     Registre suas dívidas e monitore cada pagamento.
                     Com um acompanhamento eficaz, você se aproxima
                     cada vez mais da tranquilidade financeira!
+                </article>
             </section>
         </div>
     </div>

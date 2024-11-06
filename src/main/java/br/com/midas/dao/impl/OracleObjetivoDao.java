@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OracleObjetivoDao implements ObjetivoDao {
 
@@ -43,7 +44,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
             throw new DBException("Erro ao cadastradar.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -55,7 +56,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
     public List<Objetivo> getAll(){
         PreparedStatement stmt = null;
         List<Objetivo> objetivos = new ArrayList<>();
-        ResultSet resultado = null;
+        ResultSet resultado;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
@@ -81,7 +82,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -120,7 +121,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
             throw new DBException("Erro ao atualizar.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -144,7 +145,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
             throw new DBException("Erro ao remover.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();

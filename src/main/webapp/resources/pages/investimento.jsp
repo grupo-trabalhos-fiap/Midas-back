@@ -41,6 +41,7 @@
                     Faça um novo investimento e não
                     deixe seu dinheiro parado. Investir
                     é um realizador de sonhos.
+                </article>
             </section>
         </div>
 

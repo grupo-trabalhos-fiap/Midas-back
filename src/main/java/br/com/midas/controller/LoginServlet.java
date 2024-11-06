@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     private UsuarioDao usuarioDao;
     private EmailBo bo;
 
-    public LoginServlet() throws SQLException {
+    public LoginServlet() {
         usuarioDao = DaoFactory.getUsuarioDAO();
         bo = new EmailBo();
     }

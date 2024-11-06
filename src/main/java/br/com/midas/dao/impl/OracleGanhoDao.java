@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OracleGanhoDao implements GanhoDao {
 
@@ -24,7 +25,7 @@ public class OracleGanhoDao implements GanhoDao {
 
         String sql = "INSERT INTO T_MSF_GANHOS " +
                 "(cd_usuario, vl_ganho, dt_ganho, ds_ganho) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?)";
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
@@ -41,7 +42,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao cadastradar.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -53,7 +54,7 @@ public class OracleGanhoDao implements GanhoDao {
     public List<Ganho> getAll(){
         PreparedStatement stmt = null;
         List<Ganho> ganhos = new ArrayList<>();
-        ResultSet resultado = null;
+        ResultSet resultado;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
@@ -78,7 +79,7 @@ public class OracleGanhoDao implements GanhoDao {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -115,7 +116,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao atualizar.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -139,7 +140,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao remover.");
         } finally {
             try {
-                stmt.close();
+                Objects.requireNonNull(stmt).close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -42,6 +42,7 @@
                     Faça o registro dos seus gastos e
                     mantenha um acompanhamento
                     das suas despesas financeiras.
+                </article>
             </section>
         </div>
 

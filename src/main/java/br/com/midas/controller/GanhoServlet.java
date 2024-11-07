@@ -66,7 +66,7 @@ public class GanhoServlet extends HttpServlet {
 
             dao.cadastrar(ganho);
 
-            req.setAttribute("mensagem", "Objetivo cadastrado!");
+            req.setAttribute("mensagem", "Ganho cadastrado!");
             List<Ganho> ganhos = dao.getAll();
             req.setAttribute("ganhos", ganhos);
 

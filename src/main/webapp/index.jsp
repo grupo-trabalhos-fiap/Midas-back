@@ -42,8 +42,8 @@
       <section class="conteudodireito mt-5">
         <article class="textoprincipal mt-5">
           <h1>
-            Dê um toque de <font color="#B78E10">ouro</font>
-            nas suas  <font color="#B78E10">finanças</font>
+            Dê um toque de <span style="color: #B78E10; ">ouro</span>
+            nas suas <span style="color: #B78E10; ">finanças</span>
           </h1>
         </article>
 

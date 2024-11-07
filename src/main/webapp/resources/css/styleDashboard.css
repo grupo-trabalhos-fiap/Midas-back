@@ -136,7 +136,7 @@ body {
     color: var(--dourado);
 }
 
-.grafico2-meio button {
+.grafico2-meio button a {
     border: 1px solid var(--vermelho);
     color: var(--vermelho);
 }
@@ -252,7 +252,7 @@ body {
     line-height: 22px;
 }
 
-.grafico3-inferior button {
+.grafico3-inferior button a {
     color: var(--branco);
     background-color: transparent;
     border: 1px solid var(--branco);

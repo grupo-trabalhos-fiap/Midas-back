@@ -16,11 +16,18 @@
 <body>
 <%@include file="header.jsp"%>
 
+<!-- Exibir mensagem de erro, se houver -->
+<c:if test="${not empty erro}">
+  <div class="alert alert-danger" role="alert">
+      ${erro}
+  </div>
+</c:if>
+
 <section class="container topo-dash">
   <!-- topo esquerda -->
   <div class="topo-esquerda">
     <div class="topo-esquerda-textos">
-      <h1 class="topo-h1">Seja bem-vindo,<br> Matheus Gonçalves!</h1>
+      <h1 class="topo-h1">Seja bem-vindo,<br> ${nomeUsuario}!</h1>
       <p class="topo-p">Dê um toque de ouro nas suas finanças<br> e conquiste o sucesso que sempre sonhou!</p>
     </div>
     <div class="topo-esquerda-imagem">
@@ -31,7 +38,6 @@
   <div class="topo-direita">
     <div class="topo-direita-botao">
       <h3 class="h3-topo-direita">Comparação</h3>
-      <button class="botao-topo-direita">Acesse</button>
     </div>
     <div class="topo-direita-grafico">
       <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/ganhos-gastos.svg" class="img-fluid imagem-topo-direita">
@@ -39,46 +45,51 @@
     </div>
   </div>
 </section>
+
 <section class="container graficos-meio">
+  <!-- Análise de Ganhos -->
   <div class="grafico1-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>ganhos</span></h3>
-      <button class="botao-graficos-meio">Acesse</button>
+      <a href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
     </div>
     <div class="meio-grafico">
       <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-ganhos.svg" class="img-fluid">
-      <h4>Ganhos de março = R$2.000,00</h4>
+      <h4>Total de Ganhos = R$${totalGanhos}</h4>
     </div>
   </div>
+
+  <!-- Análise de Gastos -->
   <div class="grafico2-meio">
     <div class="graficos-meio-botao">
-      <!-- PAREI NAS CORES DO GRÁFICO DE GASTOS -->
       <h3 class="h3-graficos-meio">Análise: <span>gastos</span></h3>
-      <button class="botao-graficos-meio">Acesse</button>
+      <a href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
     </div>
     <div class="meio-grafico">
-      <h4>Gastos de março = R$1.800,00</h4>
       <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-gastos.svg" class="img-fluid">
-
+      <h4>Total de Gastos = R$${totalGastos}</h4>
     </div>
   </div>
+
+  <!-- Análise de Investimentos -->
   <div class="grafico3-meio">
     <div class="graficos-meio-botao">
-      <h3 class="h3-graficos-meio">Último <span>gasto</span></h3>
-      <button class="botao-graficos-meio">Acesse</button>
+      <h3 class="h3-graficos-meio">Análise: <span>investimentos</span></h3>
+      <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
     </div>
-    <div class="meio-grafico-ultimo-gasto">
-      <h5>R$60,00</h5>
-      <h5>31/03/2024</h5>
-      <h5>Ovo da páscoa</h5>
+    <div class="meio-grafico">
+      <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-investimentos.svg" class="img-fluid">
+      <h4>Total de Investimentos = R$${totalInvestimentos}</h4>
     </div>
   </div>
 </section>
+
 <section class="container graficos-inferior">
+  <!-- Objetivos -->
   <div class="grafico1-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Objetivos</h3>
-      <button class="botao-graficos-inferior">Acesse</button>
+      <a href="${pageContext.request.contextPath}/resources/pages/Objetivos.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
     </div>
     <div class="inferior-grafico-objetivos">
       <div class="progress" role="progressbar" aria-label="Example 50px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 40px">
@@ -87,10 +98,12 @@
       <h4>50% dos objetivos concluídos</h4>
     </div>
   </div>
+
+  <!-- Investimentos -->
   <div class="grafico2-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Investimentos</h3>
-      <button class="botao-graficos-inferior">Acesse</button>
+      <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
     </div>
     <div class="inferior-grafico-investimentos">
       <h3>CDB = R$200,00</h3>
@@ -99,10 +112,12 @@
       <h4>Valor investido = <span>R$600,00</span></h4>
     </div>
   </div>
+
+  <!-- Dívidas -->
   <div class="grafico3-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Dívidas</h3>
-      <button class="botao-graficos-inferior">Acesse</button>
+      <a href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
     </div>
     <div class="inferior-grafico-dividas">
       <h3>20/05/2024 - R$200,00</h3>
@@ -112,6 +127,7 @@
     </div>
   </div>
 </section>
+
 <%@include file="footer.jsp"%>
 
 <!-- link JS do Bootstrap -->

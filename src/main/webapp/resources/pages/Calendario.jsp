@@ -72,7 +72,7 @@
     <div class="row text-center">
         <div class="col-12 order-lg-1 order-2 col-lg-6">
             <div class="imagemprincipal2">
-                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem Calendário2.png">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem Calendário2.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 order-lg-2 order-1 col-lg-6 mt-5">

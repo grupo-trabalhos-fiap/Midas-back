@@ -70,8 +70,8 @@ public class ObjetivoServlet extends HttpServlet {
             dao.cadastrar(objetivo);
 
             req.setAttribute("mensagem", "Objetivo cadastrado!");
-            listar(req, resp); // Atualiza a tabela
-
+            List<Objetivo> objetivos = dao.getAll();
+            req.setAttribute("objetivos", objetivos);
 
         } catch (DBException db) {
             db.printStackTrace();
@@ -102,7 +102,6 @@ public class ObjetivoServlet extends HttpServlet {
             dao.atualizar(objetivo);
 
             req.setAttribute("mensagem", "Objetivo atualizado!");
-            listar(req, resp);
         } catch (DBException db) {
             db.printStackTrace();
             req.setAttribute("erro", "Erro ao atualizar");

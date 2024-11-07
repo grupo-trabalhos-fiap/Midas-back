@@ -96,7 +96,7 @@ public class GanhoServlet extends HttpServlet {
 
             dao.atualizar(ganho);
 
-            req.setAttribute("mensagem", "Objetivo atualizado!");
+            req.setAttribute("mensagem", "Ganho atualizado!");
         } catch (DBException db) {
             db.printStackTrace();
             req.setAttribute("erro", "Erro ao atualizar");
@@ -112,7 +112,7 @@ public class GanhoServlet extends HttpServlet {
         int codigoGanho = Integer.parseInt(req.getParameter("codigoExcluir"));
         try {
             dao.remover(codigoGanho);
-            req.setAttribute("mensagem", "Produto removido!");
+            req.setAttribute("mensagem", "Ganho removido!");
         } catch (DBException e) {
             e.printStackTrace();
             req.setAttribute("erro", "Erro ao atualizar");

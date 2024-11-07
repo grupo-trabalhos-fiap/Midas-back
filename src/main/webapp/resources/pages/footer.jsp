@@ -35,7 +35,7 @@
             <a href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp" class="footer-link">Calendário</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/Objetivos.jsp" class="footer-link">Objetivos</a>
+            <a href="${pageContext.request.contextPath}/objetivos?acao=cadastrar" class="footer-link">Objetivos</a>
           </li>
         </ul>
       </div>

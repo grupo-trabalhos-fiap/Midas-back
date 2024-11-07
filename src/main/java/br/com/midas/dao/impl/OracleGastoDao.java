@@ -1,9 +1,9 @@
 package br.com.midas.dao.impl;
 
-import br.com.midas.dao.GanhoDao;
+import br.com.midas.dao.GastoDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.ConnectionFactory;
-import br.com.midas.model.Ganho;
+import br.com.midas.model.Gasto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,27 +14,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OracleGanhoDao implements GanhoDao {
+public class OracleGastoDao implements GastoDao {
 
     private Connection conexao;
 
     @Override
-    public void cadastrarGanho(Ganho ganho) throws DBException {
+    public void cadastrarGasto(Gasto gasto) throws DBException {
         PreparedStatement stmt = null;
 
-        String sql = "INSERT INTO T_MSF_GANHOS (cd_usuario, vl_ganho, dt_ganho, ds_ganho) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO T_MSF_GASTOS (cd_usuario, vl_gasto, dt_gasto, categoria, ds_gasto) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
             stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, ganho.getCdUsuario());
-            stmt.setDouble(2, ganho.getValorGanho());
+            stmt.setInt(1, gasto.getCdUsuario());
+            stmt.setDouble(2, gasto.getValorGasto());
             // Convertendo LocalDate para String no formato dd/MM/yyyy
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String dataGanhoFormatada = ganho.getDataGanho().format(formatter);
-            stmt.setString(3, dataGanhoFormatada);
-            stmt.setString(4, ganho.getDescricaoGanho());
+            String dataGastoFormatada = gasto.getDataGasto().format(formatter);
+            stmt.setString(3, dataGastoFormatada);
+            stmt.setString(4, gasto.getCategoria());
+            stmt.setString(5, gasto.getDescricaoGasto());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,29 +51,30 @@ public class OracleGanhoDao implements GanhoDao {
     }
 
     @Override
-    public List<Ganho> getAllGanho(){
+    public List<Gasto> getAllGasto(){
         PreparedStatement stmt = null;
-        List<Ganho> ganhos = new ArrayList<>();
-        ResultSet resultadoGanho = null;
+        List<Gasto> gastos = new ArrayList<>();
+        ResultSet resultadoGasto = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_GANHOS";
+            String sql = "SELECT * FROM T_MSF_GASTOS";
             stmt = conexao.prepareStatement(sql);
-            resultadoGanho = stmt.executeQuery();
+            resultadoGasto = stmt.executeQuery();
 
-            while (resultadoGanho.next()) {
-                int codigoGanho = resultadoGanho.getInt("cd_ganho");
-                int codigoUsuario = resultadoGanho.getInt("cd_usuario");
-                double valorGanho = resultadoGanho.getDouble("vl_ganho");
+            while (resultadoGasto.next()) {
+                int codigoGasto = resultadoGasto.getInt("cd_gasto");
+                int codigoUsuario = resultadoGasto.getInt("cd_usuario");
+                double valorGasto = resultadoGasto.getDouble("vl_gasto");
                 // Convertendo String para LocalDate
-                LocalDate dataGanho = LocalDate.parse(resultadoGanho.getString("dt_ganho"),
+                LocalDate dataGasto = LocalDate.parse(resultadoGasto.getString("dt_gasto"),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                String descricaoGanho = resultadoGanho.getString("ds_ganho");
+                String categoria = resultadoGasto.getString("categoria");
+                String descricaoGasto = resultadoGasto.getString("ds_gasto");
 
-                Ganho ganho = new Ganho(codigoGanho, codigoUsuario, valorGanho, dataGanho,
-                        descricaoGanho);
-                ganhos.add(ganho);
+                Gasto gasto = new Gasto(codigoGasto, codigoUsuario, valorGasto, dataGasto, categoria,
+                        descricaoGasto);
+                gastos.add(gasto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,30 +86,32 @@ public class OracleGanhoDao implements GanhoDao {
                 e.printStackTrace();
             }
         }
-        return ganhos;
+        return gastos;
     }
 
     @Override
-    public void atualizarGanho(Ganho ganho) throws DBException {
+    public void atualizarGasto(Gasto gasto) throws DBException {
         PreparedStatement stmt = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
 
-            String sql = "UPDATE T_MSF_GANHOS SET " +
-                    "vl_ganho = ?, " +
-                    "dt_ganho = ?, " +
-                    "ds_ganho = ? " +
-                    "WHERE cd_ganho = ?";
+            String sql = "UPDATE T_MSF_GASTOS SET " +
+                    "vl_gasto = ?, " +
+                    "dt_gasto = ?, " +
+                    "categoria = ?, " +
+                    "ds_gasto = ? " +
+                    "WHERE cd_gasto = ?";
 
             stmt = conexao.prepareStatement(sql);
-            stmt.setDouble(1, ganho.getValorGanho());
+            stmt.setDouble(1, gasto.getValorGasto());
             // Convertendo LocalDate para String no formato dd/MM/yyyy
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String dataGanhoFormatada = ganho.getDataGanho().format(formatter);
-            stmt.setString(2, dataGanhoFormatada);
-            stmt.setString(3, ganho.getDescricaoGanho());
-            stmt.setInt(4, ganho.getCodigoGanho());
+            String dataGastoFormatada = gasto.getDataGasto().format(formatter);
+            stmt.setString(2, dataGastoFormatada);
+            stmt.setString(3, gasto.getCategoria());
+            stmt.setString(4, gasto.getDescricaoGasto());
+            stmt.setInt(5, gasto.getCodigoGasto());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -124,16 +128,16 @@ public class OracleGanhoDao implements GanhoDao {
     }
 
     @Override
-    public void removerGanho(int codigoGanho) throws DBException {
+    public void removerGasto(int codigoGasto) throws DBException {
         PreparedStatement stmt = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "DELETE FROM T_MSF_GANHOS WHERE cd_ganho = ?";
+            String sql = "DELETE FROM T_MSF_GASTOS WHERE cd_gasto = ?";
             stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, codigoGanho);
+            stmt.setInt(1, codigoGasto);
             stmt.executeUpdate();
-            System.out.println("Ganho removido.");
+            System.out.println("Gasto removido.");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DBException("Erro ao remover.");

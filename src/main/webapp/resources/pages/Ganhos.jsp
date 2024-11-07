@@ -78,7 +78,7 @@
                 </div>
                 <div class="linha-modal"></div>
                 <!-- formulário modal -->
-                <form action="${pageContext.request.contextPath}/ganhos?acao=cadastrar" method="post">
+                <form action="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar" method="post">
                     <div class="modal-body">
 
                         <div class="form-floating mb-3">
@@ -104,7 +104,7 @@
                     <!-- botões modal -->
                     <div class="modal-footer">
                         <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" value="Salvar2" class="btn salvar">Salvar ganho</button>
+                        <button type="submit" value="Salvar" class="btn salvar">Salvar ganho</button>
                     </div>
                 </form>
                 <!-- fim formulário modal -->
@@ -160,23 +160,29 @@
             </tr>
 
             <c:forEach items="${ganhos}" var="ganho">
-            <tr>
-                <td data-label="Data"><fmt:parseDate value="${ganho.dataGanho}" pattern="yyyy-MM-dd" var="dataGanhoFmt"/>
-                    <fmt:formatDate value="${dataGanhoFmt}" pattern="dd/MM/yyyy"/></td>
-                <td data-label="Valor"><fmt:formatNumber value="${ganho.valorGanho}"/></td>
-                <td data-label="Descrição">${ganho.descricaoGanho}</td>
-                <td data-label="#" class="funções">
-                    <button type="button" class="btn editar">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </button>
-                    <button type="button" class="btn excluir" data-bs-toggle="modal"
-                            data-bs-target="#excluirModal"
-                            onclick="codigoExcluir.value = ${ganho.codigoObjetivo}">
-                        <i class="bi bi-trash3-fill"></i> Excluir
-                    </button>
+                <tr>
+                    <td data-label="Data">
+                        <fmt:parseDate value="${ganho.dataGanho}" pattern="yyyy-MM-dd" var="dataGanhoFmt"/>
+                        <fmt:formatDate value="${dataGanhoFmt}" pattern="dd/MM/yyyy"/>
+                    </td>
+                    <td data-label="Valor"><fmt:formatNumber value="${ganho.valorGanho}"/></td>
+                    <td data-label="Descrição">${ganho.descricaoGanho}</td>
+                    <td data-label="#" class="funções">
+                        <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
+                                onclick="codigoEditarGanho.value = '${ganho.codigoGanho}';
+                                        valorGanhoEditar.value = '${ganho.valorGanho}';
+                                        dataGanhoEditar.value = '${ganho.dataGanho}';
+                                        descricaoGanhoEditar.value = '${ganho.descricaoGanho}';">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </button>
+                        <button type="button" class="btn excluir" data-bs-toggle="modal"
+                                data-bs-target="#excluirModal"
+                                onclick="codigoExcluir.value = ${ganho.codigoGanho}">
+                            <i class="bi bi-trash3-fill"></i> Excluir
+                        </button>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
             </c:forEach>
 
             </tbody>
@@ -184,7 +190,57 @@
         </table>
     </div>
     <!-- fim tabela de ganhos -->
-    <!-- Modal -->
+
+    <!-- Modal - Editar Ganho -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="editarModalLabel">Editar Ganho</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="linha-modal"></div>
+                <c:choose>
+                    <c:when test="${not empty mensagem}">
+                        <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                                ${mensagem}
+                        </div>
+                    </c:when>
+                    <c:when test="${not empty erro}">
+                        <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                                ${erro}
+                        </div>
+                    </c:when>
+                </c:choose>
+                <form action="${pageContext.request.contextPath}/ganhos?acaoGanho=editar" method="post">
+                    <input type="hidden" name="codigoGanho" id="codigoEditarGanho">
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="valorGanho" id="valorGanhoEditar" placeholder="R$00,00" required>
+                            <label for="valorGanhoEditar">Valor</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" name="dataGanho" id="dataGanhoEditar" required>
+                            <label for="dataGanhoEditar" class="col-form-label">Data</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                        <textarea class="form-control" name="descricaoGanho" id="descricaoGanhoEditar"
+                                  placeholder="motivo do recebimento"></textarea>
+                            <label for="descricaoGanhoEditar" class="col-form-label">Breve descrição</label>
+                        </div>
+                    </div>
+
+                    <div class="linha-modal"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" value="Salvar" class="btn salvar">Salvar alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal excluir -->
     <div
             class="modal fade"
             id="excluirModal"
@@ -207,12 +263,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h4>Você confirma a exclusão deste objetivo?</h4>
+                    <h4>Você confirma a exclusão deste ganho?</h4>
                     <p><strong>Atenção!</strong> Esta ação é irreversível.</p>
                 </div>
                 <div class="modal-footer">
 
-                    <form action="${pageContext.request.contextPath}/ganhos" method="post">
+                    <form action="${pageContext.request.contextPath}/ganhos?acaoGanho=excluir" method="post">
                         <input
                                 type="hidden"
                                 name="acao"

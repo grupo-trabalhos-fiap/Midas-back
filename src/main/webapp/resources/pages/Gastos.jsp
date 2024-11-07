@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -77,22 +79,22 @@
             </div>
             <div class="linha-modal"></div>
             <!-- formulário modal -->
-            <form>
+            <form action="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" method="post">
                 <div class="modal-body">
 
                     <div class="form-floating mb-3">
 
-                        <input type="text" class="form-control" id="floatingInput" placeholder="R$00,00" required>
+                        <input type="text" class="form-control" name="valorGasto" id="floatingInput" placeholder="R$00,00" required>
                         <label for="floatingInput">Valor</label>
                     </div>
                     <div class="form-floating mb-3">
 
-                        <input type="date" class="form-control" id="floatingdata" required>
+                        <input type="date" class="form-control" name="dataGasto" id="floatingdata" required>
                         <label for="floatingdata" class="col-form-label">Data</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <select class="form-select" id="floatingselect" required>
+                        <select class="form-select" name="categoria" id="floatingselect" required>
                             <option selected disabled>Selecione uma categoria</option>
                             <option value="Aluguel">Aluguel</option>
                             <option value="Alimentação">Alimentação</option>
@@ -108,8 +110,8 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                            <textarea class="form-control" id="floatingdesc"
-                                      placeholder="motivo do recebimento"></textarea>
+                            <textarea class="form-control" name="descricaoGasto" id="floatingdesc"
+                                      placeholder="motivo do gasto"></textarea>
                         <label for="floatingdesc" class="col-form-label">Breve descrição</label>
                     </div>
                 </div>
@@ -118,7 +120,7 @@
                 <!-- botões modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn salvar">Salvar gasto</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar gasto</button>
                 </div>
 
             </form>
@@ -180,26 +182,160 @@
 
             </td>
         </tr>
-        <tr>
-            <td data-label="Data">dd/mm/aaaa</td>
-            <td data-label="Valor">R$00,00</td>
-            <td data-label="Categoria">Categoria do gasto</td>
-            <td data-label="Descrição">Breve descrição sobre o gasto</td>
-            <td data-label="#" class="funções">
-                <button type="button" class="btn editar">
-                    <i class="bi bi-pencil-square"></i> Editar
-                </button>
-                <button type="button" class="btn excluir">
-                    <i class="bi bi-trash3-fill"></i> Excluir
-                </button>
+        <c:forEach items="${gastos}" var="gasto">
+            <tr>
+                <td data-label="Data">
+                    <fmt:parseDate value="${gasto.dataGasto}" pattern="yyyy-MM-dd" var="dataGastoFmt"/>
+                    <fmt:formatDate value="${dataGastoFmt}" pattern="dd/MM/yyyy"/>
+                </td>
+                <td data-label="Valor"><fmt:formatNumber value="${gasto.valorGasto}"/></td>
+                <td data-label="Categoria">${gasto.categoria}</td>
+                <td data-label="Descrição">${gasto.descricaoGasto}</td>
+                <td data-label="#" class="funções">
+                    <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
+                            onclick="codigoGasto.value = '${gasto.codigoGasto}';
+                                    valorGastoEditar.value = '${gasto.valorGasto}';
+                                    dataGastoEditar.value = '${gasto.dataGasto}';
+                                    categoriaEditar.value = '${gasto.categoria}';
+                                    descricaoGastoEditar.value = '${gasto.descricaoGasto}';">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </button>
+                    <button type="button" class="btn excluir" data-bs-toggle="modal"
+                            data-bs-target="#excluirModal"
+                            onclick="codigoExcluir.value = ${gasto.codigoGasto}">
+                        <i class="bi bi-trash3-fill"></i> Excluir
+                    </button>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
         <!-- fim conteúdo de exemplo -->
     </table>
 </div>
 <!-- fim tabela de gastos -->
+
+<!-- Modal - Editar Gasto -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="editarModalLabel">Editar Gasto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="linha-modal"></div>
+            <c:choose>
+                <c:when test="${not empty mensagem}">
+                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                            ${mensagem}
+                    </div>
+                </c:when>
+                <c:when test="${not empty erro}">
+                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                            ${erro}
+                    </div>
+                </c:when>
+            </c:choose>
+            <form action="${pageContext.request.contextPath}/gastos?acaoGasto=editar" method="post">
+                <input type="hidden" name="codigoGasto" id="codigoGasto">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="valorGasto" id="valorGastoEditar" placeholder="R$00,00" required>
+                        <label for="valorGastoEditar">Valor</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" name="dataGasto" id="dataGastoEditar" required>
+                        <label for="dataGastoEditar" class="col-form-label">Data</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="categoria" id="categoriaEditar" required>
+                            <option selected disabled>Selecione uma categoria</option>
+                            <option value="Aluguel">Aluguel</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Academia">Academia</option>
+                            <option value="Contas">Contas</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <label for="categoriaEditar" class="col-form-label">Categorias</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="descricaoGasto" id="descricaoGastoEditar"
+                                  placeholder="motivo do gasto"></textarea>
+                        <label for="descricaoGastoEditar" class="col-form-label">Breve descrição</label>
+                    </div>
+                </div>
+
+                <div class="linha-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal excluir -->
+<div
+        class="modal fade"
+        id="excluirModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel2">
+                    Confirmar Exclusão
+                </h1>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Você confirma a exclusão deste gasto?</h4>
+                <p><strong>Atenção!</strong> Esta ação é irreversível.</p>
+            </div>
+            <div class="modal-footer">
+
+                <form action="${pageContext.request.contextPath}/gastos?acaoGasto=excluir" method="post">
+                    <input
+                            type="hidden"
+                            name="acao"
+                            value="excluir">
+                    <input
+                            type="hidden"
+                            name="codigoExcluir"
+                            id="codigoExcluir">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Não
+                    </button>
+                    <button
+                            type="submit"
+                            class="btn btn-danger">
+                        Sim
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal-->
 
 <%@include file="footer.jsp"%>
 

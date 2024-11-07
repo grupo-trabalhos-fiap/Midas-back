@@ -56,9 +56,8 @@
     <div class="informacoes">
         <select class="form-select genero" aria-label="Default select example" id="generoCadastro" disabled>
             <option selected disabled>Gênero</option>
-            <option value="1">Masculino</option>
-            <option value="2">Feminino</option>
-            <option value="3">Prefiro não dizer</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
         </select>
         <!-- modal -->
         <button type="button" class="btn botao-editar-informacoes" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar informações <i class="fa-regular fa-pen-to-square icon-editar-informacoes"></i></button>
@@ -70,35 +69,34 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <form id="modalForm">
+                        <form id="modalForm" action="${pageContext.request.contextPath}/editarPerfil" method="post">
+                            <input type="hidden" name="codigoUsuario" value="${codigoUsuario}">
                             <div class="mb-3">
                                 <label for="nomeCompletoModal" class="form-label label-nome-completo">Nome completo</label>
-                                <input type="text" class="form-control placeholder-nome-completo" id="nomeCompletoModal" placeholder="Ex: Ana Silva">
+                                <input type="text" class="form-control placeholder-nome-completo" id="nomeCompletoModal" name="nomeCompleto" value="${nomeCompleto}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="emailModal" class="form-label label-email">Email</label>
-                                <input type="email" class="form-control placeholder-email" id="emailModal" placeholder="Ex: anasilva04@gmail.com">
+                                <input type="email" class="form-control placeholder-email" id="emailModal" name="email" value="${email}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="data-nasc-modal" class="form-label label-data-nasc">Data de nascimento</label>
-                                <input type="date" class="form-control data-nasc" id="data-nasc-modal">
+                                <input type="date" class="form-control data-nasc" id="data-nasc-modal" name="dataNascimento" value="${dataNascimento}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="senhaModal" class="form-label label-senha">Senha</label>
-                                <input type="password" id="senhaModal" class="form-control senha" aria-describedby="passwordHelpBlock">
+                                <input type="password" id="senhaModal" class="form-control senha" name="senha" aria-describedby="passwordHelpBlock">
                             </div>
                             <label for="generoModal" class="form-label label-genero">Gênero</label>
-                            <select class="form-select genero" aria-label="Default select example" id="generoModal">
-                                <option selected disabled>Gênero</option>
-                                <option value="1">Masculino</option>
-                                <option value="2">Feminino</option>
-                                <option value="3">Prefiro não dizer</option>
+                            <select class="form-select genero" aria-label="Default select example" id="generoModal" name="genero" required>
+                                <option value="M" ${genero == 'M' ? 'selected' : ''}>Masculino</option>
+                                <option value="F" ${genero == 'F' ? 'selected' : ''}>Feminino</option>
                             </select>
+                            <button type="submit" class="btn btn-primary botao-modal">Salvar</button>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary botao-modal">Salvar</button>
                     </div>
                 </div>
             </div>

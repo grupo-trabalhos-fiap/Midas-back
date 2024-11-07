@@ -39,10 +39,10 @@
                   Finanças >
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item my-3" href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp">Ganhos</a></li>
+                  <li><a class="dropdown-item my-3" href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar">Ganhos</a></li>
                   <li>
                   </li>
-                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp">Gastos</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar">Gastos</a></li>
                 </ul>
               </li>
               <!-- fim menu dropdown -->
@@ -59,7 +59,7 @@
 
               <li class="nav-item">
                 <i class="bi bi-piggy-bank-fill"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/investimento.jsp">Investimentos</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar">Investimentos</a>
               </li>
 
               <li class="nav-item">

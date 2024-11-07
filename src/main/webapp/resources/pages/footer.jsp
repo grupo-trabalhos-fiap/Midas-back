@@ -48,13 +48,13 @@
             <h3>Finanças</h3>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp" class="footer-link">Ganhos</a>
+            <a href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar" class="footer-link">Ganhos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp" class="footer-link">Gastos</a>
+            <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="footer-link">Gastos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="footer-link">Investimentos</a>
+            <a href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar" class="footer-link">Investimentos</a>
           </li>
           <li>
             <a href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp" class="footer-link">Dívidas</a>

@@ -85,18 +85,6 @@
             </div>
             <div class="linha-modal"></div>
             <!-- formulário modal -->
-            <c:choose>
-                <c:when test="${not empty mensagem}">
-                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
-                            ${mensagem}
-                    </div>
-                </c:when>
-                <c:when test="${not empty erro}">
-                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
-                            ${erro}
-                    </div>
-                </c:when>
-            </c:choose>
 
             <form action="${pageContext.request.contextPath}/objetivos?acao=cadastrar" method="post">
                 <div class="modal-body">
@@ -119,7 +107,7 @@
                     <div class="form-floating mb-3">
 
                             <textarea class="form-control" name="descricaoObjetivo" id="floatingdesc"
-                                      placeholder="motivo do recebimento"></textarea>
+                                      placeholder="motivo do objetivo"></textarea>
                         <label for="floatingdesc" class="col-form-label">Breve descrição</label>
                     </div>
 
@@ -270,7 +258,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <textarea class="form-control" name="descricaoObjetivo" id="descricaoObjetivoEditar"
-                                  placeholder="motivo do recebimento"></textarea>
+                                  placeholder="motivo do objetivo"></textarea>
                         <label for="descricaoObjetivoEditar" class="col-form-label">Breve descrição</label>
                     </div>
                 </div>

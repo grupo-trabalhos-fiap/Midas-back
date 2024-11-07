@@ -3,23 +3,22 @@ package br.com.midas.model;
 import java.time.LocalDate;
 
 public class Investimento {
-    private Long codigoInvestimento;
+    private int codigoInvestimento;
+    private int cdUsuario;
     private String tipoInvestimento;
     private String nomeAplicacao;
     private String nomeBanco;
     private double valorAplicacao;
     private LocalDate dataInvestimento; // dd/mm/aaaa
     private LocalDate dataVencimento; // dd/mm/aaaa
-    private String indicacoesInvestimentos;
 
     // Construtor padrão
     public Investimento() {
     }
 
     // Construtor com todos os atributos obrigatórios
-    public Investimento(Long codigoInvestimento, String tipoInvestimento, String nomeAplicacao, String nomeBanco,
-            double valorAplicacao, LocalDate dataInvestimento, LocalDate dataVencimento,
-            String indicacoesInvestimentos) {
+    public Investimento(int codigoInvestimento, String tipoInvestimento, String nomeAplicacao, String nomeBanco,
+                        double valorAplicacao, LocalDate dataInvestimento, LocalDate dataVencimento) {
         this.codigoInvestimento = codigoInvestimento;
         this.tipoInvestimento = tipoInvestimento;
         this.nomeAplicacao = nomeAplicacao;
@@ -27,28 +26,47 @@ public class Investimento {
         this.valorAplicacao = valorAplicacao;
         this.dataInvestimento = dataInvestimento;
         this.dataVencimento = dataVencimento;
-        this.indicacoesInvestimentos = indicacoesInvestimentos;
     }
 
     // Construtor com o código oculto
     public Investimento(String tipoInvestimento, String nomeAplicacao, String nomeBanco, double valorAplicacao,
-            LocalDate dataInvestimento, LocalDate dataVencimento, String indicacoesInvestimentos) {
+                        LocalDate dataInvestimento, LocalDate dataVencimento) {
         this.tipoInvestimento = tipoInvestimento;
         this.nomeAplicacao = nomeAplicacao;
         this.nomeBanco = nomeBanco;
         this.valorAplicacao = valorAplicacao;
         this.dataInvestimento = dataInvestimento;
         this.dataVencimento = dataVencimento;
-        this.indicacoesInvestimentos = indicacoesInvestimentos;
+    }
+
+    // Construtor com todos os atributos obrigatórios
+    public Investimento(int codigoInvestimento, int codigoUsuario, String tipoInvestimento, String nomeAplicacao, String nomeBanco,
+                        double valorAplicacao, LocalDate dataInvestimento, LocalDate dataVencimento) {
+        this.codigoInvestimento = codigoInvestimento;
+        this.cdUsuario = codigoUsuario;
+        this.tipoInvestimento = tipoInvestimento;
+        this.nomeAplicacao = nomeAplicacao;
+        this.nomeBanco = nomeBanco;
+        this.valorAplicacao = valorAplicacao;
+        this.dataInvestimento = dataInvestimento;
+        this.dataVencimento = dataVencimento;
     }
 
     // Métodos getters e setters
-    public Long getCodigoInvestimento() {
+    public int getCodigoInvestimento() {
         return codigoInvestimento;
     }
 
-    public void setCodigoInvestimento(Long codigoInvestimento) {
+    public void setCodigoInvestimento(int codigoInvestimento) {
         this.codigoInvestimento = codigoInvestimento;
+    }
+
+    public int getCdUsuario() {
+        return cdUsuario;
+    }
+
+    public void setCdUsuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
     }
 
     public String getTipoInvestimento() {
@@ -97,13 +115,5 @@ public class Investimento {
 
     public void setDataVencimento(LocalDate dataVencimento) {
         this.dataVencimento = dataVencimento;
-    }
-
-    public String getIndicacoesInvestimentos() {
-        return indicacoesInvestimentos;
-    }
-
-    public void setIndicacoesInvestimentos(String indicacoesInvestimentos) {
-        this.indicacoesInvestimentos = indicacoesInvestimentos;
     }
 }

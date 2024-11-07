@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Ganho {
     private int codigoGanho;
-    private int cdUsuario; // Adicione o atributo cdUsuario
+    private int cdUsuario;
     private double valorGanho;
     private LocalDate dataGanho; // dd/mm/aaa
     private String descricaoGanho;
@@ -16,13 +16,12 @@ public class Ganho {
     // Construtor com todos os atributos obrigatórios
     public Ganho(int codigoGanho, int codigoUsuario, double valorGanho, LocalDate dataGanho, String descricaoGanho) {
         this.codigoGanho = codigoGanho;
-        this.cdUsuario = codigoUsuario; // Se você quiser manter o atributo Usuario
+        this.cdUsuario = codigoUsuario;
         this.valorGanho = valorGanho;
         this.dataGanho = dataGanho;
         this.descricaoGanho = descricaoGanho;
     }
 
-    // Construtor com o código oculto
     public Ganho(int codigoGanho, double valorGanho, LocalDate dataGanho, String descricaoGanho) {
         this.codigoGanho = codigoGanho;
         this.valorGanho = valorGanho;

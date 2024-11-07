@@ -5,7 +5,7 @@ import br.com.midas.util.CriptografiaUtils;
 import java.time.LocalDate;
 
 public class Usuario {
-    private Long codigoUsuario;
+    private int codigoUsuario;
     private String nomeCompleto;
     private LocalDate dataNascimento; // dd/mm/aaaa
     private char genero;
@@ -17,8 +17,14 @@ public class Usuario {
     }
 
     // Construtor com todos os atributos obrigatórios
-    public Usuario(Long codigoUsuario, String nomeCompleto, LocalDate dataNascimento, char genero, String email,
-                   String senha) {
+    public Usuario(
+            int codigoUsuario,
+            String nomeCompleto,
+            LocalDate dataNascimento,
+            char genero,
+            String email,
+            String senha
+    ) {
         this.codigoUsuario = codigoUsuario;
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
@@ -28,7 +34,13 @@ public class Usuario {
     }
 
     // Construtor com o código oculto
-    public Usuario(String nomeCompleto, LocalDate dataNascimento, char genero, String email, String senha) {
+    public Usuario(
+            String nomeCompleto,
+            LocalDate dataNascimento,
+            char genero,
+            String email,
+            String senha
+    ) {
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
@@ -42,11 +54,11 @@ public class Usuario {
         setSenha(senha);
     }
     // Métodos getters e setters
-    public Long getCodigoUsuario() {
+    public int getCodigoUsuario() {
         return codigoUsuario;
     }
 
-    public void setCodigoUsuario(Long codigoUsuario) {
+    public void setCodigoUsuario(int codigoUsuario) {
         this.codigoUsuario = codigoUsuario;
     }
 

@@ -28,28 +28,28 @@
     <span class="navbar-text text-danger" style="margin-right:10px">
         ${erro }
     </span>
-    <form action="${pageContext.request.contextPath}/login" method="post">
-      <div class="mb-4 ms-4 me-5">
-        <label class="form-label">E-mail</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com">
-      </div>
-      <div class="mb-2 ms-4 me-5">
-        <label class="form-label">Senha</label>
-        <input type="password" class="form-control" id="senha" name="senha" placeholder="********">
-      </div>
-      <div class="mb-5 ms-4">
-        <a href="#" id="esquecisenha">Esqueci minha senha</a>
-        <!-- <input type="checkbox" class="form-check-input" id="lembrar">
-        <label class="form-check-label" for="lembrar">Lembrar-me</label> -->
-      </div>
-      <div class="mb-3 form-floating d-flex justify-content-center align-items-center flex-column">
-        <button class="btn btn-secondary btn-lg w-50 btn-danger me-md-2" id="linkentrar" type="submit">Entrar</button>
-      </div>
-      <div class="mb-4 form-floating d-flex justify-content-center align-items-center flex-column">
-        <p>Ainda não possui acesso?</p>
-        <a href="${pageContext.request.contextPath}/resources/pages/Cadastro_Usuario.jsp" id="cadastrese">Cadastre-se</a>
-      </div>
-    </form>
+      <form action="${pageContext.request.contextPath}/login" method="post">
+        <div class="mb-4 ms-4 me-5">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com">
+        </div>
+        <div class="mb-2 ms-4 me-5">
+          <label class="form-label">Senha</label>
+          <input type="password" class="form-control" id="senha" name="senha" placeholder="********">
+        </div>
+        <div class="mb-5 ms-4">
+          <a href="#" id="esquecisenha">Esqueci minha senha</a>
+          <!-- <input type="checkbox" class="form-check-input" id="lembrar">
+          <label class="form-check-label" for="lembrar">Lembrar-me</label> -->
+        </div>
+        <div class="mb-3 form-floating d-flex justify-content-center align-items-center flex-column">
+          <button class="btn btn-secondary btn-lg w-50 btn-danger me-md-2" id="linkentrar" type="submit">Entrar</button>
+        </div>
+        <div class="mb-4 form-floating d-flex justify-content-center align-items-center flex-column">
+          <p>Ainda não possui acesso?</p>
+          <a href="${pageContext.request.contextPath}/resources/pages/Cadastro_Usuario.jsp" id="cadastrese">Cadastre-se</a>
+        </div>
+      </form>
     </c:if>
   </div>
 </div>

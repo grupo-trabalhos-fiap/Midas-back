@@ -7,10 +7,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- css da tela -->
-    <link rel="stylesheet" href="../css/styleDividas.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleDividas.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
     <title>Dívidas</title>
 </head>
 
@@ -24,7 +24,7 @@
         <div class="col-12 col-lg-6 order-1 mt-3">
             <!-- imagem principal das dívidas -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem dividas.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem dividas.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-lg-6 order-2 mt-3">

@@ -8,10 +8,10 @@
     <%@include file="links_header.jsp"%>
 
     <!-- link css perfil -->
-    <link rel="stylesheet" href="../css/stylePerfil.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/stylePerfil.css">
 
     <!-- link css header e footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
         <p>Seja bem-vindo ao seu perfil pessoal.</p>
     </div>
     <div class="boas-vindas-imagem">
-        <img src="../Imagens/Vetores/perfil-usuario.svg" class="img-fluid">
+        <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/perfil-usuario.svg" class="img-fluid">
     </div>
 </section>
 
@@ -109,7 +109,6 @@
 <%@include file="footer.jsp"%>
 
 
-<script src="../js/perfil.js"></script>
 <%@include file="links_footer.jsp"%>
 
 </body>

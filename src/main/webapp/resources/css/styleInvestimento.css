@@ -101,7 +101,7 @@
 
 /* botão - adicionar investimento */
 .adicionar{
-    background-color: var(--vermelho);
+    background-color: var(--dourado);
     color: var(--bege);
     transition: all 0.2s;
     margin: 7rem auto;
@@ -113,7 +113,7 @@
 }
 
 svg{
-    width: 30%;
+    width: 20%;
 }
 
 svg path{
@@ -122,13 +122,13 @@ svg path{
 }
 
 .adicionar:hover svg path {
-    fill: var(--vermelho);
+    fill: var(--dourado);
 }
 
 .adicionar:hover{
     background-color: transparent;
-    border: 1px solid var(--vermelho);
-    color: var(--vermelho);
+    border: 1px solid var(--dourado);
+    color: var(--dourado);
 }
 /* fim botão - adicionar investimento */
 
@@ -186,7 +186,7 @@ svg path{
 }
 
 .colunas{
-    color: var(--vermelho);
+    color: var(--dourado);
     border-radius: 5px;
     box-shadow: 1px 1px 4px #727171;
     font-size: 1.5rem;
@@ -245,7 +245,7 @@ svg path{
 
     .table tbody tr {
         overflow: hidden;
-        box-shadow: 1px 1px 4px var(--vermelho);
+        box-shadow: 1px 1px 4px var(--dourado);
     }
 
     table.table td:before {
@@ -256,7 +256,7 @@ svg path{
         width: 25%; 
         float: left;
         padding: 5px 5px;
-        background-color: var(--vermelho);
+        background-color: var(--dourado);
         font-weight: bold;
         box-sizing: border-box;      
     }

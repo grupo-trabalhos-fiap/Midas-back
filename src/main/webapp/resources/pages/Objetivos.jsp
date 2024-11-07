@@ -179,7 +179,7 @@
             <td data-label="Nome">Nome para a sua meta</td>
             <td data-label="Data">dd/mm/aaaa</td>
             <td data-label="Valor">R$00,00</td>
-            <td data-label="Descrição">Breve descrição sobre o ganho</td>
+            <td data-label="Descrição">Breve descrição sobre o objetivo</td>
             <td data-label="#" class="funções">
                 <button type="button" class="btn editar">
                     <i class="bi bi-pencil-square"></i> Editar
@@ -204,7 +204,12 @@
                 <td data-label="Valor"> <fmt:formatNumber value="${objetivo.valorObjetivo}"/></td>
                 <td data-label="Descrição">${objetivo.descricaoObjetivo}</td>
                 <td data-label="#" class="funções">
-                    <button type="button" class="btn editar">
+                    <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
+                            onclick="codigoEditar.value = ${objetivo.codigoObjetivo};
+                                    nomeObjetivoEditar.value = '${objetivo.nomeObjetivo}';
+                                    valorObjetivoEditar.value = '${objetivo.valorObjetivo}';
+                                    dataObjetivoEditar.value = '${objetivo.dataObjetivo}';
+                                    descricaoObjetivoEditar.value = '${objetivo.descricaoObjetivo}';">
                         <i class="bi bi-pencil-square"></i> Editar
                     </button>
                     <button type="button" class="btn excluir" data-bs-toggle="modal"
@@ -224,7 +229,63 @@
     </table>
 </div>
 <!-- fim tabela de objetivos -->
-<!-- Modal -->
+
+<!-- Modal - Editar Objetivo -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="editarModalLabel">Editar Objetivo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="linha-modal"></div>
+            <c:choose>
+                <c:when test="${not empty mensagem}">
+                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                            ${mensagem}
+                    </div>
+                </c:when>
+                <c:when test="${not empty erro}">
+                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                            ${erro}
+                    </div>
+                </c:when>
+            </c:choose>
+            <form action="${pageContext.request.contextPath}/objetivos?acao=editar" method="post">
+                <input type="hidden" name="codigo" id="codigoEditar">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="nomeObjetivo" id="nomeObjetivoEditar" placeholder="ex.: casa própria"
+                               required>
+                        <label for="nomeObjetivoEditar">Nome</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="valorObjetivo" id="valorObjetivoEditar" placeholder="R$00,00" required>
+                        <label for="valorObjetivoEditar">Valor</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" name="dataObjetivo" id="dataObjetivoEditar" required>
+                        <label for="dataObjetivoEditar" class="col-form-label">Data</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="descricaoObjetivo" id="descricaoObjetivoEditar"
+                                  placeholder="motivo do recebimento"></textarea>
+                        <label for="descricaoObjetivoEditar" class="col-form-label">Breve descrição</label>
+                    </div>
+                </div>
+
+                <div class="linha-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal excluir -->
 <div
         class="modal fade"
         id="excluirModal"

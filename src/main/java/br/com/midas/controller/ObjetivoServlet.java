@@ -132,8 +132,8 @@ public class ObjetivoServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Objetivo> objetivos = dao.getAll();
-            req.setAttribute("objetivos", objetivos);
-            req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
+        List<Objetivo> objetivos = dao.getAll();
+        req.setAttribute("objetivos", objetivos);
+        req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
     }
 }

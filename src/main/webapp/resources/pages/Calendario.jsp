@@ -7,13 +7,13 @@
     <%@include file="links_header.jsp"%>
     <title>Calendário</title>
     <!-- css do datepicker -->
-    <link rel="stylesheet" href="../datepicker/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datepicker/css/bootstrap-datepicker.min.css">
 
     <!-- css da tela -->
-    <link rel="stylesheet" href="../css/styleCalendario.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleCalendario.css">
 
     <!-- css do header e do footer -->
-    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
         <div class="col-12 col-sm-12 col-md-12 order-2 col-lg-6 mt-2">
             <!-- imagem principal do Calendário -->
             <div class="imagemprincipal mt-5">
-                <img src="../Imagens/Vetores/Imagem Calendário.png" class="img-fluid">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem Calendário.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 order-1 col-lg-6 mt-5">
@@ -53,7 +53,7 @@
     <div id="datepicker"></div>
     <!-- script do jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/datepicker/js/bootstrap-datepicker.min.js"></script>
     <script>$('#datepicker').datepicker()</script>
     <div>
         <script>
@@ -71,24 +71,24 @@
 <div class="container mt-5 text-center">
     <div class="row text-center">
         <div class="col-12 order-lg-1 order-2 col-lg-6">
-            <div class="imagemprincipal2 mt-5">
-                <img src="../Imagens/Vetores/Imagem Calendário2.png" class="img-fluid">
+            <div class="imagemprincipal2">
+                <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Imagem Calendário2.png" class="img-fluid">
             </div>
         </div>
         <div class="col-12 order-lg-2 order-1 col-lg-6 mt-5">
-            <section class="conteudodireito mt-5 mx-3">
+            <section class="conteudodireito mt-5 mx-3 mb-5">
                 <article class="subtitulo2 mt-3">
-                    <div class="positivo mb-5 mt-5">
-                        <img src="../Imagens/Icones/positivo.png" class="img-fluid">
+                    <div class="positivo">
+                        <img src="${pageContext.request.contextPath}/resources/Imagens/Icones/positivo.png" class=" me-3">
                         <h1>
                             Se a renda for positiva, ou seja, os ganhos forem maiores que os gastos, o dia está marcado com dourado. <br><br>
                         </h1>
                     </div>
-                    <div class="negativo mt-5">
+                    <div class="negativo">
                         <h1>
                             Se a renda for negativa, ou seja, os gastos forem maiores que os ganhos, o dia está marcado com vermelho.
                         </h1>
-                            <img src="../Imagens/Icones/negativo.png" class="img-fluid">
+                            <img src="${pageContext.request.contextPath}/resources/Imagens/Icones/negativo.png" class="ms-3">
                     </div>
                 </article>
             </section>

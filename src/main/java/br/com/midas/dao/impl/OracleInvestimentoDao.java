@@ -55,20 +55,20 @@ public class OracleInvestimentoDao implements InvestimentoDao {
     }
 
     @Override
-    public List<Investimento> getAllInvestimento() {
+    public List<Investimento> getAllInvestimento(int codigoUsuario) {
         PreparedStatement stmt = null;
         List<Investimento> investimentos = new ArrayList<>();
         ResultSet resultadoInvestimento = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_INVESTIMENTOS";
+            String sql = "SELECT * FROM T_MSF_INVESTIMENTOS WHERE cd_usuario = ?";
             stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoUsuario);
             resultadoInvestimento = stmt.executeQuery();
 
             while (resultadoInvestimento.next()) {
                 int codigoInvestimento = resultadoInvestimento.getInt("CD_INVESTIMENTO");
-                int codigoUsuario = resultadoInvestimento.getInt("cd_usuario");
                 String tipoInvestimento = resultadoInvestimento.getString("TIPO_INVESTIMENTO");
                 String nomeAplicacao = resultadoInvestimento.getString("NM_APLICACAO");
                 String nomeBanco = resultadoInvestimento.getString("NM_BANCO");

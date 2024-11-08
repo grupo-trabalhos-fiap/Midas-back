@@ -3,6 +3,7 @@ package br.com.midas.controller;
 import br.com.midas.dao.UsuarioDao;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Usuario;
+import br.com.midas.util.CriptografiaUtils;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,13 +58,14 @@ public class UsuarioServlet extends HttpServlet {
             char genero = req.getParameter("genero").charAt(0);
             String email = req.getParameter("email");
             String senha = req.getParameter("senha");
+            String senhaCriptografada = CriptografiaUtils.criptografar(senha);
 
-            Usuario usuario = new Usuario(nomeCompleto, dataNascimento, genero, email, senha);
+            Usuario usuario = new Usuario(nomeCompleto, dataNascimento, genero, email, senhaCriptografada);
             dao.cadastrarUsuario(usuario);
 
             logger.info("Usuário cadastrado com sucesso!");
             req.setAttribute("mensagem", "Usuário cadastrado com sucesso!");
-            req.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(req, resp);
+            req.getRequestDispatcher("/resources/pages/login.jsp").forward(req, resp);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Erro ao cadastrar usuário", e);
             req.setAttribute("erro", "Erro ao cadastrar usuário. Por favor, valide os dados.");
@@ -130,6 +132,6 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/resources/pages/dashboard.jsp").forward(req, resp);
+        req.getRequestDispatcher("/resources/pages/login.jsp").forward(req, resp);
     }
 }

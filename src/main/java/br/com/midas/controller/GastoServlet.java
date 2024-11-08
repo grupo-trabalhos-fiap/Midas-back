@@ -69,7 +69,7 @@ public class GastoServlet extends HttpServlet {
             dao.cadastrarGasto(gasto);
 
             req.setAttribute("mensagem", "Gasto cadastrado!");
-            List<Gasto> gastos = dao.getAllGasto();
+            List<Gasto> gastos = dao.getAllGasto(codigoUsuario);
             req.setAttribute("gastos", gastos); // Corrija para "ganhos"
 
         } catch (DBException db) {
@@ -84,7 +84,7 @@ public class GastoServlet extends HttpServlet {
 
     private void editarGasto(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            int codigoGasto = Integer.parseInt(req.getParameter("codigoGasto"));
+            int codigoGasto = Integer.parseInt(req.getParameter("codigoGasto")); 
             double valorGasto = Double.parseDouble(req.getParameter("valorGasto"));
             LocalDate dataGasto = LocalDate.parse(req.getParameter("dataGasto"));
             String categoria = req.getParameter("categoria");
@@ -131,8 +131,11 @@ public class GastoServlet extends HttpServlet {
     }
 
     private void listarGasto(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Gasto> gastos = dao.getAllGasto();
-            req.setAttribute("gastos", gastos);
-            req.getRequestDispatcher("/resources/pages/Gastos.jsp").forward(req, resp);
+        HttpSession session = req.getSession();
+        Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+
+        List<Gasto> gastos = dao.getAllGasto(codigoUsuario);
+        req.setAttribute("gastos", gastos);
+        req.getRequestDispatcher("/resources/pages/Gastos.jsp").forward(req, resp);
     }
 }

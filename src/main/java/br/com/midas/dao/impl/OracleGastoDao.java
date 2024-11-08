@@ -51,20 +51,20 @@ public class OracleGastoDao implements GastoDao {
     }
 
     @Override
-    public List<Gasto> getAllGasto(){
+    public List<Gasto> getAllGasto(int codigoUsuario){
         PreparedStatement stmt = null;
         List<Gasto> gastos = new ArrayList<>();
         ResultSet resultadoGasto = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_GASTOS";
+            String sql = "SELECT * FROM T_MSF_GASTOS WHERE cd_usuario = ?";
             stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoUsuario);
             resultadoGasto = stmt.executeQuery();
 
             while (resultadoGasto.next()) {
                 int codigoGasto = resultadoGasto.getInt("cd_gasto");
-                int codigoUsuario = resultadoGasto.getInt("cd_usuario");
                 double valorGasto = resultadoGasto.getDouble("vl_gasto");
                 // Convertendo String para LocalDate
                 LocalDate dataGasto = LocalDate.parse(resultadoGasto.getString("dt_gasto"),

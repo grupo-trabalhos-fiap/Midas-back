@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OracleGanhoDao implements GanhoDao {
 
@@ -31,6 +30,7 @@ public class OracleGanhoDao implements GanhoDao {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, ganho.getCdUsuario());
             stmt.setDouble(2, ganho.getValorGanho());
+            // Convertendo LocalDate para String no formato dd/MM/yyyy
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataGanhoFormatada = ganho.getDataGanho().format(formatter);
             stmt.setString(3, dataGanhoFormatada);
@@ -41,7 +41,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao cadastrar.");
         } finally {
             try {
-                Objects.requireNonNull(stmt).close();
+                stmt.close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -50,42 +50,41 @@ public class OracleGanhoDao implements GanhoDao {
     }
 
     @Override
-    public List<Ganho> getAllGanho(){
+    public List<Ganho> getAllGanho(int codigoUsuario) {
         PreparedStatement stmt = null;
         List<Ganho> ganhos = new ArrayList<>();
         ResultSet resultadoGanho = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_GANHOS";
+            String sql = "SELECT * FROM T_MSF_GANHOS WHERE cd_usuario = ?";
             stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoUsuario);
             resultadoGanho = stmt.executeQuery();
 
             while (resultadoGanho.next()) {
                 int codigoGanho = resultadoGanho.getInt("cd_ganho");
-                int codigoUsuario = resultadoGanho.getInt("cd_usuario");
                 double valorGanho = resultadoGanho.getDouble("vl_ganho");
-                // Convertendo String para LocalDate
                 LocalDate dataGanho = LocalDate.parse(resultadoGanho.getString("dt_ganho"),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 String descricaoGanho = resultadoGanho.getString("ds_ganho");
 
-                Ganho ganho = new Ganho(codigoGanho, codigoUsuario, valorGanho, dataGanho,
-                        descricaoGanho);
+                Ganho ganho = new Ganho(codigoGanho, codigoUsuario, valorGanho, dataGanho, descricaoGanho);
                 ganhos.add(ganho);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                Objects.requireNonNull(stmt).close();
-                conexao.close();
+                if (stmt != null) stmt.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return ganhos;
     }
+
 
     @Override
     public void atualizarGanho(Ganho ganho) throws DBException {
@@ -115,7 +114,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao atualizar.");
         } finally {
             try {
-                Objects.requireNonNull(stmt).close();
+                stmt.close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -139,7 +138,7 @@ public class OracleGanhoDao implements GanhoDao {
             throw new DBException("Erro ao remover.");
         } finally {
             try {
-                Objects.requireNonNull(stmt).close();
+                stmt.close();
                 conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -67,7 +67,7 @@ public class GanhoServlet extends HttpServlet {
             dao.cadastrarGanho(ganho);
 
             req.setAttribute("mensagem", "Ganho cadastrado!");
-            List<Ganho> ganhos = dao.getAllGanho();
+            List<Ganho> ganhos = dao.getAllGanho(codigoUsuario);
             req.setAttribute("ganhos", ganhos); // Corrija para "ganhos"
 
         } catch (DBException db) {
@@ -127,8 +127,14 @@ public class GanhoServlet extends HttpServlet {
     }
 
     private void listarGanho(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Ganho> ganhos = dao.getAllGanho();
-            req.setAttribute("ganhos", ganhos);
-            req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
+        // Obter o código do usuário da sessão
+        HttpSession session = req.getSession();
+        Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+
+        // Recuperar e exibir os ganhos do usuário logado
+        List<Ganho> ganhos = dao.getAllGanho(codigoUsuario);
+        req.setAttribute("ganhos", ganhos);
+        req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
     }
+
 }

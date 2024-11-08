@@ -12,7 +12,7 @@
   <!-- CSS da página de dashboard -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleDashboard.css">
 
-  <!-- CSS do header e do footer -->
+  <!-- css do header e do footer -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 <body>
@@ -33,15 +33,17 @@
 </c:if>
 
 <section class="container topo-dash">
+  <!-- topo esquerda -->
   <div class="topo-esquerda">
     <div class="topo-esquerda-textos">
-      <h1 class="topo-h1">Seja bem-vindo,<br> ${nomeUsuario}!</h1>
+      <h1 class="topo-h1">Seja bem-vindo,<br> ${nomeCompleto}!</h1>
       <p class="topo-p">Dê um toque de ouro nas suas finanças<br> e conquiste o sucesso que sempre sonhou!</p>
     </div>
     <div class="topo-esquerda-imagem">
       <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Vetor Midas.png" class="img">
     </div>
   </div>
+  <!-- topo direita -->
   <div class="topo-direita">
     <div class="topo-direita-botao">
       <h3 class="h3-topo-direita">Comparação</h3>
@@ -54,10 +56,13 @@
 </section>
 
 <section class="container graficos-meio">
+  <!-- Análise de Ganhos -->
   <div class="grafico1-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>ganhos</span></h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/Ganhos.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
+      <a href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
     <div class="meio-grafico">
       <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-ganhos.svg" class="img-fluid">
@@ -65,10 +70,13 @@
     </div>
   </div>
 
+  <!-- Análise de Gastos -->
   <div class="grafico2-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>gastos</span></h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/Gastos.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
+      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
     <div class="meio-grafico">
       <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-gastos.svg" class="img-fluid">
@@ -76,23 +84,30 @@
     </div>
   </div>
 
+  <!-- Último Gasto -->
   <div class="grafico3-meio">
     <div class="graficos-meio-botao">
-      <h3 class="h3-graficos-meio">Análise: <span>investimentos</span></h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="botao-graficos-meio btn btn-primary">Acesse</a>
+      <h3 class="h3-graficos-meio">Último <span>gasto</span></h3>
+      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
-    <div class="meio-grafico">
-      <img src="${pageContext.request.contextPath}/resources/Imagens/Gráficos/analise-de-investimentos.svg" class="img-fluid">
-      <h4>Total de Investimentos = R$${totalInvestimentos}</h4>
+    <div class="meio-grafico-ultimo-gasto">
+      <h5>R$60,00</h5>
+      <h5>31/03/2024</h5>
+      <h5>Ovo da páscoa</h5>
     </div>
   </div>
 </section>
 
 <section class="container graficos-inferior">
+  <!-- Objetivos -->
   <div class="grafico1-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Objetivos</h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/Objetivos.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
+      <a href="${pageContext.request.contextPath}/objetivos?acao=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
     <div class="inferior-grafico-objetivos">
       <div class="progress" role="progressbar" aria-label="Example 50px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 40px">
@@ -105,7 +120,9 @@
   <div class="grafico2-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Investimentos</h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/investimento.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
+      <a href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
     <div class="inferior-grafico-investimentos">
       <h3>CDB = R$200,00</h3>
@@ -115,10 +132,13 @@
     </div>
   </div>
 
+  <!-- Dívidas -->
   <div class="grafico3-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Dívidas</h3>
-      <a href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp" class="botao-graficos-inferior btn btn-primary">Acesse</a>
+      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+        <button class="botao-graficos-meio">Acesse</button>
+      </a>
     </div>
     <div class="inferior-grafico-dividas">
       <h3>20/05/2024 - R$200,00</h3>
@@ -130,6 +150,8 @@
 </section>
 
 <%@include file="footer.jsp"%>
+
+<!-- link JS do Bootstrap -->
 <%@include file="links_footer.jsp"%>
 </body>
 </html>

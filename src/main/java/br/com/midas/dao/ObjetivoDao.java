@@ -8,5 +8,5 @@ public interface ObjetivoDao {
     void cadastrar(Objetivo objetivo) throws DBException;
     void atualizar(Objetivo objetivo) throws DBException;
     void remover(int codigoObjetivo) throws DBException;
-    List<Objetivo> getAll();
+    List<Objetivo> getAll(int codigoUsuario);
 }

@@ -74,7 +74,7 @@ public class InvestimentoServlet extends HttpServlet {
             dao.cadastrarInvestimento(investimento);
 
             req.setAttribute("mensagem", "Investimento cadastrado!");
-            List<Investimento> investimentos = dao.getAllInvestimento();
+            List<Investimento> investimentos = dao.getAllInvestimento(codigoUsuario);
             req.setAttribute("investimentos", investimentos);
 
         } catch (DBException db) {
@@ -141,7 +141,10 @@ public class InvestimentoServlet extends HttpServlet {
     }
 
     private void listarInvestimento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Investimento> investimentos = dao.getAllInvestimento();
+        HttpSession session = req.getSession();
+        Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+
+        List<Investimento> investimentos = dao.getAllInvestimento(codigoUsuario);
         req.setAttribute("investimentos", investimentos);
         req.getRequestDispatcher("/resources/pages/investimento.jsp").forward(req, resp);
     }

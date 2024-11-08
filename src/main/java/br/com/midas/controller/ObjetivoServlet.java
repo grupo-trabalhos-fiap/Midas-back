@@ -69,7 +69,7 @@ public class ObjetivoServlet extends HttpServlet {
             dao.cadastrar(objetivo);
 
             req.setAttribute("mensagem", "Objetivo cadastrado!");
-            List<Objetivo> objetivos = dao.getAll();
+            List<Objetivo> objetivos = dao.getAll(codigoUsuario);
             req.setAttribute("objetivos", objetivos);
 
         } catch (DBException db) {
@@ -131,7 +131,10 @@ public class ObjetivoServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Objetivo> objetivos = dao.getAll();
+        HttpSession session = req.getSession();
+        Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+
+        List<Objetivo> objetivos = dao.getAll(codigoUsuario);
         req.setAttribute("objetivos", objetivos);
         req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
     }

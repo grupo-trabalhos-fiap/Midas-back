@@ -8,5 +8,5 @@ public interface GastoDao {
     void cadastrarGasto(Gasto gasto) throws DBException;
     void atualizarGasto(Gasto gasto) throws DBException;
     void removerGasto(int codigoGasto) throws DBException;
-    List<Gasto> getAllGasto();
+    List<Gasto> getAllGasto(int codigoUsuario);
 }

@@ -17,7 +17,7 @@ public class OracleUsuarioDao implements UsuarioDao {
     private Connection conexao;
 
     @Override
-    public void cadastrar(Usuario usuario) throws DBException {
+    public void cadastrarUsuario(Usuario usuario) throws DBException {
         PreparedStatement stmt = null;
         String sql = "INSERT INTO T_MSF_USUARIO (nm_usuario, dt_nascimento, genero, email, senha) VALUES (?, ?, ?, ?, ?)";
 
@@ -48,7 +48,7 @@ public class OracleUsuarioDao implements UsuarioDao {
     }
 
     @Override
-    public void atualizar(Usuario usuario) throws DBException {
+    public void atualizarUsuario(Usuario usuario) throws DBException {
         PreparedStatement stmt = null;
         String sql = "UPDATE T_MSF_USUARIO SET nm_usuario = ?, dt_nascimento = ?, genero = ?, email = ?, senha = ? WHERE cd_usuario = ?";
 
@@ -61,7 +61,7 @@ public class OracleUsuarioDao implements UsuarioDao {
             stmt.setString(3, String.valueOf(usuario.getGenero()));
             stmt.setString(4, usuario.getEmail());
             stmt.setString(5, usuario.getSenha());
-            stmt.setLong(6, usuario.getCodigoUsuario());
+            stmt.setInt(6, usuario.getCodigoUsuario());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -78,7 +78,29 @@ public class OracleUsuarioDao implements UsuarioDao {
     }
 
     @Override
-    public Usuario buscarPorId(Long id) throws DBException {
+    public void deletarUsuario(int id) throws DBException {
+        PreparedStatement stmt = null;
+        String sql = "DELETE FROM T_MSF_USUARIO WHERE cd_usuario = ?";
+
+        try {
+            conexao = ConnectionFactory.getInstance().getConnection();
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Erro ao deletar usuário.", e);
+            throw new DBException("Erro ao deletar usuário.");
+        } finally {
+            try {
+                Objects.requireNonNull(stmt).close();
+                conexao.close();
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Erro ao fechar recursos no método deletar.", e);
+            }
+        }
+    }
+
+    public Usuario buscarPorId(int id) throws DBException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM T_MSF_USUARIO WHERE cd_usuario = ?";
@@ -87,12 +109,12 @@ public class OracleUsuarioDao implements UsuarioDao {
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
             stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, id);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
                 usuario = new Usuario(
-                        rs.getLong("cd_usuario"),
+                        rs.getInt("cd_usuario"),
                         rs.getString("nm_usuario"),
                         rs.getDate("dt_nascimento").toLocalDate(),
                         rs.getString("genero").charAt(0),
@@ -113,29 +135,6 @@ public class OracleUsuarioDao implements UsuarioDao {
             }
         }
         return usuario;
-    }
-
-    @Override
-    public void deletar(Long id) throws DBException {
-        PreparedStatement stmt = null;
-        String sql = "DELETE FROM T_MSF_USUARIO WHERE cd_usuario = ?";
-
-        try {
-            conexao = ConnectionFactory.getInstance().getConnection();
-            stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao deletar usuário.", e);
-            throw new DBException("Erro ao deletar usuário.");
-        } finally {
-            try {
-                Objects.requireNonNull(stmt).close();
-                conexao.close();
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Erro ao fechar recursos no método deletar.", e);
-            }
-        }
     }
 
     @Override

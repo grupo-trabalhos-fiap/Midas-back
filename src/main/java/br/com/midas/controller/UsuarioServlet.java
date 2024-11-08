@@ -59,7 +59,7 @@ public class UsuarioServlet extends HttpServlet {
             String senha = req.getParameter("senha");
 
             Usuario usuario = new Usuario(nomeCompleto, dataNascimento, genero, email, senha);
-            dao.cadastrar(usuario);
+            dao.cadastrarUsuario(usuario);
 
             logger.info("Usuário cadastrado com sucesso!");
             req.setAttribute("mensagem", "Usuário cadastrado com sucesso!");
@@ -73,7 +73,7 @@ public class UsuarioServlet extends HttpServlet {
 
     private void editar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Long codigoUsuario = Long.parseLong(req.getParameter("codigoUsuario"));
+            int codigoUsuario = Integer.parseInt(req.getParameter("codigoUsuario"));
             String nomeCompleto = req.getParameter("nomeCompleto");
             LocalDate dataNascimento = LocalDate.parse(req.getParameter("dataNascimento"));
             char genero = req.getParameter("genero").charAt(0);
@@ -81,7 +81,7 @@ public class UsuarioServlet extends HttpServlet {
             String senha = req.getParameter("senha");
 
             Usuario usuario = new Usuario(codigoUsuario, nomeCompleto, dataNascimento, genero, email, senha);
-            dao.atualizar(usuario);
+            dao.atualizarUsuario(usuario);
 
             req.setAttribute("mensagem", "Usuário atualizado com sucesso!");
         } catch (Exception e) {
@@ -93,8 +93,8 @@ public class UsuarioServlet extends HttpServlet {
 
     private void excluir(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Long codigoUsuario = Long.parseLong(req.getParameter("codigoExcluir"));
-            dao.deletar(codigoUsuario);
+            int codigoUsuario = Integer.parseInt(req.getParameter("codigoExcluir"));
+            dao.deletarUsuario(codigoUsuario);
 
             req.setAttribute("mensagem", "Usuário excluído com sucesso!");
         } catch (Exception e) {

@@ -18,7 +18,7 @@
             <form action="${pageContext.request.contextPath}/usuarios?acao=cadastrar" id="formcadastro" method="post">
                 <h1 id="infocadastro">Informações de Cadastro</h1>
                 <div class="mb-4">
-                    <label class="form-label"> Nooo completo*</label>
+                    <label class="form-label"> Nome completo*</label>
                     <input type="text" class="form-control" id="nomecompleto" name="nomeCompleto" placeholder="" required>
                 </div>
                 <div class="mb-4">

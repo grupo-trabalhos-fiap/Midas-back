@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class LoginServlet extends HttpServlet {
     private UsuarioDao usuarioDao;
     private EmailBo emailBo;
 
-    public LoginServlet() {
+    public LoginServlet() throws SQLException {
         this.usuarioDao = DaoFactory.getUsuarioDAO();
         this.emailBo = new EmailBo();
     }

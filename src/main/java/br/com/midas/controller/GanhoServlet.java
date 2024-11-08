@@ -31,25 +31,25 @@ public class GanhoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String acao = req.getParameter("acao");
+        String acaoGanho = req.getParameter("acaoGanho");
 
         HttpSession session = req.getSession();
         int codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
 
-        switch (acao) {
+        switch (acaoGanho) {
             case "cadastrar":
-                cadastrar(req, resp, codigoUsuario);
+                cadastrarGanho(req, resp, codigoUsuario);
                 break;
             case "editar":
-                editar(req, resp);
+                editarGanho(req, resp);
                 break;
             case "excluir":
-                excluir(req, resp);
+                excluirGanho(req, resp);
                 break;
         }
     }
 
-    private void cadastrar(HttpServletRequest req, HttpServletResponse resp, int codigoUsuario)
+    private void cadastrarGanho(HttpServletRequest req, HttpServletResponse resp, int codigoUsuario)
             throws ServletException, IOException {
         try {
             double valorGanho = Double.parseDouble(req.getParameter("valorGanho"));
@@ -64,11 +64,11 @@ public class GanhoServlet extends HttpServlet {
                     descricaoGanho
             );
 
-            dao.cadastrar(ganho);
+            dao.cadastrarGanho(ganho);
 
             req.setAttribute("mensagem", "Ganho cadastrado!");
-            List<Ganho> ganhos = dao.getAll();
-            req.setAttribute("ganhos", ganhos);
+            List<Ganho> ganhos = dao.getAllGanho();
+            req.setAttribute("ganhos", ganhos); // Corrija para "ganhos"
 
         } catch (DBException db) {
             db.printStackTrace();
@@ -80,7 +80,7 @@ public class GanhoServlet extends HttpServlet {
         req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
     }
 
-    private void editar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void editarGanho(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int codigoGanho = Integer.parseInt(req.getParameter("codigoGanho"));
             double valorGanho = Double.parseDouble(req.getParameter("valorGanho"));
@@ -94,7 +94,7 @@ public class GanhoServlet extends HttpServlet {
                     descricaoGanho
             );
 
-            dao.atualizar(ganho);
+            dao.atualizarGanho(ganho);
 
             req.setAttribute("mensagem", "Ganho atualizado!");
         } catch (DBException db) {
@@ -104,30 +104,30 @@ public class GanhoServlet extends HttpServlet {
             e.printStackTrace();
             req.setAttribute("erro", "Por favor, valide os dados");
         }
-        listar(req, resp);
+        listarGanho(req, resp);
     }
 
-    private void excluir(HttpServletRequest req, HttpServletResponse resp)
+    private void excluirGanho(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         int codigoGanho = Integer.parseInt(req.getParameter("codigoExcluir"));
         try {
-            dao.remover(codigoGanho);
+            dao.removerGanho(codigoGanho);
             req.setAttribute("mensagem", "Ganho removido!");
         } catch (DBException e) {
             e.printStackTrace();
             req.setAttribute("erro", "Erro ao atualizar");
         }
-        listar(req, resp);
+        listarGanho(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        listar(req, resp);
+        listarGanho(req, resp);
     }
 
-    private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Ganho> ganhos = dao.getAll();
+    private void listarGanho(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            List<Ganho> ganhos = dao.getAllGanho();
             req.setAttribute("ganhos", ganhos);
             req.getRequestDispatcher("/resources/pages/Ganhos.jsp").forward(req, resp);
     }

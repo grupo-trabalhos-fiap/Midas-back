@@ -11,7 +11,7 @@
     --branco: #fff;
     --bege: #F1EBD5;
     --bordaInferior: #92919173;
-    --sombra: rgba(107, 106, 106, 0.336); 
+    --sombra: rgba(107, 106, 106, 0.336);
 }
 
 body {
@@ -81,8 +81,8 @@ body {
 }
 
 .h3-topo-direita, .h3-graficos-meio, .h3-graficos-inferior {
-     color: var(--vermelho);
-     font-size: 1.3rem;
+    color: var(--vermelho);
+    font-size: 1.3rem;
 }
 
 .botao-topo-direita, .botao-graficos-meio, .botao-graficos-inferior {
@@ -98,7 +98,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-}    
+}
 
 .topo-direita-grafico h4, .meio-grafico h4 {
     font-size: 1rem;
@@ -136,7 +136,7 @@ body {
     color: var(--dourado);
 }
 
-.grafico2-meio button {
+.grafico2-meio button a {
     border: 1px solid var(--vermelho);
     color: var(--vermelho);
 }
@@ -252,7 +252,7 @@ body {
     line-height: 22px;
 }
 
-.grafico3-inferior button {
+.grafico3-inferior button a {
     color: var(--branco);
     background-color: transparent;
     border: 1px solid var(--branco);
@@ -295,7 +295,7 @@ body {
     .topo-h1 {
         font-size: 1.5rem;
     }
-    
+
     .topo-p {
         margin-top: 20px;
         font-size: .7rem;

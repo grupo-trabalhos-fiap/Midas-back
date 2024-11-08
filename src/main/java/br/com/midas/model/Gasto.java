@@ -25,7 +25,8 @@ public class Gasto {
     }
 
     // Construtor com o código do Usuário oculto
-    public Gasto(int codigoGasto, double valorGasto, LocalDate dataGasto, String categoria, String descricaoGasto) {
+    public Gasto( int codigoUsuario, double valorGasto, LocalDate dataGasto, String categoria, String descricaoGasto) {
+        this.cdUsuario = codigoUsuario;
         this.valorGasto = valorGasto;
         this.dataGasto = dataGasto;
         this.categoria = categoria;

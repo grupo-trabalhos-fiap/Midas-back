@@ -15,7 +15,7 @@
 <div class="vh-100 d-flex justify-content-center align-items-center flex-column" id="basebox">
     <div class="d-flex justify-content-center align-items-center row">
         <div class="col-sm-8 col-md-6 col-lg-4 p-4 mt-auto shadow rounded" id="cadastrobox">
-            <form action="${pageContext.request.contextPath}/usuarios?acaoUsuario=cadastrar" id="formcadastro" method="post">
+            <form action="${pageContext.request.contextPath}/usuarios?acao=cadastrar" id="formcadastro" method="post">
                 <h1 id="infocadastro">Informações de Cadastro</h1>
                 <div class="mb-4">
                     <label class="form-label"> Nome completo*</label>

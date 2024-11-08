@@ -37,11 +37,6 @@
           <label class="form-label">Senha</label>
           <input type="password" class="form-control" id="senha" name="senha" placeholder="********">
         </div>
-        <div class="mb-5 ms-4">
-          <a href="#" id="esquecisenha">Esqueci minha senha</a>
-          <!-- <input type="checkbox" class="form-check-input" id="lembrar">
-          <label class="form-check-label" for="lembrar">Lembrar-me</label> -->
-        </div>
         <div class="mb-3 form-floating d-flex justify-content-center align-items-center flex-column">
           <button class="btn btn-secondary btn-lg w-50 btn-danger me-md-2" id="linkentrar" type="submit">Entrar</button>
         </div>

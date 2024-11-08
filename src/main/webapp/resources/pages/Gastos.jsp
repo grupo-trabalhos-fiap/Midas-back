@@ -193,7 +193,7 @@
                 <td data-label="Descrição">${gasto.descricaoGasto}</td>
                 <td data-label="#" class="funções">
                     <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
-                            onclick="codigoGasto.value = '${gasto.codigoGasto}';
+                            onclick="codigoGastoEditar.value = ${gasto.codigoGasto};
                                     valorGastoEditar.value = '${gasto.valorGasto}';
                                     dataGastoEditar.value = '${gasto.dataGasto}';
                                     categoriaEditar.value = '${gasto.categoria}';
@@ -224,20 +224,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="linha-modal"></div>
-            <c:choose>
-                <c:when test="${not empty mensagem}">
-                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
-                            ${mensagem}
-                    </div>
-                </c:when>
-                <c:when test="${not empty erro}">
-                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
-                            ${erro}
-                    </div>
-                </c:when>
-            </c:choose>
             <form action="${pageContext.request.contextPath}/gastos?acaoGasto=editar" method="post">
-                <input type="hidden" name="codigoGasto" id="codigoGasto">
+                <input type="hidden" name="codigoGasto" id="codigoGastoEditar">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="valorGasto" id="valorGastoEditar" placeholder="R$00,00" required>

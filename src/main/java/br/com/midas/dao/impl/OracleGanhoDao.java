@@ -50,42 +50,41 @@ public class OracleGanhoDao implements GanhoDao {
     }
 
     @Override
-    public List<Ganho> getAllGanho(){
+    public List<Ganho> getAllGanho(int codigoUsuario) {
         PreparedStatement stmt = null;
         List<Ganho> ganhos = new ArrayList<>();
         ResultSet resultadoGanho = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_GANHOS";
+            String sql = "SELECT * FROM T_MSF_GANHOS WHERE cd_usuario = ?";
             stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoUsuario);
             resultadoGanho = stmt.executeQuery();
 
             while (resultadoGanho.next()) {
                 int codigoGanho = resultadoGanho.getInt("cd_ganho");
-                int codigoUsuario = resultadoGanho.getInt("cd_usuario");
                 double valorGanho = resultadoGanho.getDouble("vl_ganho");
-                // Convertendo String para LocalDate
                 LocalDate dataGanho = LocalDate.parse(resultadoGanho.getString("dt_ganho"),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 String descricaoGanho = resultadoGanho.getString("ds_ganho");
 
-                Ganho ganho = new Ganho(codigoGanho, codigoUsuario, valorGanho, dataGanho,
-                        descricaoGanho);
+                Ganho ganho = new Ganho(codigoGanho, codigoUsuario, valorGanho, dataGanho, descricaoGanho);
                 ganhos.add(ganho);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
-                conexao.close();
+                if (stmt != null) stmt.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return ganhos;
     }
+
 
     @Override
     public void atualizarGanho(Ganho ganho) throws DBException {

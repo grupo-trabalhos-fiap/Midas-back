@@ -52,20 +52,20 @@ public class OracleObjetivoDao implements ObjetivoDao {
     }
 
     @Override
-    public List<Objetivo> getAll(){
+    public List<Objetivo> getAll(int codigoUsuario){
         PreparedStatement stmt = null;
         List<Objetivo> objetivos = new ArrayList<>();
         ResultSet resultado = null;
 
         try {
             conexao = ConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM T_MSF_OBJETIVOS";
+            String sql = "SELECT * FROM T_MSF_OBJETIVOS WHERE cd_usuario = ?";
             stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoUsuario);
             resultado = stmt.executeQuery();
 
             while (resultado.next()) {
                 int codigoObjetivo = resultado.getInt("cd_objetivo");
-                int codigoUsuario = resultado.getInt("cd_usuario"); // Adicione o código do usuário
                 String nomeObjetivo = resultado.getString("nm_objetivo");
                 double valorObjetivo = resultado.getDouble("vl_objetivo");
                 // Convertendo String para LocalDate

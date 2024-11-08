@@ -8,5 +8,5 @@ public interface InvestimentoDao {
     void cadastrarInvestimento(Investimento investimento) throws DBException;
     void atualizarInvestimento(Investimento investimento) throws DBException;
     void removerInvestimento(int codigoInvestimento) throws DBException;
-    List<Investimento> getAllInvestimento();
+    List<Investimento> getAllInvestimento(int codigoUsuario);
 }

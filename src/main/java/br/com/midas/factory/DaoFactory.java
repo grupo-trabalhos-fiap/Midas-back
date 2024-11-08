@@ -13,7 +13,6 @@ public class DaoFactory {
     public static GanhoDao getGanhoDAO() {
         return new OracleGanhoDao();
     }
-
     public static DashboardDao getDashboardDAO() {
         return new OracleDashboardDao();
     }

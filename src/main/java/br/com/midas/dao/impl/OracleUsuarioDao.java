@@ -6,6 +6,7 @@ import br.com.midas.factory.ConnectionFactory;
 import br.com.midas.model.Usuario;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -138,7 +139,7 @@ public class OracleUsuarioDao implements UsuarioDao {
     }
 
     @Override
-    public boolean validarUsuario(Usuario usuario) {
+    public Usuario validarUsuario(Usuario usuario) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM T_MSF_USUARIO WHERE EMAIL = ? AND SENHA = ?";
@@ -150,19 +151,29 @@ public class OracleUsuarioDao implements UsuarioDao {
             stmt.setString(2, usuario.getSenha());
             rs = stmt.executeQuery();
 
-            return rs.next();
+            // Verifica se existe um resultado e cria o objeto Usuario com os dados do banco
+            if (rs.next()) {
+                int codigoUsuario = rs.getInt("cd_usuario");
+                String nomeCompleto = rs.getString("nm_usuario");
+                LocalDate dataNascimento = rs.getDate("dt_nascimento").toLocalDate();
+                char genero = rs.getString("genero").charAt(0);
+                String email = rs.getString("email");
+                String senha = rs.getString("senha");
+
+                return new Usuario(codigoUsuario, nomeCompleto, dataNascimento, genero, email, senha);
+            }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Erro ao validar usuário.", e);
         } finally {
             try {
-                Objects.requireNonNull(stmt).close();
-                Objects.requireNonNull(rs).close();
-                conexao.close();
+                if (stmt != null) stmt.close();
+                if (rs != null) rs.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, "Erro ao fechar recursos no método validarUsuario.", e);
             }
         }
-        return false;
+        return null; // Retorna null se o usuário não for encontrado ou se ocorrer um erro
     }
 
     public int getCodigoUsuarioByEmail(String email) {

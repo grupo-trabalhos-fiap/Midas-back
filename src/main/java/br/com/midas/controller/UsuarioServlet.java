@@ -84,6 +84,7 @@ public class UsuarioServlet extends HttpServlet {
             dao.atualizarUsuario(usuario);
 
             req.setAttribute("mensagem", "Usuário atualizado com sucesso!");
+            req.setAttribute("usuario", usuario);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Erro ao atualizar usuário", e);
             req.setAttribute("erro", "Erro ao atualizar usuário. Por favor, valide os dados.");
@@ -110,9 +111,10 @@ public class UsuarioServlet extends HttpServlet {
             String senha = req.getParameter("senha");
 
             Usuario usuario = new Usuario(email, senha);
-            boolean valido = dao.validarUsuario(usuario);
+            Usuario usuarioVerificado = dao.validarUsuario(usuario);
+            req.getSession().setAttribute("usuario", usuarioVerificado);
 
-            if (valido) {
+            if (usuarioVerificado != null) {
                 req.setAttribute("mensagem", "Usuário válido.");
             } else {
                 req.setAttribute("erro", "Usuário inválido.");

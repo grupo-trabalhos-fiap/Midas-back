@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,7 +12,7 @@
   <!-- CSS da página de dashboard -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleDashboard.css">
 
-  <!-- css do header e do footer -->
+  <!-- CSS do header e do footer -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>
 <body>
@@ -23,8 +25,14 @@
   </div>
 </c:if>
 
+<!-- Verificação se os dados foram carregados corretamente -->
+<c:if test="${empty nomeUsuario || empty totalGanhos || empty totalGastos || empty totalInvestimentos}">
+  <div class="alert alert-warning" role="alert">
+    Algum dado está ausente no dashboard. Verifique o servlet para garantir que todos os valores estão sendo carregados.
+  </div>
+</c:if>
+
 <section class="container topo-dash">
-  <!-- topo esquerda -->
   <div class="topo-esquerda">
     <div class="topo-esquerda-textos">
       <h1 class="topo-h1">Seja bem-vindo,<br> ${nomeUsuario}!</h1>
@@ -34,7 +42,6 @@
       <img src="${pageContext.request.contextPath}/resources/Imagens/Vetores/Vetor Midas.png" class="img">
     </div>
   </div>
-  <!-- topo direita -->
   <div class="topo-direita">
     <div class="topo-direita-botao">
       <h3 class="h3-topo-direita">Comparação</h3>
@@ -47,7 +54,6 @@
 </section>
 
 <section class="container graficos-meio">
-  <!-- Análise de Ganhos -->
   <div class="grafico1-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>ganhos</span></h3>
@@ -59,7 +65,6 @@
     </div>
   </div>
 
-  <!-- Análise de Gastos -->
   <div class="grafico2-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>gastos</span></h3>
@@ -71,7 +76,6 @@
     </div>
   </div>
 
-  <!-- Análise de Investimentos -->
   <div class="grafico3-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>investimentos</span></h3>
@@ -85,7 +89,6 @@
 </section>
 
 <section class="container graficos-inferior">
-  <!-- Objetivos -->
   <div class="grafico1-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Objetivos</h3>
@@ -99,7 +102,6 @@
     </div>
   </div>
 
-  <!-- Investimentos -->
   <div class="grafico2-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Investimentos</h3>
@@ -113,7 +115,6 @@
     </div>
   </div>
 
-  <!-- Dívidas -->
   <div class="grafico3-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Dívidas</h3>
@@ -129,8 +130,6 @@
 </section>
 
 <%@include file="footer.jsp"%>
-
-<!-- link JS do Bootstrap -->
 <%@include file="links_footer.jsp"%>
 </body>
 </html>

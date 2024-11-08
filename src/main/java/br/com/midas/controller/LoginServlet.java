@@ -2,7 +2,6 @@ package br.com.midas.controller;
 
 import br.com.midas.bo.EmailBo;
 import br.com.midas.dao.UsuarioDao;
-import br.com.midas.exception.DBException;
 import br.com.midas.exception.EmailException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Usuario;
@@ -32,51 +31,58 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response
-    )
-            throws ServletException, IOException
-    {
-
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-
-        try {
-            if (validarUsuario(email, senha)) {
-                int codigoUsuario = usuarioDao.getCodigoUsuarioByEmail(email);
-                iniciarSessaoUsuario(request, codigoUsuario);
-
-                response.sendRedirect(request.getContextPath() + "/resources/pages/dashboard.jsp");
-
-                enviarNotificacaoLogin(email);
-
-            } else {
-                exibirMensagemErro(request, response, "Usuário e/ou senha inválidos");
-            }
-        } catch (DBException e) {
-            logger.log(Level.SEVERE, "Erro ao validar o usuário", e);
-            exibirMensagemErro(request, response, "Erro ao processar o login. Tente novamente.");
-        }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        realizarLogin(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        session.invalidate();  // Invalida a sessão para efetuar o logout
-        response.sendRedirect(request.getContextPath() + "/resources/pages/login.jsp");  // Redireciona para a página de login
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        redirecionarParaLogin(response);
     }
 
-    private boolean validarUsuario(String email, String senha) throws DBException {
+    private void realizarLogin(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+
         Usuario usuario = new Usuario(email, senha);
-        return usuarioDao.validarUsuario(usuario);
+        Usuario usuarioVerificado = usuarioDao.validarUsuario(usuario);
+
+        if (usuarioVerificado != null) {
+            autenticarUsuario(request, response, usuarioVerificado);
+        } else {
+            falhaAutenticacao(request, response, email);
+        }
     }
 
-    private void iniciarSessaoUsuario(HttpServletRequest request, int codigoUsuario) {
-        HttpSession session = request.getSession();
-        session.setAttribute("codigoUsuario", codigoUsuario);
+    private void autenticarUsuario(HttpServletRequest request, HttpServletResponse response, Usuario usuarioVerificado) {
+        try {
+            HttpSession session = request.getSession();
+            session.setAttribute("usuarioVerificado", usuarioVerificado);
+
+            // Logando todas as informações do usuário
+            logger.log(Level.INFO, "Login realizado com sucesso. Informações do usuário:");
+            logger.log(Level.INFO, "Código do usuário: {0}", usuarioVerificado.getCodigoUsuario());
+            logger.log(Level.INFO, "Nome completo: {0}", usuarioVerificado.getNomeCompleto());
+            logger.log(Level.INFO, "Data de nascimento: {0}", usuarioVerificado.getDataNascimento());
+            logger.log(Level.INFO, "Gênero: {0}", usuarioVerificado.getGenero());
+            logger.log(Level.INFO, "Email: {0}", usuarioVerificado.getEmail());
+
+            response.sendRedirect(request.getContextPath() + "/resources/pages/dashboard.jsp");
+            enviarNotificacaoLogin(usuarioVerificado.getEmail());
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Erro ao redirecionar para o dashboard após login bem-sucedido", e);
+        }
+    }
+
+    private void falhaAutenticacao(HttpServletRequest request, HttpServletResponse response, String email) {
+        logger.log(Level.WARNING, "Tentativa de login falhou para o e-mail: {0}", email);
+        request.setAttribute("erro", "Usuário ou senha inválidos");
+
+        try {
+            request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+            logger.log(Level.SEVERE, "Erro ao redirecionar para a página de login após falha na autenticação", e);
+        }
     }
 
     private void enviarNotificacaoLogin(String email) {
@@ -88,9 +94,11 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private void exibirMensagemErro(HttpServletRequest request, HttpServletResponse response, String mensagem)
-            throws ServletException, IOException {
-        request.setAttribute("erro", mensagem);
-        request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
+    private void redirecionarParaLogin(HttpServletResponse response) {
+        try {
+            response.sendRedirect("/resources/pages/login.jsp");
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Erro ao redirecionar para a página de login", e);
+        }
     }
 }

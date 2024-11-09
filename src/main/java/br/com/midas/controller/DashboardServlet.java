@@ -71,6 +71,8 @@ public class DashboardServlet extends HttpServlet {
             Map<String, Object> ultimoGasto = dashboardDao.getUltimoGasto(codigoUsuario);
             double porcentagemObjetivosConcluidos = dashboardDao.getPorcentagemObjetivosConcluidos(codigoUsuario);
             List<Map<String, Object>> detalhesDividas = dashboardDao.getDetalhesDividas(codigoUsuario);
+            double totalDividas = dashboardDao.getTotalDividas(codigoUsuario);
+
 
             // Atributos para exibição no JSP
             req.setAttribute("nomeUsuario", nomeUsuario);
@@ -82,6 +84,7 @@ public class DashboardServlet extends HttpServlet {
             req.setAttribute("investimentosPorTipo", investimentosPorTipo);
             req.setAttribute("porcentagemObjetivosConcluidos", porcentagemObjetivosConcluidos);
             req.setAttribute("detalhesDividas", detalhesDividas);
+            req.setAttribute("totalDividas", totalDividas);
 
         } catch (DBException e) {
             logger.log(Level.SEVERE, "Erro ao carregar os dados do dashboard para o usuário: " + codigoUsuario, e);

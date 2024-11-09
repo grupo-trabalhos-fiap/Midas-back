@@ -95,6 +95,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: center;
 }
 
 .topo-direita-grafico h4, .meio-grafico h4 {
@@ -205,9 +206,19 @@ body {
 
 /* Ajuste para rolagem e exibição no bloco de investimentos */
 .inferior-grafico-investimentos {
-    max-height: 150px; /* Defina o limite de altura desejado */
+    max-height: 120px; /* Defina o limite de altura desejado */
     overflow-y: auto;  /* Adiciona uma barra de rolagem vertical */
-    padding-right: 10px; /* Espaço à direita para evitar que a rolagem sobreponha o texto */
+    padding: 10px 0px 10px 30px; /* Espaço para evitar que a rolagem sobreponha o texto */
+}
+
+.inferior-grafico-investimentos h3 {
+    font-size: 100%;
+}
+
+.valor-investido {
+    font-size: 100%;
+    padding-top: 2%;
+    text-align: center;
 }
 
 .inferior-grafico-investimentos .investimento-item {
@@ -251,6 +262,23 @@ body {
     font-size: .9rem;
     font-weight: 400;
     line-height: 22px;
+}
+
+.inferior-grafico-dividas {
+    max-height: 120px; /* Defina o limite de altura desejado */
+    overflow-y: auto;  /* Adiciona uma barra de rolagem vertical */
+    padding: 10px 0px 10px 30px; /* Espaço para evitar que a rolagem sobreponha o texto */
+}
+
+.inferior-grafico-dividas h3 {
+    font-size: 100%;
+}
+
+.valor-total-dividas {
+    font-size: 100%;
+    padding-top: 2%;
+    text-align: center;
+    color: var(--branco);
 }
 
 .grafico3-inferior button a {

@@ -15,4 +15,5 @@ public interface DashboardDao {
     Map<String, Double> getValorInvestidoPorTipo(int codigoUsuario) throws DBException;
     double getPorcentagemObjetivosConcluidos(int codigoUsuario) throws DBException;
     List<Map<String, Object>> getDetalhesDividas(int codigoUsuario) throws DBException;
+    double getTotalDividas(int codigoUsuario) throws DBException;
 }

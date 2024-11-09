@@ -69,10 +69,15 @@ public class OracleDashboardDao implements DashboardDao {
         return executarConsultaListaDetalhes(sql, codigoUsuario);
     }
 
+    @Override
+    public double getTotalDividas(int codigoUsuario) throws DBException {
+        String sql = "SELECT NVL(SUM(vl_divida), 0) AS total FROM T_MSF_DIVIDAS WHERE cd_usuario = ?";
+        return executarConsultaSoma(sql, codigoUsuario);
+    }
+
     private double executarConsultaSimplesDouble(String sql, int codigoUsuario, String coluna) throws DBException {
         try (Connection conexao = getConnection();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {
-
             stmt.setInt(1, codigoUsuario);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() ? rs.getDouble(coluna) : 0;
@@ -85,7 +90,8 @@ public class OracleDashboardDao implements DashboardDao {
 
     private List<Map<String, Object>> executarConsultaListaDetalhes(String sql, int codigoUsuario) throws DBException {
         List<Map<String, Object>> detalhesList = new ArrayList<>();
-        try (PreparedStatement stmt = prepararStatement(sql, codigoUsuario);
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -102,7 +108,8 @@ public class OracleDashboardDao implements DashboardDao {
     }
 
     private double executarConsultaSoma(String sql, int codigoUsuario) throws DBException {
-        try (PreparedStatement stmt = prepararStatement(sql, codigoUsuario);
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
              ResultSet resultado = stmt.executeQuery()) {
 
             return resultado.next() ? resultado.getDouble("total") : 0;
@@ -113,7 +120,8 @@ public class OracleDashboardDao implements DashboardDao {
     }
 
     private String executarConsultaSimplesString(String sql, int codigoUsuario) throws DBException {
-        try (PreparedStatement stmt = prepararStatement(sql, codigoUsuario);
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
              ResultSet rs = stmt.executeQuery()) {
 
             return rs.next() ? rs.getString("NM_USUARIO") : null;
@@ -125,7 +133,8 @@ public class OracleDashboardDao implements DashboardDao {
 
     private Map<String, Double> executarConsultaInvestimentoPorTipo(String sql, int codigoUsuario) throws DBException {
         Map<String, Double> investimentosPorTipo = new HashMap<>();
-        try (PreparedStatement stmt = prepararStatement(sql, codigoUsuario);
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -140,7 +149,8 @@ public class OracleDashboardDao implements DashboardDao {
 
     private Map<String, Object> executarConsultaUltimoGasto(String sql, int codigoUsuario) throws DBException {
         Map<String, Object> ultimoGasto = new HashMap<>();
-        try (PreparedStatement stmt = prepararStatement(sql, codigoUsuario);
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
              ResultSet rs = stmt.executeQuery()) {
 
             if (rs.next()) {
@@ -155,8 +165,7 @@ public class OracleDashboardDao implements DashboardDao {
         return ultimoGasto;
     }
 
-    private PreparedStatement prepararStatement(String sql, int codigoUsuario) throws SQLException {
-        Connection conexao = getConnection();
+    private PreparedStatement prepararStatement(Connection conexao, String sql, int codigoUsuario) throws SQLException {
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setInt(1, codigoUsuario);
         return stmt;

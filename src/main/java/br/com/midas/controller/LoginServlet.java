@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("usuarioVerificado", usuarioVerificado);
             session.setAttribute("codigoUsuario", usuarioVerificado.getCodigoUsuario());
 
-            logger.log(Level.INFO, "Login realizado com sucesso. Informações do usuário:");
+            logger.log(Level.INFO, "Login realizado com sucesso");
 
             response.sendRedirect(request.getContextPath() + "/dashboard");
             enviarNotificacaoLogin(usuarioVerificado.getEmail());

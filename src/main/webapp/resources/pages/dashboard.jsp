@@ -56,7 +56,7 @@
   <div class="grafico1-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>ganhos</span></h3>
-      <a href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/ganhos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
@@ -73,7 +73,7 @@
   <div class="grafico2-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Análise: <span>gastos</span></h3>
-      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/gastos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
@@ -90,7 +90,7 @@
   <div class="grafico3-meio">
     <div class="graficos-meio-botao">
       <h3 class="h3-graficos-meio">Último <span>gasto</span></h3>
-      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/gastos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
@@ -106,7 +106,7 @@
   <div class="grafico1-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Objetivos</h3>
-      <a href="${pageContext.request.contextPath}/objetivos?acao=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/objetivos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
@@ -126,22 +126,24 @@
   <div class="grafico2-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Investimentos</h3>
-      <a href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/investimentos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
-    <div class="inferior-grafico-investimentos" style="max-height: 200px; overflow-y: auto;">
-      <c:forEach var="tipoInvestimento" items="${investimentosPorTipo}">
-        <h3>${tipoInvestimento.key} = R$ ${tipoInvestimento.value}</h3>
-      </c:forEach>
-      <h4>Valor investido = R$ ${totalInvestido}</h4>
+    <div>
+      <div class="inferior-grafico-investimentos">
+        <c:forEach var="tipoInvestimento" items="${investimentosPorTipo}">
+          <h3>${tipoInvestimento.key} = R$ ${tipoInvestimento.value}</h3>
+        </c:forEach>
+      </div>
+      <h4 class="valor-investido">Valor investido = R$ ${totalInvestido}</h4>
     </div>
   </div>
 
   <div class="grafico3-inferior">
     <div class="graficos-inferior-botao">
       <h3 class="h3-graficos-inferior">Dívidas</h3>
-      <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="text-decoration-none">
+      <a href="${pageContext.request.contextPath}/dividas" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
       </a>
     </div>
@@ -149,8 +151,8 @@
       <c:forEach var="divida" items="${detalhesDividas}">
         <h3><fmt:formatDate value="${divida.dt_pagamento}" pattern="dd/MM/yyyy"/> - R$${divida.vl_divida}</h3>
       </c:forEach>
-      <h4>Valor total das dívidas = R$ ${totalDividas}</h4>
     </div>
+    <h4 class="valor-total-dividas">Valor total das dívidas = R$ ${totalDividas}</h4>
   </div>
 </section>
 

@@ -39,9 +39,6 @@ public class UsuarioServlet extends HttpServlet {
             case "editar":
                 editar(req, resp);
                 break;
-            case "excluir":
-                excluir(req, resp);
-                break;
             case "validar":
                 validar(req, resp);
                 break;
@@ -86,22 +83,10 @@ public class UsuarioServlet extends HttpServlet {
             dao.atualizarUsuario(usuario);
 
             req.setAttribute("mensagem", "Usuário atualizado com sucesso!");
+            req.setAttribute("usuario", usuario);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Erro ao atualizar usuário", e);
             req.setAttribute("erro", "Erro ao atualizar usuário. Por favor, valide os dados.");
-        }
-        listar(req, resp);
-    }
-
-    private void excluir(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            int codigoUsuario = Integer.parseInt(req.getParameter("codigoExcluir"));
-            dao.deletarUsuario(codigoUsuario);
-
-            req.setAttribute("mensagem", "Usuário excluído com sucesso!");
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Erro ao excluir usuário", e);
-            req.setAttribute("erro", "Erro ao excluir usuário.");
         }
         listar(req, resp);
     }
@@ -112,9 +97,10 @@ public class UsuarioServlet extends HttpServlet {
             String senha = req.getParameter("senha");
 
             Usuario usuario = new Usuario(email, senha);
-            boolean valido = dao.validarUsuario(usuario);
+            Usuario usuarioVerificado = dao.validarUsuario(usuario);
+            req.getSession().setAttribute("usuario", usuarioVerificado);
 
-            if (valido) {
+            if (usuarioVerificado != null) {
                 req.setAttribute("mensagem", "Usuário válido.");
             } else {
                 req.setAttribute("erro", "Usuário inválido.");

@@ -7,8 +7,5 @@ public interface UsuarioDao {
 
     void cadastrarUsuario(Usuario usuario) throws DBException;
     void atualizarUsuario(Usuario usuario) throws DBException;
-    Usuario buscarPorId(int id) throws DBException;
-    void deletarUsuario(int id) throws DBException;
-    boolean validarUsuario(Usuario usuario);
-    int getCodigoUsuarioByEmail(String email);
+    Usuario validarUsuario(Usuario usuario);
 }

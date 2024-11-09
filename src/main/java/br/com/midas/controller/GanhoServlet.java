@@ -4,6 +4,7 @@ import br.com.midas.dao.GanhoDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Ganho;
+import br.com.midas.model.Usuario;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +35,8 @@ public class GanhoServlet extends HttpServlet {
         String acaoGanho = req.getParameter("acaoGanho");
 
         HttpSession session = req.getSession();
-        int codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+        int codigoUsuario = usuarioVerificado.getCodigoUsuario();
 
         switch (acaoGanho) {
             case "cadastrar":

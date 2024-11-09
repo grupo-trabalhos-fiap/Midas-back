@@ -33,6 +33,21 @@ public class Usuario {
         this.senha = senha;
     }
 
+    // Sem Senha
+    public Usuario(
+            int codigoUsuario,
+            String nomeCompleto,
+            LocalDate dataNascimento,
+            char genero,
+            String email
+    ) {
+        this.codigoUsuario = codigoUsuario;
+        this.nomeCompleto = nomeCompleto;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.email = email;
+    }
+
     // Construtor com o código oculto
     public Usuario(
             String nomeCompleto,

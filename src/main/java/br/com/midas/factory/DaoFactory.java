@@ -13,7 +13,6 @@ public class DaoFactory {
     public static GanhoDao getGanhoDAO() {
         return new OracleGanhoDao();
     }
-
     public static DashboardDao getDashboardDAO() {
         return new OracleDashboardDao();
     }
@@ -22,5 +21,8 @@ public class DaoFactory {
     }
     public static InvestimentoDao getInvestimentoDAO() {
         return new OracleInvestimentoDao();
+    }
+    public static DividaDao getDividaDAO() {
+        return new OracleDividaDao();
     }
 }

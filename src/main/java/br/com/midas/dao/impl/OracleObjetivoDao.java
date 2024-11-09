@@ -73,9 +73,10 @@ public class OracleObjetivoDao implements ObjetivoDao {
                 LocalDate dataObjetivo = LocalDate.parse(resultado.getString("dt_objetivo"),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 String descricaoObjetivo = resultado.getString("ds_objetivo");
+                String dsConcluido = resultado.getString("ds_concluido"); // Recuperando o status de conclusão
 
                 Objetivo objetivo = new Objetivo(codigoObjetivo, codigoUsuario, nomeObjetivo, valorObjetivo, dataObjetivo,
-                        descricaoObjetivo);
+                        descricaoObjetivo, dsConcluido); // Passando o status para o construtor
                 objetivos.add(objetivo);
             }
         } catch (SQLException e) {
@@ -91,8 +92,37 @@ public class OracleObjetivoDao implements ObjetivoDao {
         return objetivos;
     }
 
-    @Override
-    public void atualizar(Objetivo objetivo) throws DBException {
+    // Novo método para atualizar o status do objetivo
+    public void atualizarStatus(Objetivo objetivo) throws DBException {
+        PreparedStatement stmt = null;
+
+        try {
+            conexao = ConnectionFactory.getInstance().getConnection();
+
+            String sql = "UPDATE T_MSF_OBJETIVOS SET " +
+                    "ds_concluido = ? " +
+                    "WHERE cd_objetivo = ?";
+
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, objetivo.getDsConcluido());
+            stmt.setInt(2, objetivo.getCodigoObjetivo());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException("Erro ao atualizar o status.");
+        } finally {
+            try {
+                stmt.close();
+                conexao.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Novo método para editar os outros atributos do objetivo
+    public void editarObjetivo(Objetivo objetivo) throws DBException {
         PreparedStatement stmt = null;
 
         try {
@@ -118,7 +148,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DBException("Erro ao atualizar.");
+            throw new DBException("Erro ao editar o objetivo.");
         } finally {
             try {
                 Objects.requireNonNull(stmt).close();
@@ -128,6 +158,7 @@ public class OracleObjetivoDao implements ObjetivoDao {
             }
         }
     }
+
 
     @Override
     public void remover(int codigoObjetivo) throws DBException {

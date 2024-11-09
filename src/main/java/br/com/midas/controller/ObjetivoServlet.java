@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/objetivos")
@@ -46,7 +47,37 @@ public class ObjetivoServlet extends HttpServlet {
             case "excluir":
                 excluir(req, resp);
                 break;
+            case "concluir":
+                concluirObjetivo(req, resp);
+                break;
         }
+    }
+
+    private void concluirObjetivo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            int codigoObjetivo = Integer.parseInt(req.getParameter("codigoConclusao"));
+            String statusConclusao = req.getParameter("statusConclusao");
+
+            String novoStatus = "F"; // Default: não concluído
+            if (statusConclusao.equals("T")) {
+                novoStatus = "F"; // Inverte o status
+            } else {
+                novoStatus = "T"; // Inverte o status
+            }
+
+            // Atualizar o status do objetivo no DAO
+            Objetivo objetivo = new Objetivo(codigoObjetivo, novoStatus); // Passando o novo status
+            dao.atualizarStatus(objetivo); // Usar o método correto do DAO
+
+            req.setAttribute("mensagem", "Objetivo atualizado!");
+        } catch (DBException db) {
+            db.printStackTrace();
+            req.setAttribute("erro", "Erro ao atualizar o status do objetivo.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("erro", "Erro ao atualizar o status do objetivo.");
+        }
+        listar(req, resp);
     }
 
     private void cadastrar(HttpServletRequest req, HttpServletResponse resp, int codigoUsuario)
@@ -57,13 +88,18 @@ public class ObjetivoServlet extends HttpServlet {
             LocalDate dataObjetivo = LocalDate.parse(req.getParameter("dataObjetivo"));
             String descricaoObjetivo = req.getParameter("descricaoObjetivo");
 
+            // Não precisa do codigoObjetivo aqui!
+            // String[] concluidos = req.getParameterValues("concluido_" + codigoObjetivo);
+            String dsConcluido = "F"; // Default: não concluído
+
             Objetivo objetivo = new Objetivo(
-                    0,
+                    0, // Código do objetivo será gerado automaticamente
                     codigoUsuario,
                     nomeObjetivo,
                     valorObjetivo,
                     dataObjetivo,
-                    descricaoObjetivo
+                    descricaoObjetivo,
+                    dsConcluido
             );
 
             dao.cadastrar(objetivo);
@@ -90,15 +126,23 @@ public class ObjetivoServlet extends HttpServlet {
             LocalDate dataObjetivo = LocalDate.parse(req.getParameter("dataObjetivo"));
             String descricaoObjetivo = req.getParameter("descricaoObjetivo");
 
+            // Obter o status do checkbox
+            String[] concluidos = req.getParameterValues("concluido_" + codigoObjetivo);
+            String dsConcluido = "F"; // Default: não concluído
+            if (concluidos != null && Arrays.asList(concluidos).contains(String.valueOf(codigoObjetivo))) {
+                dsConcluido = "T"; // Concluído
+            }
+
             Objetivo objetivo = new Objetivo(
                     codigoObjetivo,
                     nomeObjetivo,
                     valorObjetivo,
                     dataObjetivo,
-                    descricaoObjetivo
+                    descricaoObjetivo,
+                    dsConcluido
             );
 
-            dao.atualizar(objetivo);
+            dao.editarObjetivo(objetivo); // Usar o método correto do DAO
 
             req.setAttribute("mensagem", "Objetivo atualizado!");
         } catch (DBException db) {
@@ -136,6 +180,20 @@ public class ObjetivoServlet extends HttpServlet {
 
         List<Objetivo> objetivos = dao.getAll(codigoUsuario);
         req.setAttribute("objetivos", objetivos);
+
+        // Calcular a porcentagem de objetivos concluídos
+        int objetivosConcluidos = 0;
+        for (Objetivo objetivo : objetivos) {
+            if (objetivo.getDsConcluido().equals("T")) {
+                objetivosConcluidos++;
+            }
+        }
+        int porcentagemObjetivos = 0;
+        if (objetivos.size() > 0) {
+            porcentagemObjetivos = (objetivosConcluidos * 100) / objetivos.size();
+        }
+        req.setAttribute("porcentagemObjetivos", porcentagemObjetivos);
+
         req.getRequestDispatcher("/resources/pages/Objetivos.jsp").forward(req, resp);
     }
 }

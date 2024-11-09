@@ -57,7 +57,7 @@
             <a href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar" class="footer-link">Investimentos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp" class="footer-link">Dívidas</a>
+            <a href="${pageContext.request.contextPath}/dividas?acaoDivida=cadastrar" class="footer-link">Dívidas</a>
           </li>
         </ul>
       </div>

@@ -3,7 +3,8 @@ package br.com.midas.model;
 import java.time.LocalDate;
 
 public class Divida {
-    private Long codigoDivida;
+    private int codigoDivida;
+    private int cdUsuario;
     private double valorDivida;
     private LocalDate dataPagamento; // dd/mm/aaaa
     private boolean paga;
@@ -15,12 +16,32 @@ public class Divida {
     }
 
     // Construtor com todos os atributos obrigatórios
-    public Divida(Long codigo, double valorDivida, LocalDate dataPagamento, boolean paga, double juros,
+    public Divida(int codigoDivida, int codigoUsuario, double valorDivida, LocalDate dataPagamento, boolean paga, double juros,
             LocalDate dataDivida) {
-        this.codigoDivida = codigo;
+        this.codigoDivida = codigoDivida;
+        this.cdUsuario = codigoUsuario;
         this.valorDivida = valorDivida;
         this.dataPagamento = dataPagamento;
         this.paga = paga;
+        this.juros = juros;
+        this.dataDivida = dataDivida;
+    }
+
+    public Divida(int codigoDivida, int codigoUsuario, double valorDivida, LocalDate dataPagamento, double juros,
+                  LocalDate dataDivida) {
+        this.codigoDivida = codigoDivida;
+        this.cdUsuario = codigoUsuario;
+        this.valorDivida = valorDivida;
+        this.dataPagamento = dataPagamento;
+        this.juros = juros;
+        this.dataDivida = dataDivida;
+    }
+
+    public Divida(int codigoDivida, double valorDivida, LocalDate dataPagamento, double juros,
+                  LocalDate dataDivida) {
+        this.codigoDivida = codigoDivida;
+        this.valorDivida = valorDivida;
+        this.dataPagamento = dataPagamento;
         this.juros = juros;
         this.dataDivida = dataDivida;
     }
@@ -35,12 +56,20 @@ public class Divida {
     }
 
     // Métodos getters e setters
-    public Long getCodigoDivida() {
+    public int getCodigoDivida() {
         return codigoDivida;
     }
 
-    public void setCodigoDivida(Long codigoDivida) {
+    public void setCodigoDivida(int codigoDivida) {
         this.codigoDivida = codigoDivida;
+    }
+
+    public int getCdUsuario() {
+        return cdUsuario;
+    }
+
+    public void setCdUsuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
     }
 
     public double getValorDivida() {

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -68,30 +70,25 @@
             </div>
             <div class="linha-modal"></div>
             <!-- formulário modal -->
-            <form>
+            <form action="${pageContext.request.contextPath}/dividas?acaoDivida=cadastrar" method="post">
                 <div class="modal-body">
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="R$00,00" required>
+                        <input type="text" class="form-control" id="floatingInput" name="valorDivida" placeholder="R$00,00" required>
                         <label for="floatingInput">Valor</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="floatingdata" required>
+                        <input type="date" class="form-control" name="dataPagamento" id="floatingdata" required>
                         <label for="floatingdata" class="col-form-label">Data do vencimento/pagamento</label>
                     </div>
                     <div class="mb-3">
                         <label for="customRange3" class="form-label ms-3">Porcentagem de juros</label>
-                        <input type="range" class="form-range" min="0" max="100" step="5" id="customRange3" oninput="updateValue(this.value)">
+                        <input type="range" class="form-range" name="juros" min="0" max="100" step="5" id="customRange3" oninput="updateValue(this.value)">
                         <div id="rangeValue" class="range-value">0</div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="floatingdata2">
+                        <input type="date" class="form-control" name="dataDivida" id="floatingdata2">
                         <label for="floatingdata2" class="col-form-label">Data da dívida</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                            <textarea class="form-control" id="floatingdesc"
-                                      placeholder="motivo do recebimento"></textarea>
-                        <label for="floatingdesc" class="col-form-label">Breve descrição</label>
                     </div>
                 </div>
 
@@ -99,7 +96,7 @@
                 <!-- botões modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn salvar">Salvar dívida</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar dívida</button>
                 </div>
 
             </form>
@@ -132,11 +129,6 @@
             </th>
             <th>
                 <div class="colunas">
-                    Descrição
-                </div>
-            </th>
-            <th>
-                <div class="colunas">
                     Data Dívida
                 </div>
             </th>
@@ -155,7 +147,6 @@
             <td data-label="Data Venc.">dd/mm/aaaa</td>
             <td data-label="Valor">R$00,00</td>
             <td data-label="Juros">00%</td>
-            <td data-label="Descrição">Breve descrição sobre o gasto</td>
             <td data-label="Data Dívida">dd/mm/aaaa</td>
             <td data-label="#" class="funções">
                 <div class="botoes">
@@ -173,34 +164,154 @@
                 </div>
             </td>
         </tr>
-        <tr>
-            <td data-label="DataVenc">dd/mm/aaaa</td>
-            <td data-label="Valor">R$00,00</td>
-            <td data-label="Juros">00%</td>
-            <td data-label="Descrição">Breve descrição sobre o gasto</td>
-            <td data-label="DataDiv">dd/mm/aaaa</td>
-            <td data-label="#" class="funções">
-                <div class="botoes">
-                    <button type="button" class="btn editar">
+        <!-- fim conteúdo de exemplo -->
+        <c:forEach items="${dividas}" var="divida">
+            <tr>
+                <td data-label="Data Venc.">
+                    <fmt:parseDate value="${divida.dataPagamento}" pattern="yyyy-MM-dd" var="dataPgmtFmt"/>
+                    <fmt:formatDate value="${dataPgmtFmt}" pattern="dd/MM/yyyy"/>
+                </td>
+                <td data-label="Valor"><fmt:formatNumber value="${divida.valorDivida}"/></td>
+                <td data-label="Juros"><fmt:formatNumber value="${divida.juros}"/></td>
+                <td data-label="Data Dívida">
+                    <fmt:parseDate value="${divida.dataDivida}" pattern="yyyy-MM-dd" var="dataDividaFmt"/>
+                    <fmt:formatDate value="${dataDividaFmt}" pattern="dd/MM/yyyy"/>
+                </td>
+                <td data-label="#" class="funções">
+                    <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
+                            onclick="codigoEditarDivida.value = ${divida.codigoDivida};
+                                    valorDividaEditar.value = '${divida.valorDivida}';
+                                    dataPagamentoEditar.value = '${divida.dataPagamento}';
+                                    jurosEditar.value = '${divida.juros}';
+                                    dataDividaEditar.value = '${divida.dataDivida}';"
+                    >
                         <i class="bi bi-pencil-square"></i> Editar
                     </button>
-                    <button type="button" class="btn excluir">
+                    <button type="button" class="btn excluir" data-bs-toggle="modal"
+                            data-bs-target="#excluirModal"
+                            onclick="codigoExcluir.value = ${divida.codigoDivida}">
                         <i class="bi bi-trash3-fill"></i> Excluir
                     </button>
-                </div>
-                <div class="form-check">
-                    <h4 class="dsPaga">Dívida paga</h4>
-                    <input class="form-check-input" type="checkbox" id="customCheckbox2">
-                    <label class="form-check-label" for="customCheckbox2"></label>
-                </div>
-            </td>
-        </tr>
+                    <div class="form-check">
+                        <h4 class="dsPaga">Dívida paga</h4>
+                        <input class="form-check-input" type="checkbox" id="customCheckbox2">
+                        <label class="form-check-label" for="customCheckbox2"></label>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
-        <!-- fim conteúdo de exemplo -->
     </table>
 </div>
 <!-- fim tabela de dividas -->
+<!-- Modal - Editar Ganho -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="editarModalLabel">Editar Divida</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="linha-modal"></div>
+            <c:choose>
+                <c:when test="${not empty mensagem}">
+                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
+                            ${mensagem}
+                    </div>
+                </c:when>
+                <c:when test="${not empty erro}">
+                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
+                            ${erro}
+                    </div>
+                </c:when>
+            </c:choose>
+            <form action="${pageContext.request.contextPath}/dividas?acaoDivida=editar" method="post">
+                <input type="hidden" name="codigoDivida" id="codigoEditarDivida">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="valorDividaEditar" name="valorDivida" placeholder="R$00,00" required>
+                        <label for="valorDividaEditar">Valor</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" name="dataPagamento" id="dataPagamentoEditar" required>
+                        <label for="dataPagamentoEditar" class="col-form-label">Data do vencimento/pagamento</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jurosEditar" class="form-label ms-3">Porcentagem de juros</label>
+                        <input type="range" class="form-range" name="juros" min="0" max="100" step="5" id="jurosEditar" oninput="updateValue(this.value)">
+                        <div id="rangeValue2" class="range-value">0</div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" name="dataDivida" id="dataDividaEditar">
+                        <label for="dataDividaEditar" class="col-form-label">Data da dívida</label>
+                    </div>
+                </div>
 
+                <div class="linha-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn fechar" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" value="Salvar" class="btn salvar">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal excluir -->
+<div
+        class="modal fade"
+        id="excluirModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel2">
+                    Confirmar Exclusão
+                </h1>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Você confirma a exclusão desta divida?</h4>
+                <p><strong>Atenção!</strong> Esta ação é irreversível.</p>
+            </div>
+            <div class="modal-footer">
+
+                <form action="${pageContext.request.contextPath}/dividas?acaoDivida=excluir" method="post">
+                    <input
+                            type="hidden"
+                            name="acao"
+                            value="excluir">
+                    <input
+                            type="hidden"
+                            name="codigoExcluir"
+                            id="codigoExcluir">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Não
+                    </button>
+                    <button
+                            type="submit"
+                            class="btn btn-danger">
+                        Sim
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal-->
 <%@include file="footer.jsp"%>
 
 <!-- link javascript para funcionamento do formulário conectado na tabela -->

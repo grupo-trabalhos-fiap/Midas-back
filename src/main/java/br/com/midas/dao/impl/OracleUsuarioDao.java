@@ -79,66 +79,6 @@ public class OracleUsuarioDao implements UsuarioDao {
     }
 
     @Override
-    public void deletarUsuario(int id) throws DBException {
-        PreparedStatement stmt = null;
-        String sql = "DELETE FROM T_MSF_USUARIO WHERE cd_usuario = ?";
-
-        try {
-            conexao = ConnectionFactory.getInstance().getConnection();
-            stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao deletar usuário.", e);
-            throw new DBException("Erro ao deletar usuário.");
-        } finally {
-            try {
-                Objects.requireNonNull(stmt).close();
-                conexao.close();
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Erro ao fechar recursos no método deletar.", e);
-            }
-        }
-    }
-
-    public Usuario buscarPorId(int id) throws DBException {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM T_MSF_USUARIO WHERE cd_usuario = ?";
-        Usuario usuario = null;
-
-        try {
-            conexao = ConnectionFactory.getInstance().getConnection();
-            stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, id);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                usuario = new Usuario(
-                        rs.getInt("cd_usuario"),
-                        rs.getString("nm_usuario"),
-                        rs.getDate("dt_nascimento").toLocalDate(),
-                        rs.getString("genero").charAt(0),
-                        rs.getString("email"),
-                        rs.getString("senha")
-                );
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao buscar usuário por ID.", e);
-            throw new DBException("Erro ao buscar usuário por ID.");
-        } finally {
-            try {
-                Objects.requireNonNull(stmt).close();
-                Objects.requireNonNull(rs).close();
-                conexao.close();
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Erro ao fechar recursos no método buscarPorId.", e);
-            }
-        }
-        return usuario;
-    }
-
-    @Override
     public Usuario validarUsuario(Usuario usuario) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -173,35 +113,6 @@ public class OracleUsuarioDao implements UsuarioDao {
                 logger.log(Level.SEVERE, "Erro ao fechar recursos no método validarUsuario.", e);
             }
         }
-        return null; // Retorna null se o usuário não for encontrado ou se ocorrer um erro
-    }
-
-    public int getCodigoUsuarioByEmail(String email) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String sql = "SELECT cd_usuario FROM T_MSF_USUARIO WHERE EMAIL = ?";
-        int codigoUsuario = -1;
-
-        try {
-            conexao = ConnectionFactory.getInstance().getConnection();
-            stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, email);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                codigoUsuario = rs.getInt("cd_usuario");
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao buscar código do usuário por email.", e);
-        } finally {
-            try {
-                Objects.requireNonNull(stmt).close();
-                Objects.requireNonNull(rs).close();
-                conexao.close();
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Erro ao fechar recursos no método getCodigoUsuarioByEmail.", e);
-            }
-        }
-        return codigoUsuario;
+        return null;
     }
 }

@@ -39,9 +39,6 @@ public class UsuarioServlet extends HttpServlet {
             case "editar":
                 editar(req, resp);
                 break;
-            case "excluir":
-                excluir(req, resp);
-                break;
             case "validar":
                 validar(req, resp);
                 break;
@@ -90,19 +87,6 @@ public class UsuarioServlet extends HttpServlet {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Erro ao atualizar usuário", e);
             req.setAttribute("erro", "Erro ao atualizar usuário. Por favor, valide os dados.");
-        }
-        listar(req, resp);
-    }
-
-    private void excluir(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            int codigoUsuario = Integer.parseInt(req.getParameter("codigoExcluir"));
-            dao.deletarUsuario(codigoUsuario);
-
-            req.setAttribute("mensagem", "Usuário excluído com sucesso!");
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Erro ao excluir usuário", e);
-            req.setAttribute("erro", "Erro ao excluir usuário.");
         }
         listar(req, resp);
     }

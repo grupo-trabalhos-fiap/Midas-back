@@ -5,6 +5,7 @@ import br.com.midas.dao.UsuarioDao;
 import br.com.midas.exception.EmailException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Usuario;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +25,15 @@ public class LoginServlet extends HttpServlet {
     private UsuarioDao usuarioDao;
     private EmailBo emailBo;
 
-    public LoginServlet() throws SQLException {
-        this.usuarioDao = DaoFactory.getUsuarioDAO();
-        this.emailBo = new EmailBo();
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        try {
+            this.usuarioDao = DaoFactory.getUsuarioDAO();
+            this.emailBo = new EmailBo();
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
@@ -37,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        redirecionarParaLogin(response);
+        redirecionarParaLogin(request, response);
     }
 
     private void realizarLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -58,16 +64,11 @@ public class LoginServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             session.setAttribute("usuarioVerificado", usuarioVerificado);
+            session.setAttribute("codigoUsuario", usuarioVerificado.getCodigoUsuario());
 
-            // Logando todas as informações do usuário
             logger.log(Level.INFO, "Login realizado com sucesso. Informações do usuário:");
-            logger.log(Level.INFO, "Código do usuário: {0}", usuarioVerificado.getCodigoUsuario());
-            logger.log(Level.INFO, "Nome completo: {0}", usuarioVerificado.getNomeCompleto());
-            logger.log(Level.INFO, "Data de nascimento: {0}", usuarioVerificado.getDataNascimento());
-            logger.log(Level.INFO, "Gênero: {0}", usuarioVerificado.getGenero());
-            logger.log(Level.INFO, "Email: {0}", usuarioVerificado.getEmail());
 
-            response.sendRedirect(request.getContextPath() + "/resources/pages/dashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/dashboard");
             enviarNotificacaoLogin(usuarioVerificado.getEmail());
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Erro ao redirecionar para o dashboard após login bem-sucedido", e);
@@ -94,9 +95,9 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private void redirecionarParaLogin(HttpServletResponse response) {
+    private void redirecionarParaLogin(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.sendRedirect("/resources/pages/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Erro ao redirecionar para a página de login", e);
         }

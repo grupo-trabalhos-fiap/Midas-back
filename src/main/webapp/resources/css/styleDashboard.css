@@ -19,7 +19,6 @@ body {
 }
 
 /* topo do dashboard */
-
 .topo-dash {
     margin-top: 130px;
     height: 20vh;
@@ -29,7 +28,6 @@ body {
 }
 
 /* parte esquerda do topo */
-
 .topo-esquerda {
     display: flex;
     justify-content: space-around;
@@ -62,7 +60,6 @@ body {
 }
 
 /* parte direita do topo */
-
 .topo-direita {
     width: 30%;
     height: 14rem;
@@ -110,7 +107,6 @@ body {
 }
 
 /* graficos do meio (abaixo do topo) */
-
 .graficos-meio {
     margin-top: 130px;
     display: flex;
@@ -165,7 +161,6 @@ body {
 }
 
 /* graficos da parte inferior (abaixo do meio) */
-
 .graficos-inferior {
     margin-top: 40px;
     margin-bottom: 50px;
@@ -208,11 +203,17 @@ body {
     background-color: var(--dourado);
 }
 
-.grafico2-inferior .inferior-grafico-investimentos, .grafico3-inferior .inferior-grafico-objetivos {
-    margin-top: 15px;
+/* Ajuste para rolagem e exibição no bloco de investimentos */
+.inferior-grafico-investimentos {
+    max-height: 150px; /* Defina o limite de altura desejado */
+    overflow-y: auto;  /* Adiciona uma barra de rolagem vertical */
+    padding-right: 10px; /* Espaço à direita para evitar que a rolagem sobreponha o texto */
 }
 
-.grafico2-inferior .inferior-grafico-investimentos h3, .grafico3-inferior .inferior-grafico-dividas h3 {
+.inferior-grafico-investimentos .investimento-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 1.1rem;
     text-align: center;
 }
@@ -257,10 +258,9 @@ body {
     background-color: transparent;
     border: 1px solid var(--branco);
 }
+
 /* RESPONSIVIDADE */
-
 @media (max-width: 300px) {
-
     .topo-esquerda {
         height: 8vh;
         padding: 0;
@@ -271,57 +271,45 @@ body {
 }
 
 @media (max-width: 435px) {
-
     .topo-esquerda {
         height: 40vh;
     }
-
     .topo-esquerda-textos h1, p {
         text-align: center;
     }
-
     .topo-esquerda-imagem img {
         display: none;
     }
-
 }
 
 @media (max-width: 991px) {
-
     .topo-esquerda {
         padding: 15px;
     }
-
     .topo-h1 {
         font-size: 1.5rem;
     }
-
     .topo-p {
         margin-top: 20px;
         font-size: .7rem;
         font-weight: 300;
     }
-
     .topo-esquerda {
         width: 100%;
     }
-
     .topo-direita {
         font-size: 1.2rem;
         margin-top: 50px;
         width: 100%;
     }
-
     .topo-direita-grafico, .meio-grafico {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
     .graficos-meio {
         margin-top: 400px;
     }
-
     .grafico1-meio, .grafico2-meio, .grafico3-meio, .grafico1-inferior, .grafico2-inferior, .grafico3-inferior {
         width: 100%;
         margin-top: 40px;

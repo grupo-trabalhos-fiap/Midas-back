@@ -26,7 +26,7 @@
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
               <li class="nav-item">
                 <i class="bi bi-grid-1x2-fill"></i>
-                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/resources/pages/dashboard.jsp">Dashboard</a>
+                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
               </li>
               <li class="nav-item perfil">
                 <i class="bi bi-person-circle"></i>

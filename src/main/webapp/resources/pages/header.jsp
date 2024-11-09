@@ -64,7 +64,7 @@
 
               <li class="nav-item">
                 <i class="bi bi-receipt"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/Dividas.jsp">Dívidas</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/dividas?acaoDivida=cadastrar">Dívidas</a>
               </li>
             </ul>
           </div>

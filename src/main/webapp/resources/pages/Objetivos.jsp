@@ -57,9 +57,9 @@
 <div class="container">
     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0"
          aria-valuemax="100">
-        <div class="progress-bar" style="width: 50%"></div>
+        <div class="progress-bar" style="width: 50%" id="progressBar"></div>
     </div>
-    <h1 class="porcentagemObj">50% dos objetivos concluídos</h1>
+    <h1 class="porcentagemObj" id="progressText">50% dos objetivos concluídos</h1>
 </div>
 <!-- fim barra de progresso -->
 <!-- botão - adicionar objetivo -->
@@ -197,7 +197,8 @@
                                     nomeObjetivoEditar.value = '${objetivo.nomeObjetivo}';
                                     valorObjetivoEditar.value = '${objetivo.valorObjetivo}';
                                     dataObjetivoEditar.value = '${objetivo.dataObjetivo}';
-                                    descricaoObjetivoEditar.value = '${objetivo.descricaoObjetivo}';">
+                                    descricaoObjetivoEditar.value = '${objetivo.descricaoObjetivo}';
+                                    statusObjetivoEditar.checked = ${objetivo.dsConcluido == 'T'};">
                         <i class="bi bi-pencil-square"></i> Editar
                     </button>
                     <button type="button" class="btn excluir" data-bs-toggle="modal"
@@ -205,10 +206,15 @@
                             onclick="codigoExcluir.value = ${objetivo.codigoObjetivo}">
                         <i class="bi bi-trash3-fill"></i> Excluir
                     </button>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="customCheckbox2">
-                        <label class="form-check-label" for="customCheckbox2"></label>
-                    </div>
+                    <button type="button" class="btn concluir" data-bs-toggle="modal"
+                            data-bs-target="#concluirModal"
+                            onclick="codigoConclusao.value = ${objetivo.codigoObjetivo};
+                                    statusConclusao.value = '${objetivo.dsConcluido}';">
+                        <i class="bi bi-check-circle-fill"
+                           <c:if test="${objetivo.dsConcluido == 'T'}">style="color:green;"</c:if>
+                           <c:if test="${objetivo.dsConcluido == 'F'}">style="color:gray;"</c:if>
+                        ></i>
+                    </button>
                 </td>
             </tr>
         </c:forEach>
@@ -218,8 +224,31 @@
 </div>
 <!-- fim tabela de objetivos -->
 
-<!-- Modal - Editar Objetivo -->
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal de Confirmação de Conclusão/Não Conclusão -->
+<div class="modal fade" id="concluirModal" tabindex="-1" aria-labelledby="concluirModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="concluirModalLabel">Confirmar Ação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="concluirModalBody">
+                Tem certeza que deseja mudar o status de conclusão?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <form action="${pageContext.request.contextPath}/objetivos?acao=concluir" method="post">
+                    <input type="hidden" name="codigoConclusao" id="codigoConclusao">
+                    <input type="hidden" name="statusConclusao" id="statusConclusao">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Edição de Objetivo -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -338,6 +367,16 @@
 
 <%@include file="links_footer.jsp"%>
 
+<script>
+    // Obter a porcentagem de objetivos concluídos do JSP
+    var porcentagem = parseInt("${porcentagemObjetivos}");
+
+    // Atualizar a barra de progresso
+    document.getElementById('progressBar').style.width = porcentagem + '%';
+
+    // Atualizar o texto da porcentagem
+    document.getElementById('progressText').textContent = porcentagem + '% dos objetivos concluídos';
+</script>
 </body>
 
 </html>

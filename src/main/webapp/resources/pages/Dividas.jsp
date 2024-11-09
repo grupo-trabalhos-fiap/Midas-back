@@ -43,6 +43,7 @@
                     Registre suas dívidas e monitore cada pagamento.
                     Com um acompanhamento eficaz, você se aproxima
                     cada vez mais da tranquilidade financeira!
+                </article>
             </section>
         </div>
     </div>
@@ -81,10 +82,9 @@
                         <input type="date" class="form-control" name="dataPagamento" id="floatingdata" required>
                         <label for="floatingdata" class="col-form-label">Data do vencimento/pagamento</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="customRange3" class="form-label ms-3">Porcentagem de juros</label>
-                        <input type="range" class="form-range" name="juros" min="0" max="100" step="5" id="customRange3" oninput="updateValue(this.value)">
-                        <div id="rangeValue" class="range-value">0</div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" name="juros" id="jurosInput" min="0" max="100" step="0.01" value="0">
+                        <label for="jurosInput">Porcentagem de juros (0-100)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" name="dataDivida" id="floatingdata2">
@@ -236,10 +236,9 @@
                         <input type="date" class="form-control" name="dataPagamento" id="dataPagamentoEditar" required>
                         <label for="dataPagamentoEditar" class="col-form-label">Data do vencimento/pagamento</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="jurosEditar" class="form-label ms-3">Porcentagem de juros</label>
-                        <input type="range" class="form-range" name="juros" min="0" max="100" step="5" id="jurosEditar" oninput="updateValue(this.value)">
-                        <div id="rangeValue2" class="range-value">0</div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" name="juros" id="jurosEditar" min="0" max="100" step="0.01" value="0">
+                        <label for="jurosInput">Porcentagem de juros (0-100)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" name="dataDivida" id="dataDividaEditar">
@@ -315,7 +314,7 @@
 <%@include file="footer.jsp"%>
 
 <!-- link javascript para funcionamento do formulário conectado na tabela -->
-<script src="../js/dividas.js"></script>
+<!-- <script src="../js/dividas.js"></script> -->
 
 <%@include file="links_footer.jsp"%>
 </body>

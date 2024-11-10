@@ -194,7 +194,7 @@
                 <td data-label="Descrição">${gasto.descricaoGasto}</td>
                 <td data-label="#" class="funções">
                     <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
-                            onclick="codigoGastoEditar.value = ${gasto.codigoGasto};
+                            onclick="codigoGastoEditar.value = '${gasto.codigoGasto}';
                                     valorGastoEditar.value = '${gasto.valorGasto}';
                                     dataGastoEditar.value = '${gasto.dataGasto}';
                                     categoriaEditar.value = '${gasto.categoria}';

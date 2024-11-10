@@ -13,10 +13,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OracleGastoDao implements GastoDao {
 
     private Connection conexao;
+    private static final Logger logger = Logger.getLogger(OracleGastoDao.class.getName());
 
     @Override
     public void cadastrarGasto(Gasto gasto) throws DBException {
@@ -105,6 +108,7 @@ public class OracleGastoDao implements GastoDao {
 
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, gasto.getValorGasto());
+
             // Convertendo LocalDate para String no formato dd/MM/yyyy
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataGastoFormatada = gasto.getDataGasto().format(formatter);
@@ -112,20 +116,31 @@ public class OracleGastoDao implements GastoDao {
             stmt.setString(3, gasto.getCategoria());
             stmt.setString(4, gasto.getDescricaoGasto());
             stmt.setInt(5, gasto.getCodigoGasto());
-            stmt.executeUpdate();
+
+            logger.log(Level.INFO, "SQL Executado: {0} com parâmetros: {1}, {2}, {3}, {4}, {5}",
+                    new Object[]{sql, gasto.getValorGasto(), dataGastoFormatada, gasto.getCategoria(), gasto.getDescricaoGasto(), gasto.getCodigoGasto()});
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated == 0) {
+                logger.log(Level.WARNING, "Nenhum gasto foi atualizado. Código de gasto: {0}", gasto.getCodigoGasto());
+            } else {
+                logger.log(Level.INFO, "Gasto atualizado com sucesso: Código de gasto: {0}", gasto.getCodigoGasto());
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao atualizar gasto no banco de dados", e);
             throw new DBException("Erro ao atualizar.");
         } finally {
             try {
-                stmt.close();
-                conexao.close();
+                if (stmt != null) stmt.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 
     @Override
     public void removerGasto(int codigoGasto) throws DBException {

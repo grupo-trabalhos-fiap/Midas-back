@@ -68,7 +68,7 @@
         <div class="footer_cadastro">
           <h3>Utilize o MIDAS</h3>
           <div class="botao2">
-            <a href="Cadastro_Usuario.jsp">
+            <a href="${pageContext.request.contextPath}/resources/pages/Cadastro_Usuario.jsp">
               <button>Cadastre-se</button>
             </a>
           </div>

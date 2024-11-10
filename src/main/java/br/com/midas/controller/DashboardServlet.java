@@ -69,10 +69,23 @@ public class DashboardServlet extends HttpServlet {
             double totalInvestido = dashboardDao.getTotalInvestido(codigoUsuario);
             Map<String, Double> investimentosPorTipo = dashboardDao.getValorInvestidoPorTipo(codigoUsuario);
             Map<String, Object> ultimoGasto = dashboardDao.getUltimoGasto(codigoUsuario);
-            double porcentagemObjetivosConcluidos = dashboardDao.getPorcentagemObjetivosConcluidos(codigoUsuario);
             List<Map<String, Object>> detalhesDividas = dashboardDao.getDetalhesDividas(codigoUsuario);
             double totalDividas = dashboardDao.getTotalDividas(codigoUsuario);
 
+            // Buscar os objetivos do usuário para calcular a porcentagem
+            List<Map<String, Object>> objetivos = dashboardDao.getDetalhesObjetivos(codigoUsuario);
+
+            // Calcular a porcentagem de objetivos concluídos
+            int objetivosConcluidos = 0;
+            for (Map<String, Object> objetivo : objetivos) {
+                if (objetivo.get("ds_concluido").equals("T")) {
+                    objetivosConcluidos++;
+                }
+            }
+            int porcentagemObjetivosConcluidos = 0;
+            if (objetivos.size() > 0) {
+                porcentagemObjetivosConcluidos = (objetivosConcluidos * 100) / objetivos.size();
+            }
 
             // Atributos para exibição no JSP
             req.setAttribute("nomeUsuario", nomeUsuario);
@@ -82,9 +95,9 @@ public class DashboardServlet extends HttpServlet {
             req.setAttribute("ultimoGasto", ultimoGasto);
             req.setAttribute("totalInvestido", totalInvestido);
             req.setAttribute("investimentosPorTipo", investimentosPorTipo);
-            req.setAttribute("porcentagemObjetivosConcluidos", porcentagemObjetivosConcluidos);
             req.setAttribute("detalhesDividas", detalhesDividas);
             req.setAttribute("totalDividas", totalDividas);
+            req.setAttribute("porcentagemObjetivosConcluidos", porcentagemObjetivosConcluidos); // Adicione o atributo
 
         } catch (DBException e) {
             logger.log(Level.SEVERE, "Erro ao carregar os dados do dashboard para o usuário: " + codigoUsuario, e);

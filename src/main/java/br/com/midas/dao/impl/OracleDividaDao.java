@@ -90,6 +90,34 @@ public class OracleDividaDao implements DividaDao {
         return dividas;
     }
 
+    @Override
+    public void atualizarStatusPagamento(Divida divida) throws DBException {
+        PreparedStatement stmt = null;
+
+        try {
+            conexao = ConnectionFactory.getInstance().getConnection();
+
+            String sql = "UPDATE T_MSF_DIVIDAS SET " +
+                    "ds_paga = ? " +
+                    "WHERE cd_divida = ?";
+
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, divida.getDsPaga());
+            stmt.setInt(2, divida.getCodigoDivida());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException("Erro ao atualizar o status de pagamento.");
+        } finally {
+            try {
+                stmt.close();
+                conexao.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void atualizarDivida(Divida divida) throws DBException {

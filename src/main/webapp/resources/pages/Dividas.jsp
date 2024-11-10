@@ -157,11 +157,9 @@
                         <i class="bi bi-trash3-fill"></i> Excluir
                     </button>
                 </div>
-                <div class="form-check">
-                    <h4 class="dsPaga">Dívida paga</h4>
-                    <input class="form-check-input" type="checkbox" id="customCheckbox">
-                    <label class="form-check-label" for="customCheckbox"></label>
-                </div>
+                <button>
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                </button>
             </td>
         </tr>
         <!-- fim conteúdo de exemplo -->
@@ -178,25 +176,31 @@
                     <fmt:formatDate value="${dataDividaFmt}" pattern="dd/MM/yyyy"/>
                 </td>
                 <td data-label="#" class="funções">
-                    <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
-                            onclick="codigoEditarDivida.value = ${divida.codigoDivida};
-                                    valorDividaEditar.value = '${divida.valorDivida}';
-                                    dataPagamentoEditar.value = '${divida.dataPagamento}';
-                                    jurosEditar.value = '${divida.juros}';
-                                    dataDividaEditar.value = '${divida.dataDivida}';"
-                    >
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </button>
-                    <button type="button" class="btn excluir" data-bs-toggle="modal"
-                            data-bs-target="#excluirModal"
-                            onclick="codigoExcluir.value = ${divida.codigoDivida}">
-                        <i class="bi bi-trash3-fill"></i> Excluir
-                    </button>
-                    <div class="form-check">
-                        <h4 class="dsPaga">Dívida paga</h4>
-                        <input class="form-check-input" type="checkbox" id="customCheckbox2">
-                        <label class="form-check-label" for="customCheckbox2"></label>
+                    <div class="botoes">
+                        <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
+                                onclick="codigoEditarDivida.value = ${divida.codigoDivida};
+                                        valorDividaEditar.value = '${divida.valorDivida}';
+                                        dataPagamentoEditar.value = '${divida.dataPagamento}';
+                                        jurosEditar.value = '${divida.juros}';
+                                        dataDividaEditar.value = '${divida.dataDivida}';"
+                        >
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </button>
+                        <button type="button" class="btn excluir" data-bs-toggle="modal"
+                                data-bs-target="#excluirModal"
+                                onclick="codigoExcluir.value = ${divida.codigoDivida}">
+                            <i class="bi bi-trash3-fill"></i> Excluir
+                        </button>
                     </div>
+                    <button type="button" class="btn concluir" data-bs-toggle="modal"
+                            data-bs-target="#concluirModal"
+                            onclick="codigoPagamento.value = ${divida.codigoDivida};
+                                    statusPagamento.value = '${divida.dsPaga}';">
+                        <i class="bi bi-check-circle-fill"
+                           <c:if test="${divida.dsPaga == 'T'}">style="color:green;"</c:if>
+                           <c:if test="${divida.dsPaga == 'F'}">style="color:gray;"</c:if>
+                        ></i>
+                    </button>
                 </td>
             </tr>
         </c:forEach>
@@ -204,6 +208,30 @@
     </table>
 </div>
 <!-- fim tabela de dividas -->
+
+<!-- Modal de Confirmação de Pagamento -->
+<div class="modal fade" id="concluirModal" tabindex="-1" aria-labelledby="concluirModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="concluirModalLabel">Confirmar Ação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="concluirModalBody">
+                Tem certeza que deseja mudar o status de pagamento?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <form action="${pageContext.request.contextPath}/dividas?acaoDivida=atualizarPagamento" method="post">
+                    <input type="hidden" name="codigoPagamento" id="codigoPagamento">
+                    <input type="hidden" name="statusPagamento" id="statusPagamento">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal - Editar Ganho -->
 <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

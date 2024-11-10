@@ -108,18 +108,12 @@
       <h3 class="h3-graficos-inferior">Objetivos</h3>
       <a href="${pageContext.request.contextPath}/objetivos" class="text-decoration-none">
         <button class="botao-graficos-meio">Acesse</button>
-      </a>
-    </div>
+      </a>      </div>
     <div class="inferior-grafico-objetivos">
-      <div class="progress" role="progressbar"
-           aria-label="Porcentagem de Objetivos Concluídos"
-           aria-valuenow="${porcentagemObjetivosConcluidos}"
-           aria-valuemin="0"
-           aria-valuemax="100"
-           style="height: 40px">
-        <div class="progress-bar" style="width: ${porcentagemObjetivosConcluidos}%"></div>
+      <div class="progress" role="progressbar" aria-label="Example 50px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 40px">
+        <div class="progress-bar" id="progressBarObjetivos"></div> <!-- Adicione um ID -->
       </div>
-      <h4>${porcentagemObjetivosConcluidos}% dos objetivos concluídos</h4>
+      <h4 id="progressTextObjetivos">50% dos objetivos concluídos</h4> <!-- Adicione um ID -->
     </div>
   </div>
 
@@ -158,5 +152,15 @@
 
 <%@include file="footer.jsp"%>
 <%@include file="links_footer.jsp"%>
+<script>
+  // Obter a porcentagem de objetivos concluídos do JSP
+  var porcentagemObjetivos = parseInt("${porcentagemObjetivosConcluidos}");
+
+  // Atualizar a barra de progresso
+  document.getElementById('progressBarObjetivos').style.width = porcentagemObjetivos + '%';
+
+  // Atualizar o texto da porcentagem
+  document.getElementById('progressTextObjetivos').textContent = porcentagemObjetivos + '% dos objetivos concluídos';
+</script>
 </body>
 </html>

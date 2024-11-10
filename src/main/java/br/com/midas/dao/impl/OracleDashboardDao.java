@@ -58,12 +58,6 @@ public class OracleDashboardDao implements DashboardDao {
     }
 
     @Override
-    public double getPorcentagemObjetivosConcluidos(int codigoUsuario) throws DBException {
-        String sql = "SELECT NVL((SUM(CASE WHEN DS_CONCLUIDO = 'T' THEN VL_OBJETIVO ELSE 0 END) / NULLIF(SUM(VL_OBJETIVO), 0)) * 100, 0) AS porcentagem FROM T_MSF_OBJETIVOS WHERE CD_USUARIO = ?";
-        return Math.round(executarConsultaSimplesDouble(sql, codigoUsuario, "porcentagem") * 100.0) / 100.0;
-    }
-
-    @Override
     public List<Map<String, Object>> getDetalhesDividas(int codigoUsuario) throws DBException {
         String sql = "SELECT dt_pagamento, vl_divida FROM T_MSF_DIVIDAS WHERE cd_usuario = ?";
         return executarConsultaListaDetalhes(sql, codigoUsuario);
@@ -129,6 +123,34 @@ public class OracleDashboardDao implements DashboardDao {
             logger.log(Level.SEVERE, "Erro ao buscar nome do usuário. SQL: " + sql, e);
             throw new DBException("Erro ao buscar nome do usuário.");
         }
+    }
+
+    public List<Map<String, Object>> getDetalhesObjetivos(int codigoUsuario) throws DBException {
+        String sql = "SELECT * FROM T_MSF_OBJETIVOS WHERE cd_usuario = ?";
+        return executarConsultaListaDetalhesObjetivos(sql, codigoUsuario);
+    }
+
+    private List<Map<String, Object>> executarConsultaListaDetalhesObjetivos(String sql, int codigoUsuario) throws DBException {
+        List<Map<String, Object>> objetivosList = new ArrayList<>();
+        try (Connection conexao = getConnection();
+             PreparedStatement stmt = prepararStatement(conexao, sql, codigoUsuario);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> objetivo = new HashMap<>();
+                objetivo.put("cd_objetivo", rs.getInt("cd_objetivo"));
+                objetivo.put("nm_objetivo", rs.getString("nm_objetivo"));
+                objetivo.put("vl_objetivo", rs.getDouble("vl_objetivo"));
+                objetivo.put("dt_objetivo", rs.getDate("dt_objetivo"));
+                objetivo.put("ds_objetivo", rs.getString("ds_objetivo"));
+                objetivo.put("ds_concluido", rs.getString("ds_concluido"));
+                objetivosList.add(objetivo);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Erro ao executar a consulta de detalhes de objetivos para o usuário: " + codigoUsuario, e);
+            throw new DBException("Erro ao buscar detalhes de objetivos.");
+        }
+        return objetivosList;
     }
 
     private Map<String, Double> executarConsultaInvestimentoPorTipo(String sql, int codigoUsuario) throws DBException {

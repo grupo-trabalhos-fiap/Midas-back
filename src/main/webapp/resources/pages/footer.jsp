@@ -26,7 +26,7 @@
             <h3>Início</h3>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/dashboard.jsp" class="footer-link">Home</a>
+            <a href="${pageContext.request.contextPath}/dashboard" class="footer-link">Home</a>
           </li>
           <li>
             <a href="${pageContext.request.contextPath}/resources/pages/perfil.jsp" class="footer-link">Perfil</a>

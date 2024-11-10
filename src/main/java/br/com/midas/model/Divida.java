@@ -10,6 +10,7 @@ public class Divida {
     private boolean paga;
     private double juros;
     private LocalDate dataDivida; // dd/mm/aaaa
+    private String dsPaga; // Atributo para o status de pagamento da dívida
 
     // Construtor padrão
     public Divida() {
@@ -17,7 +18,7 @@ public class Divida {
 
     // Construtor com todos os atributos obrigatórios
     public Divida(int codigoDivida, int codigoUsuario, double valorDivida, LocalDate dataPagamento, boolean paga, double juros,
-            LocalDate dataDivida) {
+                  LocalDate dataDivida) {
         this.codigoDivida = codigoDivida;
         this.cdUsuario = codigoUsuario;
         this.valorDivida = valorDivida;
@@ -53,6 +54,12 @@ public class Divida {
         this.paga = paga;
         this.juros = juros;
         this.dataDivida = dataDivida;
+    }
+
+    // Novo construtor que recebe apenas o codigoDivida e dsPaga
+    public Divida(int codigoDivida, String dsPaga) {
+        this.codigoDivida = codigoDivida;
+        this.dsPaga = dsPaga;
     }
 
     // Métodos getters e setters
@@ -110,5 +117,13 @@ public class Divida {
 
     public void setDataDivida(LocalDate dataDivida) {
         this.dataDivida = dataDivida;
+    }
+
+    public String getDsPaga() {
+        return dsPaga;
+    }
+
+    public void setDsPaga(String dsPaga) {
+        this.dsPaga = dsPaga;
     }
 }

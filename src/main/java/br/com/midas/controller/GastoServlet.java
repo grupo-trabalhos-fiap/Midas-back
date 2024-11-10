@@ -40,7 +40,7 @@ public class GastoServlet extends HttpServlet {
             case "cadastrar":
                 cadastrarGasto(req, resp, codigoUsuario);
                 break;
-            case "editar":
+            case "editarr":
                 editarGasto(req, resp);
                 break;
             case "excluir":
@@ -70,7 +70,7 @@ public class GastoServlet extends HttpServlet {
 
             req.setAttribute("mensagem", "Gasto cadastrado!");
             List<Gasto> gastos = dao.getAllGasto(codigoUsuario);
-            req.setAttribute("gastos", gastos); // Corrija para "ganhos"
+            req.setAttribute("gastos", gastos);
 
         } catch (DBException db) {
             db.printStackTrace();
@@ -84,7 +84,7 @@ public class GastoServlet extends HttpServlet {
 
     private void editarGasto(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            int codigoGasto = Integer.parseInt(req.getParameter("codigoGasto")); 
+            int codigoGasto = Integer.parseInt(req.getParameter("codigoGasto"));
             double valorGasto = Double.parseDouble(req.getParameter("valorGasto"));
             LocalDate dataGasto = LocalDate.parse(req.getParameter("dataGasto"));
             String categoria = req.getParameter("categoria");
@@ -131,11 +131,14 @@ public class GastoServlet extends HttpServlet {
     }
 
     private void listarGasto(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Obter o código do usuário da sessão
         HttpSession session = req.getSession();
         Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
 
+        // Recuperar e exibir os ganhos do usuário logado
         List<Gasto> gastos = dao.getAllGasto(codigoUsuario);
         req.setAttribute("gastos", gastos);
         req.getRequestDispatcher("/resources/pages/Gastos.jsp").forward(req, resp);
     }
+
 }

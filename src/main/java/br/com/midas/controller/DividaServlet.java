@@ -46,6 +46,9 @@ public class DividaServlet extends HttpServlet {
             case "excluir":
                 excluirDivida(req, resp);
                 break;
+            case "atualizarPagamento":
+                atualizarPagamento(req, resp);
+                break;
         }
     }
 
@@ -79,6 +82,34 @@ public class DividaServlet extends HttpServlet {
             req.setAttribute("erro", "Por favor, valide os dados");
         }
         req.getRequestDispatcher("/resources/pages/Dividas.jsp").forward(req, resp);
+    }
+
+    // Novo método para atualizar o status de pagamento da dívida
+    private void atualizarPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            int codigoDivida = Integer.parseInt(req.getParameter("codigoPagamento"));
+            String statusPagamento = req.getParameter("statusPagamento");
+
+            String novoStatus = "F"; // Default: não paga
+            if (statusPagamento.equals("T")) {
+                novoStatus = "F"; // Inverte o status
+            } else {
+                novoStatus = "T"; // Inverte o status
+            }
+
+            // Atualizar o status de pagamento da dívida no DAO
+            Divida divida = new Divida(codigoDivida, novoStatus); // Passando o novo status
+            dao.atualizarStatusPagamento(divida); // Usar o método correto do DAO
+
+            req.setAttribute("mensagem", "Status da dívida atualizado!");
+        } catch (DBException db) {
+            db.printStackTrace();
+            req.setAttribute("erro", "Erro ao atualizar o status da dívida.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("erro", "Erro ao atualizar o status da dívida.");
+        }
+        listarDivida(req, resp);
     }
 
     private void editarDivida(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

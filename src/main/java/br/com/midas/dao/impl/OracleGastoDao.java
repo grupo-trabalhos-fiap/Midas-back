@@ -51,7 +51,7 @@ public class OracleGastoDao implements GastoDao {
     }
 
     @Override
-    public List<Gasto> getAllGasto(int codigoUsuario){
+    public List<Gasto> getAllGasto(int codigoUsuario) {
         PreparedStatement stmt = null;
         List<Gasto> gastos = new ArrayList<>();
         ResultSet resultadoGasto = null;
@@ -66,28 +66,28 @@ public class OracleGastoDao implements GastoDao {
             while (resultadoGasto.next()) {
                 int codigoGasto = resultadoGasto.getInt("cd_gasto");
                 double valorGasto = resultadoGasto.getDouble("vl_gasto");
-                // Convertendo String para LocalDate
                 LocalDate dataGasto = LocalDate.parse(resultadoGasto.getString("dt_gasto"),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 String categoria = resultadoGasto.getString("categoria");
                 String descricaoGasto = resultadoGasto.getString("ds_gasto");
 
-                Gasto gasto = new Gasto(codigoGasto, codigoUsuario, valorGasto, dataGasto, categoria,
-                        descricaoGasto);
+
+                Gasto gasto = new Gasto(codigoGasto, codigoUsuario, valorGasto, dataGasto, categoria, descricaoGasto);
                 gastos.add(gasto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
-                conexao.close();
+                if (stmt != null) stmt.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return gastos;
     }
+
 
     @Override
     public void atualizarGasto(Gasto gasto) throws DBException {

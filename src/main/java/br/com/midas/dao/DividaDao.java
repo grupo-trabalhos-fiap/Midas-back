@@ -8,5 +8,6 @@ public interface DividaDao {
     void cadastrarDivida(Divida divida) throws DBException;
     void atualizarDivida(Divida divida) throws DBException;
     void removerDivida(int codigoDivida) throws DBException;
+    void atualizarStatusPagamento(Divida divida) throws DBException;
     List<Divida> getAllDivida(int codigoUsuario);
 }

@@ -4,11 +4,12 @@ import java.time.LocalDate;
 
 public class Objetivo {
     private int codigoObjetivo;
-    private int cdUsuario; // Adicione o atributo cdUsuario
+    private int cdUsuario;
     private String nomeObjetivo;
     private double valorObjetivo;
-    private LocalDate dataObjetivo; // dd/mm/aaaa
+    private LocalDate dataObjetivo;
     private String descricaoObjetivo;
+    private String dsConcluido; // Atributo para o status de conclusão
 
     // Construtor padrão
     public Objetivo() {
@@ -16,30 +17,40 @@ public class Objetivo {
 
     // Construtor com todos os atributos obrigatórios
     public Objetivo(int codigoObjetivo, String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo,
-            String descricaoObjetivo) {
+                    String descricaoObjetivo, String dsConcluido) {
         this.codigoObjetivo = codigoObjetivo;
         this.nomeObjetivo = nomeObjetivo;
         this.valorObjetivo = valorObjetivo;
         this.dataObjetivo = dataObjetivo;
         this.descricaoObjetivo = descricaoObjetivo;
+        this.dsConcluido = dsConcluido; // Adicionando o status de conclusão
     }
 
     // Construtor com o código oculto
-    public Objetivo(String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo, String descricaoObjetivo) {
+    public Objetivo(String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo, String descricaoObjetivo, String dsConcluido) {
         this.nomeObjetivo = nomeObjetivo;
         this.valorObjetivo = valorObjetivo;
         this.dataObjetivo = dataObjetivo;
         this.descricaoObjetivo = descricaoObjetivo;
+        this.dsConcluido = dsConcluido; // Adicionando o status de conclusão
     }
 
-    public Objetivo(int codigoObjetivo, int codigoUsuario, String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo, String descricaoObjetivo) {
+    public Objetivo(int codigoObjetivo, int codigoUsuario, String nomeObjetivo, double valorObjetivo, LocalDate dataObjetivo, String descricaoObjetivo, String dsConcluido) {
         this.codigoObjetivo = codigoObjetivo;
-        this.cdUsuario = codigoUsuario; // Se você quiser manter o atributo Usuario
+        this.cdUsuario = codigoUsuario;
         this.nomeObjetivo = nomeObjetivo;
         this.valorObjetivo = valorObjetivo;
         this.dataObjetivo = dataObjetivo;
         this.descricaoObjetivo = descricaoObjetivo;
+        this.dsConcluido = dsConcluido; // Adicionando o status de conclusão
     }
+
+    // Construtor que recebe apenas codigoObjetivo e dsConcluido
+    public Objetivo(int codigoObjetivo, String dsConcluido) {
+        this.codigoObjetivo = codigoObjetivo;
+        this.dsConcluido = dsConcluido;
+    }
+
     // Métodos getters e setters
     public int getCodigoObjetivo() {
         return codigoObjetivo;
@@ -87,5 +98,13 @@ public class Objetivo {
 
     public void setDescricaoObjetivo(String descricaoObjetivo) {
         this.descricaoObjetivo = descricaoObjetivo;
+    }
+
+    public String getDsConcluido() {
+        return dsConcluido;
+    }
+
+    public void setDsConcluido(String dsConcluido) {
+        this.dsConcluido = dsConcluido;
     }
 }

@@ -132,6 +132,13 @@ public class GanhoServlet extends HttpServlet {
         // Obter o código do usuário da sessão
         HttpSession session = req.getSession();
         Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+
+        if (usuarioVerificado == null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         // Recuperar e exibir os ganhos do usuário logado
         List<Ganho> ganhos = dao.getAllGanho(codigoUsuario);

@@ -6,9 +6,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-
   <%@include file="links_header.jsp"%>
-
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styleDashboard.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_footer.css">
 </head>

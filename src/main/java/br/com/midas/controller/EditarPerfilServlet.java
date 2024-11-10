@@ -8,10 +8,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
-@WebServlet("/editarPerfil")
+@WebServlet("/perfil")
 public class EditarPerfilServlet extends HttpServlet {
 
     private UsuarioDao usuarioDao;
@@ -56,4 +58,20 @@ public class EditarPerfilServlet extends HttpServlet {
             req.getRequestDispatcher("/resources/pages/perfil.jsp").forward(req, resp);
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+
+        if (usuarioVerificado == null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        req.setAttribute("usuario", usuarioVerificado);
+        req.getRequestDispatcher("/resources/pages/perfil.jsp").forward(req, resp);
+    }
+
 }

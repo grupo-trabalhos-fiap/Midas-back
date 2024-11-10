@@ -194,12 +194,11 @@
                 <td data-label="Descrição">${gasto.descricaoGasto}</td>
                 <td data-label="#" class="funções">
                     <button type="button" class="btn editar" data-bs-toggle="modal" data-bs-target="#editarModal"
-                            onclick="codigoEditarGasto.value = ${gasto.codigoGasto};
+                            onclick="codigoGastoEditar.value = '${gasto.codigoGasto}';
                                     valorGastoEditar.value = '${gasto.valorGasto}';
                                     dataGastoEditar.value = '${gasto.dataGasto}';
                                     categoriaEditar.value = '${gasto.categoria}';
-                                    descricaoGastoEditar.value = '${gasto.dataGasto}';"
-                    >
+                                    descricaoGastoEditar.value = '${gasto.descricaoGasto}';">
                         <i class="bi bi-pencil-square"></i> Editar
                     </button>
                     <button type="button" class="btn excluir" data-bs-toggle="modal"
@@ -217,7 +216,7 @@
 </div>
 <!-- fim tabela de gastos -->
 
-<!-- Modal - Editar gastos -->
+<!-- Modal - Editar Gasto -->
 <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -226,23 +225,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="linha-modal"></div>
-            <c:choose>
-                <c:when test="${not empty mensagem}">
-                    <div class="alert alert-success ms-2 me-2 m-auto mt-2">
-                            ${mensagem}
-                    </div>
-                </c:when>
-                <c:when test="${not empty erro}">
-                    <div class="alert alert-danger ms-2 me-2 m-auto mt-2">
-                            ${erro}
-                    </div>
-                </c:when>
-            </c:choose>
-            <form action="${pageContext.request.contextPath}/gastos?acaoGasto=editarr" method="post">
-                <input type="hidden" name="codigoGasto" id="codigoEditarGasto">
+            <form action="${pageContext.request.contextPath}/gastos?acaoGasto=editar" method="post">
+                <input type="hidden" name="codigoGasto" id="codigoGastoEditar">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="valorGastoEditar" name="valorGasto" placeholder="R$00,00" required>
+                        <input type="text" class="form-control" name="valorGasto" id="valorGastoEditar" placeholder="R$00,00" required>
                         <label for="valorGastoEditar">Valor</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -267,8 +254,8 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                            <textarea class="form-control" name="descricaoGasto" id="descricaoGastoEditar"
-                                      placeholder="motivo do gasto"></textarea>
+                        <textarea class="form-control" name="descricaoGasto" id="descricaoGastoEditar"
+                                  placeholder="motivo do gasto"></textarea>
                         <label for="descricaoGastoEditar" class="col-form-label">Breve descrição</label>
                     </div>
                 </div>

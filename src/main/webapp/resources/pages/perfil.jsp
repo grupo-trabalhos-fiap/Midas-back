@@ -19,7 +19,7 @@
 
 <section class="container boas-vindas">
     <div class="boas-vindas-textos">
-        <h1>Olá, usuário!</h1>
+        <h1>Olá, ${usuario.nomeCompleto}!</h1>
         <p>Seja bem-vindo ao seu perfil pessoal.</p>
     </div>
     <div class="boas-vindas-imagem">
@@ -69,7 +69,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <form id="modalForm" action="${pageContext.request.contextPath}/editarPerfil" method="post">
+                        <form id="modalForm" action="${pageContext.request.contextPath}/perfil" method="post">
                             <input type="hidden" name="codigoUsuario" value="${codigoUsuario}">
                             <div class="mb-3">
                                 <label for="nomeCompletoModal" class="form-label label-nome-completo">Nome completo</label>

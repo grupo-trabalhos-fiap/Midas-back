@@ -25,4 +25,7 @@ public class DaoFactory {
     public static DividaDao getDividaDAO() {
         return new OracleDividaDao();
     }
+    public static CalendarioDao getCalendarioDAO() {
+        return new OracleCalendarioDao();
+    }
 }

@@ -42,7 +42,7 @@ public class DashboardServlet extends HttpServlet {
         Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
 
         if (usuarioVerificado == null) {
-            logger.log(Level.WARNING, "Tentativa de acesso ao dashboard sem um usuário autenticado.");
+            session.invalidate();
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
@@ -61,7 +61,6 @@ public class DashboardServlet extends HttpServlet {
         int codigoUsuario = usuario.getCodigoUsuario();
 
         try {
-            // Carregamento das informações do usuário para o dashboard
             String nomeUsuario = dashboardDao.getNomeUsuario(codigoUsuario);
             double totalGanhos = dashboardDao.getTotalGanhos(codigoUsuario);
             double totalGastos = dashboardDao.getTotalGastos(codigoUsuario);
@@ -87,7 +86,6 @@ public class DashboardServlet extends HttpServlet {
                 porcentagemObjetivosConcluidos = (objetivosConcluidos * 100) / objetivos.size();
             }
 
-            // Atributos para exibição no JSP
             req.setAttribute("nomeUsuario", nomeUsuario);
             req.setAttribute("totalGanhos", totalGanhos);
             req.setAttribute("totalGastos", totalGastos);

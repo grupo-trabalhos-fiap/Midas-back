@@ -48,7 +48,6 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private void cadastrar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("CADASTRANDO USUÁRIO");
         try {
             String nomeCompleto = req.getParameter("nomeCompleto");
             LocalDate dataNascimento = LocalDate.parse(req.getParameter("dataNascimento"));
@@ -109,11 +108,6 @@ public class UsuarioServlet extends HttpServlet {
             logger.log(Level.SEVERE, "Erro ao validar usuário", e);
             req.setAttribute("erro", "Erro ao validar usuário.");
         }
-        listar(req, resp);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         listar(req, resp);
     }
 

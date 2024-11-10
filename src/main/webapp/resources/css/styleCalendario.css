@@ -1,7 +1,8 @@
+/* Configurações globais */
 * {
     font-family: "Poppins", sans-serif;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -12,172 +13,103 @@
     --bege: #F1EBD5;
 }
 
-.imagemprincipal img {
-    margin-top: 30px;
-}
-
-/* conteúdo da direita - título e subtítulo */
-.conteudodireito {
+/* Container principal */
+.container-calendario {
+    margin: 160px 100px 100px 100px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.textoprincipal h1 {
-    font-size: 4rem;
-    color: var(--vermelho);
-    text-align: end;
-    margin-top: 10%;
-}
-
-/* efeito de digitação em "Calendário" */
-.textoprincipal .digitando {
-    color: var(--dourado);
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0 auto;
-    animation: typing 3s steps(40, end);
-
-}
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-}
-
-.textoprincipal .digitando::before {
-    content: "";
-    display: inline-block;
-    width: 0;
-    height: 1em;
-    background-color: transparent;
-    animation: cursor-hide 0.5s step-start;
-}
-
-@keyframes cursor-hide {
-
-    from,
-    to {
-        width: 0;
-    }
-
-    50% {
-        width: 1em;
-    }
-}
-
-/* fim efeito de digitação em "Calendário" */
-
-.subtitulo{
-    font-size: 1.6rem;
-    text-align: end;
-    color: #3B3A3A;
-}
-
-/* primeiro container responsivo */
-
-@media (max-width: 1000px) {
-
-    .textoprincipal h1,
-    .subtitulo {
-        text-align: center;
-    }
-
-    .textoprincipal h1 {
-        font-size: 2.5rem;
-    }
-
-    .subtitulo {
-        font-size: 1.5rem;
-    }
-
-    .imagemprincipal img {
-        margin-top: 0;
-    }
-}
-
-/* fim primeiro container */
-
-/* Fundo do calendário */
-#datepicker {
-    background-color: var(--bege); /* Cor de fundo */
-    border: 1px solid var(--bege); /* Borda */
-}
-
-/* Cabeçalho - mês e ano */
-#datepicker .datepicker-switch {
-    background-color: var(--vermelho); /* Cor do fundo do cabeçalho */
-    color: var(--branco); /* Cor do texto */
-    font-weight: bold;
-}
-
-/* Dias da semana (Seg, Ter...) */
-#datepicker .dow {
-    color: var(--vermelho); /* Cor do texto dos dias da semana */
-    background-color: var(--bege); /* Cor de fundo dos dias da semana */
-}
-
-/* Dias do mês */
-#datepicker .day {
-    color: var(--vermelho); /* Cor dos dias do mês */
-}
-
-/* Dias selecionados */
-#datepicker .day.active, #datepicker .day.active:hover {
-    color: #491717; /* Cor de fundo do dia ativo */
-    color: var(--dourado); /* Cor do texto do dia ativo */
-}
-
-/* Dias inativos (de outros meses) */
-#datepicker .day.old, #datepicker .day.new {
-    color: #cccccc; /* Cor dos dias de meses anteriores ou próximos */
-}
-
-/* Botões de navegação (anterior/próximo) */
-#datepicker .prev, #datepicker .next {
-    color: var(--vermelho); /* Cor dos ícones de navegação */
-}
-
-#datepicker {
-    width: 400px;  /* Aumenta a largura */
-    height: auto;  /* Ajusta a altura automaticamente */
-    font-size: 1.2em;  /* Aumenta a fonte para escalonar o conteúdo */
-}
-
-/* Aumenta o tamanho dos dias e do cabeçalho */
-#datepicker .day, #datepicker .datepicker-switch, #datepicker .dow {
-    font-size: 1.3em;  /* Aumenta a fonte dos dias e do cabeçalho */
-    padding: 10px;  /* Adiciona um espaçamento extra */
-}
-
-/* Aumenta os botões de navegação (anterior/próximo) */
-#datepicker .prev, #datepicker .next {
-    font-size: 1.5em; /* Tamanho maior para os botões de navegação */
-    padding: 0 10px;  /* Adiciona espaçamento lateral */
-}
-
-/* Explicação */
-.subtitulo2 h1{
-    font-size: 1.5rem;
-    color: #3B3A3A;
-}
-
-.positivo, .negativo{
-    display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
-.positivo img, .negativo img{
-    width: 4rem;
-    height: 4rem;
+/* Formulário de seleção de ano e mês */
+.container-calendario form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.imagemprincipal2 img {
-    margin-top: 2rem;
+.container-calendario label {
+    font-size: 1rem;
+    color: var(--vermelho);
+}
+
+.container-calendario input[type="number"],
+.container-calendario select {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid var(--vermelho);
+    border-radius: 5px;
+}
+
+.container-calendario button {
+    padding: 5px 10px;
+    font-size: 1rem;
+    background-color: var(--dourado);
+    color: var(--branco);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container-calendario h2 {
+    color: var(--vermelho);
+    margin-bottom: 20px;
+}
+
+/* Estrutura do calendário */
+.calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    background-color: var(--bege);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.dia {
+    background-color: var(--branco);
+    border: 1px solid var(--vermelho);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 150px; /* Altura fixa para uniformidade */
+    overflow-y: auto; /* Barra de rolagem para conteúdo excedente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adicionado sombra no hover */
+}
+
+.dia:hover {
+    transform: scale(2); /* Aumenta o tamanho da div em 100% */
+    background-color: var(--branco); /* Mantém o fundo branco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor para realçar */
+    border-color: var(--bege)
+}
+
+.dia .data {
+    font-weight: bold;
+    color: var(--vermelho);
+    margin-bottom: 5px;
+}
+
+/* Lista de eventos do dia */
+.eventos {
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+
+.eventos .tipo {
+    font-weight: bold;
+    color: var(--vermelho); /* Ajuste para vermelho suave */
+}
+
+.dia:hover .eventos li,
+.dia:hover .eventos .tipo {
+    font-size: 80%; /* Define o tamanho da fonte apenas quando o mouse está sobre o dia */
 }

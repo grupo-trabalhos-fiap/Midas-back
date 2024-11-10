@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -32,6 +33,9 @@ public class CalendarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        int codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+
         int anoAtual = LocalDate.now().getYear();
         int mesAtual = LocalDate.now().getMonthValue();
 
@@ -48,8 +52,8 @@ public class CalendarioServlet extends HttpServlet {
         }
 
         try {
-            // Busca todos os eventos do mês e ano especificados
-            List<Evento> eventos = calendarioDao.getEventosPorMesEAno(ano, mes);
+            // Busca todos os eventos do mês e ano especificados para o usuário
+            List<Evento> eventos = calendarioDao.getEventosPorMesEAno(codigoUsuario, ano, mes);
 
             // Agrupa os eventos por dia
             Map<Integer, List<Evento>> eventosPorDia = new HashMap<>();
@@ -69,8 +73,8 @@ public class CalendarioServlet extends HttpServlet {
             }
 
             // Resgata ano do primeiro evento registrado pelo usuário
-            int anoPrimeiroEvento = calendarioDao.getAnoPrimeiroEvento();
-            logger.log(Level.INFO, "Ano: " + anoPrimeiroEvento);
+            int anoPrimeiroEvento = calendarioDao.getAnoPrimeiroEvento(codigoUsuario);
+            logger.log(Level.INFO, "Ano do primeiro evento: " + anoPrimeiroEvento);
 
             // Atribui atributos para a JSP
             req.setAttribute("diasDoMes", diasDoMes);

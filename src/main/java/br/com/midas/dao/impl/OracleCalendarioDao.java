@@ -24,30 +24,31 @@ public class OracleCalendarioDao implements CalendarioDao {
     }
 
     @Override
-    public List<Evento> getEventosPorMesEAno(int ano, int mes) throws DBException {
+    public List<Evento> getEventosPorMesEAno(int userId, int ano, int mes) throws DBException {
         List<Evento> eventos = new ArrayList<>();
         String sql = "SELECT * FROM (" +
-                "    SELECT 'Dívida' AS TIPO, VL_DIVIDA AS VALOR, DT_PAGAMENTO AS DATA FROM T_MSF_DIVIDAS WHERE EXTRACT(YEAR FROM DT_PAGAMENTO) = ? AND EXTRACT(MONTH FROM DT_PAGAMENTO) = ? " +
+                "    SELECT 'Dívida' AS TIPO, VL_DIVIDA AS VALOR, DT_PAGAMENTO AS DATA FROM T_MSF_DIVIDAS WHERE CD_USUARIO = ? AND EXTRACT(YEAR FROM DT_PAGAMENTO) = ? AND EXTRACT(MONTH FROM DT_PAGAMENTO) = ? " +
                 "    UNION ALL " +
-                "    SELECT 'Ganho', VL_GANHO, DT_GANHO FROM T_MSF_GANHOS WHERE EXTRACT(YEAR FROM DT_GANHO) = ? AND EXTRACT(MONTH FROM DT_GANHO) = ? " +
+                "    SELECT 'Ganho', VL_GANHO, DT_GANHO FROM T_MSF_GANHOS WHERE CD_USUARIO = ? AND EXTRACT(YEAR FROM DT_GANHO) = ? AND EXTRACT(MONTH FROM DT_GANHO) = ? " +
                 "    UNION ALL " +
-                "    SELECT 'Gasto', VL_GASTO, DT_GASTO FROM T_MSF_GASTOS WHERE EXTRACT(YEAR FROM DT_GASTO) = ? AND EXTRACT(MONTH FROM DT_GASTO) = ? " +
+                "    SELECT 'Gasto', VL_GASTO, DT_GASTO FROM T_MSF_GASTOS WHERE CD_USUARIO = ? AND EXTRACT(YEAR FROM DT_GASTO) = ? AND EXTRACT(MONTH FROM DT_GASTO) = ? " +
                 "    UNION ALL " +
-                "    SELECT 'Investimento', VL_APLICACAO, DT_INVESTIMENTO FROM T_MSF_INVESTIMENTOS WHERE EXTRACT(YEAR FROM DT_INVESTIMENTO) = ? AND EXTRACT(MONTH FROM DT_INVESTIMENTO) = ? " +
+                "    SELECT 'Investimento', VL_APLICACAO, DT_INVESTIMENTO FROM T_MSF_INVESTIMENTOS WHERE CD_USUARIO = ? AND EXTRACT(YEAR FROM DT_INVESTIMENTO) = ? AND EXTRACT(MONTH FROM DT_INVESTIMENTO) = ? " +
                 "    UNION ALL " +
-                "    SELECT 'Objetivo', VL_OBJETIVO, DT_OBJETIVO FROM T_MSF_OBJETIVOS WHERE EXTRACT(YEAR FROM DT_OBJETIVO) = ? AND EXTRACT(MONTH FROM DT_OBJETIVO) = ? " +
+                "    SELECT 'Objetivo', VL_OBJETIVO, DT_OBJETIVO FROM T_MSF_OBJETIVOS WHERE CD_USUARIO = ? AND EXTRACT(YEAR FROM DT_OBJETIVO) = ? AND EXTRACT(MONTH FROM DT_OBJETIVO) = ? " +
                 ") ORDER BY DATA";
 
         try (Connection conexao = getConnection();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            // Set the year and month parameters for each UNION component
-            for (int i = 1; i <= 10; i += 2) {
-                stmt.setInt(i, ano);
-                stmt.setInt(i + 1, mes);
+            int index = 1;
+            for (int i = 0; i < 5; i++) {
+                stmt.setInt(index++, userId);
+                stmt.setInt(index++, ano);
+                stmt.setInt(index++, mes);
             }
 
-            logger.log(Level.INFO, "Executando query para obter eventos do mês {0} e ano {1}. SQL: {2}", new Object[]{mes, ano, sql});
+            logger.log(Level.INFO, "Executando query para obter eventos do mês {0} e ano {1} para o usuário {2}. SQL: {3}", new Object[]{mes, ano, userId, sql});
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -62,7 +63,7 @@ public class OracleCalendarioDao implements CalendarioDao {
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao obter eventos para o mês {0} e ano {1}.", new Object[]{mes, ano});
+            logger.log(Level.SEVERE, "Erro ao obter eventos para o mês {0} e ano {1} para o usuário {2}.", new Object[]{mes, ano, userId});
             throw new DBException("Erro ao obter eventos do calendário.", e);
         }
 
@@ -71,26 +72,32 @@ public class OracleCalendarioDao implements CalendarioDao {
     }
 
     @Override
-    public int getAnoPrimeiroEvento() throws DBException {
-        String sql = "SELECT MIN(EXTRACT(YEAR FROM DT_EVENTO)) AS ano_min FROM ("
-                + "SELECT DT_PAGAMENTO AS DT_EVENTO FROM T_MSF_DIVIDAS UNION ALL "
-                + "SELECT DT_GANHO FROM T_MSF_GANHOS UNION ALL "
-                + "SELECT DT_GASTO FROM T_MSF_GASTOS UNION ALL "
-                + "SELECT DT_INVESTIMENTO FROM T_MSF_INVESTIMENTOS UNION ALL "
-                + "SELECT DT_OBJETIVO FROM T_MSF_OBJETIVOS)";
-        try {
-            Connection connection = ConnectionFactory.getInstance().getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+    public int getAnoPrimeiroEvento(int userId) throws DBException {
+        String sql = "SELECT MIN(EXTRACT(YEAR FROM DT_EVENTO)) AS ano_min FROM (" +
+                "SELECT DT_PAGAMENTO AS DT_EVENTO FROM T_MSF_DIVIDAS WHERE CD_USUARIO = ? UNION ALL " +
+                "SELECT DT_GANHO FROM T_MSF_GANHOS WHERE CD_USUARIO = ? UNION ALL " +
+                "SELECT DT_GASTO FROM T_MSF_GASTOS WHERE CD_USUARIO = ? UNION ALL " +
+                "SELECT DT_INVESTIMENTO FROM T_MSF_INVESTIMENTOS WHERE CD_USUARIO = ? UNION ALL " +
+                "SELECT DT_OBJETIVO FROM T_MSF_OBJETIVOS WHERE CD_USUARIO = ?)";
 
-            if (rs.next()) {
-                return rs.getInt("ano_min");
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            for (int i = 1; i <= 5; i++) {
+                stmt.setInt(i, userId);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("ano_min");
+                }
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao buscar o ano do primeiro evento.", e);
+            logger.log(Level.SEVERE, "Erro ao buscar o ano do primeiro evento para o usuário {0}.", userId);
             throw new DBException("Erro ao buscar o ano do primeiro evento.");
         }
+
         return LocalDate.now().getYear();
     }
 }

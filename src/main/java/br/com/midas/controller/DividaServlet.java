@@ -4,6 +4,7 @@ import br.com.midas.dao.DividaDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Divida;
+import br.com.midas.model.Usuario;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -133,6 +134,13 @@ public class DividaServlet extends HttpServlet {
         // Obter o código do usuário da sessão
         HttpSession session = req.getSession();
         Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+
+        if (usuarioVerificado == null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         // Recuperar e exibir os ganhos do usuário logado
         List<Divida> dividas = dao.getAllDivida(codigoUsuario);

@@ -26,16 +26,16 @@
             <h3>Início</h3>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/dashboard.jsp" class="footer-link">Home</a>
+            <a href="${pageContext.request.contextPath}/dashboard" class="footer-link">Home</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/perfil.jsp" class="footer-link">Perfil</a>
+            <a href="${pageContext.request.contextPath}/perfil" class="footer-link">Perfil</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/calendario.jsp" class="footer-link">Calendário</a>
+            <a href="${pageContext.request.contextPath}/calendario" class="footer-link">Calendário</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/objetivos?acao=cadastrar" class="footer-link">Objetivos</a>
+            <a href="${pageContext.request.contextPath}/objetivos" class="footer-link">Objetivos</a>
           </li>
         </ul>
       </div>
@@ -48,16 +48,16 @@
             <h3>Finanças</h3>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar" class="footer-link">Ganhos</a>
+            <a href="${pageContext.request.contextPath}/ganhos" class="footer-link">Ganhos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar" class="footer-link">Gastos</a>
+            <a href="${pageContext.request.contextPath}/gastos" class="footer-link">Gastos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar" class="footer-link">Investimentos</a>
+            <a href="${pageContext.request.contextPath}/investimentos" class="footer-link">Investimentos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/dividas?acaoDivida=cadastrar" class="footer-link">Dívidas</a>
+            <a href="${pageContext.request.contextPath}/dividas" class="footer-link">Dívidas</a>
           </li>
         </ul>
       </div>

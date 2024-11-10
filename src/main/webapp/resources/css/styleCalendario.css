@@ -69,7 +69,6 @@
     max-width: 1200px;
 }
 
-/* Cada dia no calendário */
 .dia {
     background-color: var(--branco);
     border: 1px solid var(--vermelho);
@@ -81,6 +80,14 @@
     justify-content: flex-start;
     height: 150px; /* Altura fixa para uniformidade */
     overflow-y: auto; /* Barra de rolagem para conteúdo excedente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adicionado sombra no hover */
+}
+
+.dia:hover {
+    transform: scale(2); /* Aumenta o tamanho da div em 100% */
+    background-color: var(--branco); /* Mantém o fundo branco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor para realçar */
+    border-color: var(--bege)
 }
 
 .dia .data {
@@ -99,5 +106,10 @@
 
 .eventos .tipo {
     font-weight: bold;
-    color: var(--dourado);
+    color: var(--vermelho); /* Ajuste para vermelho suave */
+}
+
+.dia:hover .eventos li,
+.dia:hover .eventos .tipo {
+    font-size: 80%; /* Define o tamanho da fonte apenas quando o mouse está sobre o dia */
 }

@@ -4,6 +4,7 @@ import br.com.midas.dao.InvestimentoDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Investimento;
+import br.com.midas.model.Usuario;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -143,6 +144,13 @@ public class InvestimentoServlet extends HttpServlet {
     private void listarInvestimento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Integer codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+
+        if (usuarioVerificado == null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         List<Investimento> investimentos = dao.getAllInvestimento(codigoUsuario);
         req.setAttribute("investimentos", investimentos);

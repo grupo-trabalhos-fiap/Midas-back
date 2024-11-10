@@ -4,6 +4,7 @@ import br.com.midas.dao.CalendarioDao;
 import br.com.midas.exception.DBException;
 import br.com.midas.factory.DaoFactory;
 import br.com.midas.model.Evento;
+import br.com.midas.model.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,6 +36,13 @@ public class CalendarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int codigoUsuario = (Integer) session.getAttribute("codigoUsuario");
+        Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
+
+        if (usuarioVerificado == null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         int anoAtual = LocalDate.now().getYear();
         int mesAtual = LocalDate.now().getMonthValue();

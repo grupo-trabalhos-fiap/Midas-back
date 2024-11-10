@@ -42,7 +42,7 @@ public class DashboardServlet extends HttpServlet {
         Usuario usuarioVerificado = (Usuario) session.getAttribute("usuarioVerificado");
 
         if (usuarioVerificado == null) {
-            logger.log(Level.WARNING, "Tentativa de acesso ao dashboard sem um usuário autenticado.");
+            session.invalidate();
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }

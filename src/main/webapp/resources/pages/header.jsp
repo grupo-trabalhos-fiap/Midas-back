@@ -30,7 +30,7 @@
               </li>
               <li class="nav-item perfil">
                 <i class="bi bi-person-circle"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/perfil.jsp">Perfil</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/perfil">Perfil</a>
               </li>
               <!-- menu dropdown -->
               <li class="nav-item dropdown">
@@ -39,32 +39,32 @@
                   Finanças >
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item my-3" href="${pageContext.request.contextPath}/ganhos?acaoGanho=cadastrar">Ganhos</a></li>
+                  <li><a class="dropdown-item my-3" href="${pageContext.request.contextPath}/ganhos">Ganhos</a></li>
                   <li>
                   </li>
-                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/gastos?acaoGasto=cadastrar">Gastos</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/gastos">Gastos</a></li>
                 </ul>
               </li>
               <!-- fim menu dropdown -->
 
               <li class="nav-item calendario">
                 <i class="bi bi-calendar3"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp">Calendário</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/calendario">Calendário</a>
               </li>
 
               <li class="nav-item">
                 <i class="bi bi-bullseye"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/objetivos?acao=cadastrar">Objetivos</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/objetivos">Objetivos</a>
               </li>
 
               <li class="nav-item">
                 <i class="bi bi-piggy-bank-fill"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/investimentos?acaoInvestimento=cadastrar">Investimentos</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/investimentos">Investimentos</a>
               </li>
 
               <li class="nav-item">
                 <i class="bi bi-receipt"></i>
-                <a class="nav-link" href="${pageContext.request.contextPath}/dividas?acaoDivida=cadastrar">Dívidas</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/dividas">Dívidas</a>
               </li>
             </ul>
           </div>
@@ -78,13 +78,13 @@
 
       <!-- conteúdo da direita -->
       <div class="direita px-3">
-        <a class="text-decoration-none" href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp">
+        <a class="text-decoration-none" href="${pageContext.request.contextPath}/calendario">
         <div class="icones mx-4">
             <i class="bi bi-calendar3"></i>
         </div>
         </a>
 
-        <a class="text-decoration-none" href="${pageContext.request.contextPath}/resources/pages/perfil.jsp">
+        <a class="text-decoration-none" href="${pageContext.request.contextPath}/perfil">
         <div class="icones3 mx-1 text-center">
             <i class="bi bi-person-circle mx-3"></i>
           <h5>Perfil</h5>

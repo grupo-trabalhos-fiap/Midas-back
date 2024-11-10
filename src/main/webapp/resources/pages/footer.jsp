@@ -32,7 +32,7 @@
             <a href="${pageContext.request.contextPath}/resources/pages/perfil.jsp" class="footer-link">Perfil</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/resources/pages/Calendario.jsp" class="footer-link">Calendário</a>
+            <a href="${pageContext.request.contextPath}/resources/pages/calendario.jsp" class="footer-link">Calendário</a>
           </li>
           <li>
             <a href="${pageContext.request.contextPath}/objetivos?acao=cadastrar" class="footer-link">Objetivos</a>

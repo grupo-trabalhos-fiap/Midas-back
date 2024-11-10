@@ -61,7 +61,6 @@ public class DashboardServlet extends HttpServlet {
         int codigoUsuario = usuario.getCodigoUsuario();
 
         try {
-            // Carregamento das informações do usuário para o dashboard
             String nomeUsuario = dashboardDao.getNomeUsuario(codigoUsuario);
             double totalGanhos = dashboardDao.getTotalGanhos(codigoUsuario);
             double totalGastos = dashboardDao.getTotalGastos(codigoUsuario);
@@ -74,7 +73,6 @@ public class DashboardServlet extends HttpServlet {
             double totalDividas = dashboardDao.getTotalDividas(codigoUsuario);
 
 
-            // Atributos para exibição no JSP
             req.setAttribute("nomeUsuario", nomeUsuario);
             req.setAttribute("totalGanhos", totalGanhos);
             req.setAttribute("totalGastos", totalGastos);
